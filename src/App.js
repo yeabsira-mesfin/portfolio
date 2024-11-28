@@ -5,8 +5,9 @@ import Hero from './Components/Hero';
 import Navbar from './Components/Navbar';
 import AboutMe from './Components/AboutMe';
 import Projects from './Components/Projects';
-
-
+import Skills from './Components/Skills';
+import Hobbies from './Components/Hobbies';
+import Contact from './Components/Contact';
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   return (
@@ -15,6 +16,8 @@ function App() {
       <Hero/>
       <AboutMe/>
       <Projects/>
+      <Skills/>
+      <Hobbies/>
      
     </div>
   );
