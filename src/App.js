@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Hero from './Components/Hero';
 import Navbar from './Components/Navbar';
 import AboutMe from './Components/AboutMe';
+import Projects from './Components/Projects';
 
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
       <Navbar/>
       <Hero/>
       <AboutMe/>
+      <Projects/>
      
     </div>
   );
