@@ -1,39 +1,52 @@
-import { motion, useScroll, useSpring } from "framer-motion";
+import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
 const ScrollProgressCircle = () => {
-  // Capture scroll progress (from 0 to 1)
-  const { scrollYProgress } = useScroll();
+  const [scrollY, setScrollY] = useState(0);
 
-  // Smooth the scroll progress with a spring effect
-  const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    mass: 1,
-  });
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollProgress = Math.min((scrollTop / docHeight) * 100, 100); // Clamped between 0-100
+      setScrollY(scrollProgress);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <div className="fixed top-10 right-10">
-      <svg className="w-16 h-16">
-        {/* Background Circle */}
+    <div
+      className="fixed z-50 top-20 right-8" // Adjusted top margin for a defined spacing
+      style={{ width: "80px", height: "80px" }}
+    >
+      <svg
+        viewBox="0 0 100 100"
+        className="w-full h-full"
+        style={{ transform: "rotate(-90deg)" }} // Ensures the progress starts from the top
+      >
+        {/* Background circle */}
         <circle
-          cx="32"
-          cy="32"
-          r="28"
-          stroke="#e5e7eb" /* Light gray color */
-          strokeWidth="4"
+          cx="50"
+          cy="50"
+          r="45"
+          stroke="#2d2d2d" // Background stroke color
+          strokeWidth="10"
           fill="none"
         />
-        {/* Progress Circle */}
+        {/* Progress circle */}
         <motion.circle
-          cx="32"
-          cy="32"
-          r="28"
-          stroke="#10b981" /* Tailwind green */
-          strokeWidth="4"
+          cx="50"
+          cy="50"
+          r="45"
+          stroke="#00C853" // Progress stroke color
+          strokeWidth="10"
           fill="none"
           strokeLinecap="round"
-          style={{
-            pathLength: smoothProgress, // Link scroll progress to circle's stroke
+          initial={{ strokeDasharray: "0, 282" }} // 2πr ≈ 282
+          animate={{
+            strokeDasharray: `${(scrollY / 100) * 282}, 282`,
           }}
         />
       </svg>
