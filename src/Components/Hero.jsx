@@ -11,11 +11,11 @@ const HeroSection = () => {
         animate={{ opacity: 0.15 }}
         transition={{ duration: 3, ease: "easeInOut" }}
       >
-        {/* Floating circles */}
+        {/* Floating white circles */}
         {[...Array(6)].map((_, index) => (
           <motion.div
             key={index}
-            className={`absolute w-32 h-32 rounded-full bg-green-500 opacity-20`}
+            className={`absolute w-32 h-32 rounded-full bg-white opacity-20`} 
             style={{
               top: `${Math.random() * 100}vh`,
               left: `${Math.random() * 100}vw`,
