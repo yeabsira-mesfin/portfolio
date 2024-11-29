@@ -1,36 +1,38 @@
+import { motion } from "framer-motion";
+
 const HeroSection = () => {
   return (
-    <section
-      id="hero"
-      className="h-screen bg-[#243d27] text-white flex items-center justify-center text-center px-4"
-    >
-      <div className="space-y-6">
-        {/* Logo */}
-        <img
-          src="/your-logo.png"
-          alt="Logo"
-          className="w-24 h-24 mx-auto sm:w-32 sm:h-32"
-        />
+    <div className="relative flex flex-col items-center justify-center h-screen text-white bg-gradient-to-br from-green-600 to-blue-600">
+      {/* Floating Points */}
+      <motion.div
+        className="absolute w-16 h-16 bg-white rounded-full top-10 left-10 opacity-20"
+        animate={{ y: [0, 20, 0] }}
+        transition={{ duration: 2, repeat: Infinity }}
+      />
+      <motion.div
+        className="absolute w-20 h-20 bg-white rounded-full bottom-20 right-20 opacity-30"
+        animate={{ x: [0, -20, 0], y: [0, -20, 0] }}
+        transition={{ duration: 3, repeat: Infinity }}
+      />
 
-        {/* Main Heading */}
-        <h1 className="text-4xl font-bold sm:text-5xl">
-          Welcome to My Portfolio
-        </h1>
-
-        {/* Subheading */}
-        <p className="text-lg sm:text-xl">
-          Crafting beautiful experiences through code and design
-        </p>
-
-        {/* Call to Action Button */}
-        <a
-          href="#about"
-          className="mt-6 inline-block bg-white text-[#243d27] px-6 py-3 text-lg font-medium rounded-lg shadow-lg hover:bg-gray-200 transition duration-300"
-        >
-          Learn More About Me
-        </a>
-      </div>
-    </section>
+      {/* Main Hero Content */}
+      <motion.h1
+        className="text-5xl font-bold"
+        initial={{ opacity: 0, y: -50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1 }}
+      >
+        Welcome to My Portfolio
+      </motion.h1>
+      <motion.p
+        className="mt-4 text-xl"
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1.5 }}
+      >
+        Scroll to explore
+      </motion.p>
+    </div>
   );
 };
 

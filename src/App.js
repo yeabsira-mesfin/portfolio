@@ -1,4 +1,4 @@
-import logo from './logo.svg';
+
 import './App.css';
 import { useState } from 'react';
 import Hero from './Components/Hero';
@@ -8,11 +8,13 @@ import Projects from './Components/Projects';
 import Skills from './Components/Skills';
 import Hobbies from './Components/Hobbies';
 import Contact from './Components/Contact';
+import ScrollProgressCircle from './Components/ScrollProgressCircle ';
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   return (
     <div>
       <Navbar/>
+     
       <Hero/>
       <AboutMe/>
       <Projects/>
