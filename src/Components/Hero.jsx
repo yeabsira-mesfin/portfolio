@@ -3,13 +3,13 @@ import { motion } from "framer-motion";
 
 const HeroSection = () => {
   return (
-    <div className="relative flex items-center justify-center h-screen text-white bg-dark-green">
-      {/* Background Animations */}
+    <div className="relative flex items-center justify-center h-screen overflow-hidden text-white bg-dark-green">
+      {/* Background Animations: Glowing Circles */}
       <motion.div
         className="absolute top-0 left-0 z-0 w-full h-full"
         initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 2 }}
+        animate={{ opacity: 0.15 }}
+        transition={{ duration: 3, ease: "easeInOut" }}
       >
         {/* Floating circles */}
         {[...Array(6)].map((_, index) => (
@@ -41,7 +41,7 @@ const HeroSection = () => {
           className="text-6xl font-bold md:text-7xl"
           initial={{ opacity: 0, scale: 0.9, y: 50 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
-          transition={{ duration: 1.5, ease: "easeInOut" }}
+          transition={{ duration: 2, ease: "easeInOut" }}
         >
           Welcome to My Portfolio
         </motion.h1>
@@ -53,22 +53,6 @@ const HeroSection = () => {
         >
           Crafting Elegant Web Experiences with Modern Technologies
         </motion.p>
-
-        {/* Animated Call-to-Action Button */}
-        <motion.button
-          className="px-6 py-3 mt-8 text-lg font-semibold text-white bg-green-500 rounded-lg shadow-lg hover:bg-green-600"
-          initial={{ scale: 0.9, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{
-            duration: 1.2,
-            delay: 1,
-            ease: "easeInOut",
-            repeatType: "reverse",
-          }}
-          whileHover={{ scale: 1.1 }}
-        >
-          Explore
-        </motion.button>
       </div>
     </div>
   );
