@@ -1,53 +1,48 @@
-import React, { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import React from "react";
+import { motion, useScroll, useSpring } from "framer-motion";
 
 const ScrollProgressCircle = () => {
-  const [scrollY, setScrollY] = useState(0);
+  const { scrollYProgress } = useScroll();
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollTop = window.scrollY;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const scrollProgress = Math.min((scrollTop / docHeight) * 100, 100); // Clamped between 0-100
-      setScrollY(scrollProgress);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  // Smooth out the progress using a spring transition
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 20,
+    mass: 0.5,
+  });
 
   return (
-    <div
-      className="fixed z-50 top-20 right-8" // Adjusted top margin for a defined spacing
-      style={{ width: "80px", height: "80px" }}
-    >
+    <div className="fixed z-50 top-16 right-16">
       <svg
+        className="w-16 h-16"
         viewBox="0 0 100 100"
-        className="w-full h-full"
-        style={{ transform: "rotate(-90deg)" }} // Ensures the progress starts from the top
+        xmlns="http://www.w3.org/2000/svg"
       >
-        {/* Background circle */}
+        {/* Static Background Circle */}
         <circle
           cx="50"
           cy="50"
           r="45"
-          stroke="#2d2d2d" // Background stroke color
-          strokeWidth="10"
           fill="none"
+          stroke="#1b4d3e" /* Adjusted to hero section color */
+          strokeWidth="5"
+          className="opacity-70"
         />
-        {/* Progress circle */}
+
+        {/* Smooth Progress Circle */}
         <motion.circle
           cx="50"
           cy="50"
           r="45"
-          stroke="#00C853" // Progress stroke color
-          strokeWidth="10"
           fill="none"
-          strokeLinecap="round"
-          initial={{ strokeDasharray: "0, 282" }} // 2πr ≈ 282
-          animate={{
-            strokeDasharray: `${(scrollY / 100) * 282}, 282`,
+          stroke="white" /* Progress stroke color */
+          strokeWidth="5"
+          strokeDasharray="282.6"
+          strokeDashoffset="282.6"
+          style={{
+            pathLength: smoothProgress, // Use smooth progress for smooth animation
           }}
+          className="transition-all ease-linear"
         />
       </svg>
     </div>
