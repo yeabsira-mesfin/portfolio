@@ -24,7 +24,7 @@ const ScrollProgressCircle = () => {
           cy="50"
           r="45"
           fill="none"
-          stroke="#1b4d3e" /* Adjusted to hero section color */
+          stroke="white" /* Adjusted to hero section color */
           strokeWidth="5"
           className="opacity-70"
         />
@@ -35,7 +35,7 @@ const ScrollProgressCircle = () => {
           cy="50"
           r="45"
           fill="none"
-          stroke="white" /* Progress stroke color */
+          stroke="#243d27" /* Progress stroke color */
           strokeWidth="5"
           strokeDasharray="282.6"
           strokeDashoffset="282.6"
