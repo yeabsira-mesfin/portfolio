@@ -10,6 +10,7 @@ module.exports = {
         'green-500': '#00C853',
         'green-300': '#A8E6CF',
       },
+      darkMode: 'class',
       keyframes: {
         fadeIn: {
           '0%': { opacity: 0 },

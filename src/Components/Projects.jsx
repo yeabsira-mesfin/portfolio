@@ -40,7 +40,7 @@ const Projects = () => {
   return (
     <>
       <GlobalStyles /> {/* Apply global styles for scrollbars */}
-      <div className="px-8 py-16 text-white bg-dark-green">
+      <div id="projects" className="px-8 py-16 text-white bg-dark-green">
         <h2 className="mb-12 text-4xl font-bold text-center md:text-5xl">My Projects</h2>
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {projectData.map((project, index) => (
