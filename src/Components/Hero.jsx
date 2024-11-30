@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 const HeroSection = () => {
   return (
-    <div className="relative flex items-center justify-center h-screen overflow-hidden text-white bg-dark-green">
+    <div className="h-[95vh] bg-dark-green text-white flex items-center justify-center relative overflow-hidden">
       {/* Background Animations: Glowing Circles */}
       <motion.div
         className="absolute top-0 left-0 z-0 w-full h-full"
@@ -15,7 +15,7 @@ const HeroSection = () => {
         {[...Array(6)].map((_, index) => (
           <motion.div
             key={index}
-            className={`absolute w-32 h-32 rounded-full bg-white opacity-20`} 
+            className="absolute w-32 h-32 bg-white rounded-full opacity-20"
             style={{
               top: `${Math.random() * 100}vh`,
               left: `${Math.random() * 100}vw`,
@@ -36,9 +36,9 @@ const HeroSection = () => {
       </motion.div>
 
       {/* Hero Content */}
-      <div className="z-10 text-center">
+      <div className="z-10 px-6 text-center">
         <motion.h1
-          className="text-6xl font-bold md:text-7xl"
+          className="text-5xl font-bold md:text-6xl"
           initial={{ opacity: 0, scale: 0.9, y: 50 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ duration: 2, ease: "easeInOut" }}
@@ -46,7 +46,7 @@ const HeroSection = () => {
           Welcome to My Portfolio
         </motion.h1>
         <motion.p
-          className="mt-4 text-xl text-green-300 md:text-2xl"
+          className="mt-4 text-lg text-green-300 md:text-xl"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.8, delay: 0.5, ease: "easeInOut" }}
