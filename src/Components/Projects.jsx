@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 const GlobalStyles = () => (
   <style>
     {`
-      /* For Chrome, Safari and Opera */
+      /* For Chrome, Safari, and Opera */
       ::-webkit-scrollbar {
         width: 8px;
         height: 8px;
@@ -46,24 +46,24 @@ const Projects = () => {
           {projectData.map((project, index) => (
             <motion.div
               key={project.id}
-              className="relative p-6 overflow-hidden bg-[#1F2A34] shadow-lg rounded-xl transform transition-all duration-500 ease-in-out hover:scale-105 hover:shadow-2xl hover:bg-[#283B46]"
+              className="relative p-6 bg-dark-green shadow-2xl rounded-2xl transform transition-all duration-500 ease-in-out hover:scale-105 hover:shadow-2xl hover:bg-[#283B46]"
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: index * 0.2 }}
             >
               {/* Embedded Preview */}
-              <div className="mb-4 overflow-hidden rounded-lg shadow-md">
+              <div className="mb-6 overflow-hidden shadow-lg rounded-2xl">
                 <iframe
                   src={project.embedLink}
-                  className="w-full h-48 rounded-lg"
+                  className="w-full h-48 rounded-2xl"
                   frameBorder="0"
                   title={project.title}
                   style={{ overflowX: "hidden", overflowY: "hidden" }}
                 ></iframe>
               </div>
 
-              {/* Project Info Bar */}
-              <div className="p-4 mb-4 text-center rounded-lg bg-gradient-to-r from-green-500 to-teal-400">
+              {/* Project Info Bar without background */}
+              <div className="p-4 mb-4 text-center rounded-lg">
                 <h3 className="text-xl font-semibold text-white">{project.title}</h3>
                 <p className="mb-4 text-lg text-white">
                   Click below to view the full project:
