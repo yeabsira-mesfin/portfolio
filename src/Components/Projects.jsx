@@ -1,6 +1,34 @@
 import React from "react";
 import { motion } from "framer-motion";
 
+// Adding global styles for scrollbars in the app (for Chrome, Safari, and Firefox)
+const GlobalStyles = () => (
+  <style>
+    {`
+      /* For Chrome, Safari and Opera */
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background-color: #4CAF50;
+        border-radius: 10px;
+        border: 2px solid #1F2A34;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: #1F2A34;
+        border-radius: 10px;
+      }
+
+      /* For Firefox */
+      scrollbar-color: #4CAF50 #1F2A34;
+      scrollbar-width: thin;
+    `}
+  </style>
+);
+
 const Projects = () => {
   const projectData = [
     { id: 1, title: "Home Of Games", embedLink: "https://homeofgames.vercel.app/" },
@@ -10,46 +38,50 @@ const Projects = () => {
   ];
 
   return (
-    <div className="px-8 py-16 text-white bg-dark-green">
-      <h2 className="mb-12 text-4xl font-bold text-center md:text-5xl">My Projects</h2>
-      <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {projectData.map((project, index) => (
-          <motion.div
-            key={project.id}
-            className="relative p-6 overflow-hidden bg-[#1F2A34] shadow-lg rounded-xl transform transition-all duration-500 ease-in-out hover:scale-105 hover:shadow-2xl hover:bg-[#283B46]"
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: index * 0.2 }}
-          >
-            {/* Embedded Preview */}
-            <div className="mb-4 overflow-hidden rounded-lg shadow-md">
-              <iframe
-                src={project.embedLink}
-                className="w-full h-48 rounded-lg"
-                frameBorder="0"
-                title={project.title}
-                style={{ overflowX: "hidden", overflowY: "hidden" }}
-              ></iframe>
-            </div>
+    <>
+      <GlobalStyles /> {/* Apply global styles for scrollbars */}
+      <div className="px-8 py-16 text-white bg-dark-green">
+        <h2 className="mb-12 text-4xl font-bold text-center md:text-5xl">My Projects</h2>
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {projectData.map((project, index) => (
+            <motion.div
+              key={project.id}
+              className="relative p-6 overflow-hidden bg-[#1F2A34] shadow-lg rounded-xl transform transition-all duration-500 ease-in-out hover:scale-105 hover:shadow-2xl hover:bg-[#283B46]"
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: index * 0.2 }}
+            >
+              {/* Embedded Preview */}
+              <div className="mb-4 overflow-hidden rounded-lg shadow-md">
+                <iframe
+                  src={project.embedLink}
+                  className="w-full h-48 rounded-lg"
+                  frameBorder="0"
+                  title={project.title}
+                  style={{ overflowX: "hidden", overflowY: "hidden" }}
+                ></iframe>
+              </div>
 
-            <h3 className="mb-2 text-2xl font-semibold text-center">{project.title}</h3>
-            <p className="mb-4 text-lg text-center">
-              Click below to view the full project:
-            </p>
-            <div className="text-center">
-              <a
-                href={project.embedLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[#4CAF50] hover:text-white font-bold text-lg"
-              >
-                View Full Project
-              </a>
-            </div>
-          </motion.div>
-        ))}
+              {/* Project Info Bar */}
+              <div className="p-4 mb-4 text-center rounded-lg bg-gradient-to-r from-green-500 to-teal-400">
+                <h3 className="text-xl font-semibold text-white">{project.title}</h3>
+                <p className="mb-4 text-lg text-white">
+                  Click below to view the full project:
+                </p>
+                <a
+                  href={project.embedLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#4CAF50] hover:text-white font-bold text-lg"
+                >
+                  View Full Project
+                </a>
+              </div>
+            </motion.div>
+          ))}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
