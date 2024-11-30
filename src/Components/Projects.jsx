@@ -7,19 +7,19 @@ const GlobalStyles = () => (
     {`
       /* For Chrome, Safari, and Opera */
       ::-webkit-scrollbar {
-        width: 8px;
-        height: 8px;
+        width: 1px;
+        height: 1px;
       }
 
       ::-webkit-scrollbar-thumb {
         background-color: #4CAF50;
-        border-radius: 10px;
-        border: 2px solid #1F2A34;
+        border-radius: 1px;
+        border: 1px solid #1F2A34;
       }
 
       ::-webkit-scrollbar-track {
         background: #1F2A34;
-        border-radius: 10px;
+        border-radius: 1px;
       }
 
       /* For Firefox */
