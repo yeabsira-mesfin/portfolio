@@ -1,14 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Code from '../images/Coding.png'
+import Exercise from '../images/Exercising.jpg'
+import Football from '../images/Football.jpg'
+import Hiking from '../images/Hikinggg.jpg'
+import Reading from '../images/Reading.jpeg'
+import VideoGames from '../images/VideoGames.jpg'
 
 // Hobby data
 const hobbies = [
-  { name: "Coding", image: "/images/coding.jpg" },
-  { name: "Exercising", image: "/images/exercising.jpg" },
-  { name: "Football", image: "/images/football.jpg" },
-  { name: "Hiking", image: "/images/hiking.jpg" },
-  { name: "Reading", image: "/images/reading.jpg" },
-  { name: "Video Games", image: "/images/video-games.jpg" },
+  { name: "Coding", image: Code },
+  { name: "Exercising", image: Exercise },
+  { name: "Football", image: Football },
+  { name: "Hiking", image: Hiking },
+  { name: "Reading", image: Reading },
+  { name: "Video Games", image: VideoGames },
 ];
 
 const Hobbies = () => {
@@ -17,7 +23,7 @@ const Hobbies = () => {
   // Auto-slide every 15 seconds
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % hobbies.length);
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % hobbies.length); // Loop the images
     }, 15000); // 15000 ms = 15 seconds
     return () => clearInterval(interval);
   }, []);
@@ -39,14 +45,21 @@ const Hobbies = () => {
               transition={{ duration: 1 }}
             >
               {/* Slide Content */}
-              <div
+              <motion.div
                 className="flex flex-col items-center justify-center w-full h-full text-white bg-center bg-cover shadow-lg"
-                style={{ backgroundImage: `url(${hobbies[currentIndex].image})` }}
+                style={{
+                  backgroundImage: `url(${hobbies[currentIndex].image})`
+                }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 1 }}
               >
-                <div className="w-full py-4 text-center bg-black bg-opacity-50">
-                  <h3 className="text-2xl font-semibold">{hobbies[currentIndex].name}</h3>
+                {/* Caption at the bottom-left */}
+                <div className="absolute bottom-0 left-0 w-full py-4 text-left bg-black bg-opacity-50">
+                  <h3 className="text-2xl font-semibold pl-4">{hobbies[currentIndex].name}</h3>
                 </div>
-              </div>
+              </motion.div>
             </motion.div>
           </AnimatePresence>
         </div>
