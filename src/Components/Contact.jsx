@@ -4,15 +4,15 @@ const Contact = () => {
   return (
     <section
       id="contact"
-      className="bg-white text-[#243d27] py-16 px-8 relative"
+      className="bg-white text-[#1B4332] py-16 px-8 relative"
     >
       {/* Send-off Animation Background */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[#243d27] to-[#4CAF50] opacity-10 -z-10"></div>
+      <div className="absolute inset-0 bg-gradient-to-r from-[#1B4332] to-[#4CAF50] opacity-10 -z-10"></div>
 
       <div className="max-w-5xl mx-auto space-y-4 text-center">
         {/* Title and CV Download button */}
         <motion.h2
-          className="text-3xl font-bold text-[#243d27]"
+          className="text-3xl font-bold text-[#1B4332]"
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
@@ -32,16 +32,16 @@ const Contact = () => {
           <input
             type="text"
             placeholder="Your Name"
-            className="w-full px-4 py-2 rounded-lg bg-[#f0f0f0] border border-[#243d27] focus:outline-none"
+            className="w-full px-4 py-2 rounded-lg bg-[#f0f0f0] border border-[#1B4332] focus:outline-none"
           />
           <input
             type="email"
             placeholder="Your Email"
-            className="w-full px-4 py-2 rounded-lg bg-[#f0f0f0] border border-[#243d27] focus:outline-none"
+            className="w-full px-4 py-2 rounded-lg bg-[#f0f0f0] border border-[#1B4332] focus:outline-none"
           />
           <textarea
             placeholder="Your Message"
-            className="w-full px-4 py-2 rounded-lg bg-[#f0f0f0] border border-[#243d27] focus:outline-none"
+            className="w-full px-4 py-2 rounded-lg bg-[#f0f0f0] border border-[#1B4332] focus:outline-none"
           ></textarea>
 
           {/* Buttons container */}
@@ -49,7 +49,7 @@ const Contact = () => {
             {/* Send Message Button */}
             <motion.button
               type="submit"
-              className="bg-[#243d27] text-white px-6 py-2 rounded-lg shadow-lg hover:bg-[#4CAF50] transition duration-300"
+              className="bg-[#1B4332] text-white px-6 py-2 rounded-lg shadow-lg hover:bg-[#4CAF50] transition duration-300"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1, delay: 0.5 }}
@@ -61,7 +61,7 @@ const Contact = () => {
             <motion.a
               href="/path-to-your-cv.pdf"
               download="Your-Name-CV"
-              className="bg-[#243d27] text-white px-6 py-2 rounded-lg shadow-lg hover:bg-[#4CAF50] transition duration-300"
+              className="bg-[#1B4332] text-white px-6 py-2 rounded-lg shadow-lg hover:bg-[#4CAF50] transition duration-300"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1, delay: 1 }}
