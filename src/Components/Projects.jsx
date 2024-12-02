@@ -72,7 +72,7 @@ const Projects = () => {
                   href={project.embedLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[#4CAF50] hover:text-white font-bold text-lg"
+                  className="text-green-300 hover:text-white font-bold text-lg"
                 >
                   View Full Project
                 </a>
