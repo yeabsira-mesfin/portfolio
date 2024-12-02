@@ -42,7 +42,10 @@ const Projects = () => {
       <GlobalStyles /> {/* Apply global styles for scrollbars */}
       <div id="projects" className="px-8 py-16 text-white bg-dark-green">
         <h2 className="mb-5 text-4xl font-bold text-center md:text-5xl">My Projects</h2>
-        <p className="py-1 mb-3 text-center">Fell free to visit my <a href="https://github.com/yeabsira-mesfin" className="text-[#2a9d8f]" target="_blank">GitHub</a> to see all my projects.</p>
+        <p className="py-1 mb-3 text-center">
+  Interested in exploring more? Visit my <a href="https://github.com/yeabsira-mesfin" className="text-[#2a9d8f] font-bold hover:underline" target="_blank">GitHub</a> for a deeper look at my work.
+</p>
+
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {projectData.map((project, index) => (
             <motion.div
