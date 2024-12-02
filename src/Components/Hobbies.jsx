@@ -29,7 +29,7 @@ const Hobbies = () => {
   }, []);
 
   return (
-    <section id="hobbies" className="bg-[#243d27] text-white py-16 px-8">
+    <section id="hobbies" className="bg-[#1B4332] text-white py-16 px-8">
       <div className="max-w-5xl mx-auto space-y-6 text-center">
         <h2 className="text-3xl font-bold">Hobbies</h2>
 
