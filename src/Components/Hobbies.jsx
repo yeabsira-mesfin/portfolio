@@ -24,7 +24,7 @@ const Hobbies = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % hobbies.length); // Loop the images
-    }, 1500); // 15000 ms = 15 seconds
+    }, 3500); // 15000 ms = 15 seconds
     return () => clearInterval(interval);
   }, []);
 
@@ -56,7 +56,7 @@ const Hobbies = () => {
                 transition={{ duration: 1 }}
               >
                 {/* Caption at the bottom-left */}
-                <div className="absolute bottom-0 left-0 w-full py-4 text-left bg-black bg-opacity-50">
+                <div className="absolute bottom-0 left-0 w-full py-4 text-left bg-green-950 bg-opacity-50">
                   <h3 className="text-2xl font-semibold pl-4">{hobbies[currentIndex].name}</h3>
                 </div>
               </motion.div>
