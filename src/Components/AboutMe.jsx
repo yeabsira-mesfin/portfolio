@@ -10,15 +10,15 @@ const AboutMe = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
       >
-        <h2 className="text-4xl font-bold text-[#243d27] mb-8">About Me</h2>
-        <p className="text-lg text-[#243d27] leading-relaxed px-4">
-          Hi, I’m Yeabsira! I’m a web developer who loves bringing creative ideas to life. I specialize in
+        <h2 className="text-4xl font-bold text-[#243d27] mb-10">About Me</h2>
+        <p className="text-lg text-[#243d27] leading-loose px-8">
+          Hi, I’m Yeabsira! I’m a web developer who loves bringing creative ideas to life. I specialize in 
           <span className="font-medium"> React.js, HTML/CSS, JavaScript, Node.js,</span> and <span className="font-medium">TypeScript</span>. My fascination with building and improving things started in college, where I had a blast working on Java projects and figuring out how to make them better.
         </p>
-        <p className="text-lg text-[#243d27] leading-relaxed px-4 mt-4">
+        <p className="text-lg text-[#243d27] leading-loose px-8 mt-6">
           At my current job, I’ve been promoted twice—proof of how much I value building trust with clients and delivering work that truly makes an impact. Outside of coding, I’m a big football fan (weekends are for games!) and an avid reader of thriller novels. Oh, and I also enjoy tinkering with fun side projects when inspiration strikes.
         </p>
-        <p className="text-lg text-[#243d27] leading-relaxed px-4 mt-4">
+        <p className="text-lg text-[#243d27] leading-loose px-8 mt-6">
           Let’s connect on <a href="https://www.linkedin.com/in/yeabsira-mesfin-76379928a" target="_blank" rel="noopener noreferrer" className="text-[#2a9d8f] underline hover:opacity-80 transition-opacity">LinkedIn</a> or <a href="https://github.com/yeabsira-mesfin" target="_blank" rel="noopener noreferrer" className="text-[#2a9d8f] underline hover:opacity-80 transition-opacity">GitHub</a>—whether to chat, collaborate, or maybe even work together. Who knows? I could be the person you’ve been looking for!
         </p>
       </motion.div>
