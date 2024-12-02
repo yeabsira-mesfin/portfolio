@@ -24,7 +24,7 @@ const Hobbies = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % hobbies.length); // Loop the images
-    }, 15000); // 15000 ms = 15 seconds
+    }, 1500); // 15000 ms = 15 seconds
     return () => clearInterval(interval);
   }, []);
 
