@@ -4,7 +4,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="bg-[#243d27] text-white fixed w-full top-0 shadow-lg z-50">
+    <nav className="bg-dark-green text-white fixed w-full top-0 shadow-lg z-50">
       <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
@@ -88,7 +88,7 @@ const Navbar = () => {
 
       {/* Mobile Dropdown */}
       {isOpen && (
-        <div className="md:hidden bg-[#243d27]">
+        <div className="md:hidden bg-dark-green">
           <a
             href="#about"
             className="block px-4 py-2 hover:bg-gray-700 hover:text-white"

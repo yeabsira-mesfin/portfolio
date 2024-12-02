@@ -22,35 +22,29 @@ const AboutMe = () => {
           About Me
         </h2>
 
-        {/* Paragraphs with slide-up effect */}
-        <p
-          className={`text-lg text-[#243d27] leading-relaxed transform transition-all duration-1000 ${
+        {/* Grouped paragraphs with synchronized animation */}
+        <div
+          className={`transform transition-all duration-1000 ${
             isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
           }`}
         >
-          Hi, I’m Yeabsira! I’m a web developer who loves bringing creative ideas to life. I specialize in{" "}
-          <span className="font-medium">React.js, HTML/CSS, JavaScript, Node.js,</span> and{" "}
-          <span className="font-medium">TypeScript</span>. My fascination with building and improving things started
-          in college, where I had a blast working on Java projects and figuring out how to make them better.
-        </p>
-        <p
-          className={`text-lg text-[#243d27] leading-relaxed mt-4 transform transition-all duration-1000 delay-200 ${
-            isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
-          }`}
-        >
-          At my current job, I’ve been promoted twice proof of how much I value building trust with clients and
-          delivering work that truly makes an impact. Outside of coding, I’m a big football fan (weekends are for
-          games!) and an avid reader of thriller novels. Oh, and I also enjoy tinkering with fun side projects when
-          inspiration strikes.
-        </p>
-        <p
-          className={`text-lg text-[#243d27] leading-relaxed mt-4 transform transition-all duration-1000 delay-400 ${
-            isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
-          }`}
-        >
-          Let’s connect on LinkedIn or GitHub—whether to chat, collaborate, or maybe even work together. Who knows? I
-          could be the person you’ve been looking for!
-        </p>
+          <p className="text-lg text-[#243d27] leading-relaxed">
+            Hi, I’m Yeabsira! I’m a web developer who loves bringing creative ideas to life. I specialize in{" "}
+            <span className="font-medium">React.js, HTML/CSS, JavaScript, Node.js,</span> and{" "}
+            <span className="font-medium">TypeScript</span>. My fascination with building and improving things started
+            in college, where I had a blast working on Java projects and figuring out how to make them better.
+          </p>
+          <p className="text-lg text-[#243d27] leading-relaxed mt-4">
+            At my current job, I’ve been promoted twice proof of how much I value building trust with clients and
+            delivering work that truly makes an impact. Outside of coding, I’m a big football fan (weekends are for
+            games!) and an avid reader of thriller novels. Oh, and I also enjoy tinkering with fun side projects when
+            inspiration strikes.
+          </p>
+          <p className="text-lg text-[#243d27] leading-relaxed mt-4">
+            Let’s connect on LinkedIn or GitHub—whether to chat, collaborate, or maybe even work together. Who knows? I
+            could be the person you’ve been looking for!
+          </p>
+        </div>
       </div>
 
       {/* Social Media Links with hover animations */}
