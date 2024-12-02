@@ -49,7 +49,7 @@ const Contact = () => {
             {/* Send Message Button */}
             <motion.button
               type="submit"
-              className="bg-[#1B4332] text-white px-6 py-2 rounded-lg shadow-lg hover:bg-[#4CAF50] transition duration-300"
+              className="bg-[#1B4332] text-white px-6 py-2 rounded-lg shadow-lg hover:bg-[#2a9d8f] transition duration-300"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1, delay: 0.5 }}
@@ -61,7 +61,7 @@ const Contact = () => {
             <motion.a
               href="/path-to-your-cv.pdf"
               download="Your-Name-CV"
-              className="bg-[#1B4332] text-white px-6 py-2 rounded-lg shadow-lg hover:bg-[#4CAF50] transition duration-300"
+              className="bg-[#1B4332] text-white px-6 py-2 rounded-lg shadow-lg hover:bg-[#2a9d8f] transition duration-300"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1, delay: 1 }}
