@@ -35,7 +35,7 @@ const ScrollProgressCircle = () => {
           cy="50"
           r="45"
           fill="none"
-          stroke="#243d27" /* Progress stroke color */
+          stroke="#1B4332" /* Progress stroke color */
           strokeWidth="5"
           strokeDasharray="282.6"
           strokeDashoffset="282.6"
