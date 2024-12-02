@@ -46,7 +46,7 @@ const Projects = () => {
           {projectData.map((project, index) => (
             <motion.div
               key={project.id}
-              className="relative p-6 bg-dark-green shadow-2xl rounded-2xl transform transition-all duration-500 ease-in-out hover:scale-105 hover:shadow-2xl hover:bg-[#283B46]"
+              className="relative p-6 bg-dark-green shadow-2xl rounded-2xl transform transition-all duration-500 ease-in-out hover:scale-105 hover:shadow-2xl hover:bg-green-800"
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: index * 0.2 }}
@@ -56,7 +56,7 @@ const Projects = () => {
                 <iframe
                   src={project.embedLink}
                   className="w-full h-48 rounded-2xl"
-                  frameBorder="0"
+                 
                   title={project.title}
                   style={{ overflowX: "hidden", overflowY: "hidden" }}
                 ></iframe>
