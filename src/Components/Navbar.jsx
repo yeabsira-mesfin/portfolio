@@ -4,7 +4,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="bg-dark-green text-white fixed w-full top-0 shadow-lg z-50">
+    <nav className="fixed top-0 z-50 w-full text-white shadow-lg bg-dark-green">
       <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
@@ -91,35 +91,35 @@ const Navbar = () => {
         <div className="md:hidden bg-dark-green">
           <a
             href="#about"
-            className="block px-4 py-2 hover:bg-gray-700 hover:text-white"
+            className="block px-4 py-2 hover:bg-[#2a9d8f] hover:text-white"
             onClick={() => setIsOpen(false)}
           >
             About Me
           </a>
           <a
             href="#projects"
-            className="block px-4 py-2 hover:bg-gray-700 hover:text-white"
+            className="block px-4 py-2 hover:bg-[#2a9d8f] hover:text-white"
             onClick={() => setIsOpen(false)}
           >
             Projects
           </a>
           <a
             href="#skills"
-            className="block px-4 py-2 hover:bg-gray-700 hover:text-white"
+            className="block px-4 py-2 hover:bg-[#2a9d8f] hover:text-white"
             onClick={() => setIsOpen(false)}
           >
             Skills
           </a>
           <a
             href="#hobbies"
-            className="block px-4 py-2 hover:bg-gray-700 hover:text-white"
+            className="block px-4 py-2 hover:bg-[#2a9d8f] hover:text-white"
             onClick={() => setIsOpen(false)}
           >
             Hobbies
           </a>
           <a
             href="#contact"
-            className="block px-4 py-2 hover:bg-gray-700 hover:text-white"
+            className="block px-4 py-2 hover:bg-[#2a9d8f] hover:text-white"
             onClick={() => setIsOpen(false)}
           >
             Contact
