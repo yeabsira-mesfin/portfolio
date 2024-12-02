@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 const HeroSection = () => {
   return (
-    <div className="h-[95vh] bg-dark-green text-white flex items-center justify-center relative overflow-hidden">
+    <div className="h-[65vh] bg-dark-green text-white flex items-center justify-center relative overflow-hidden">
       {/* Background Animations: Glowing Circles */}
       <motion.div
         className="absolute top-0 left-0 z-0 w-full h-full"

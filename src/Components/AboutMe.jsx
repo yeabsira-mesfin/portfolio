@@ -3,7 +3,7 @@ import React from "react";
 const AboutMe = () => {
   return (
     <section id="about" className="py-6 px-8 bg-gray-50">
-      <div className="max-w-3xl mx-auto text-center">
+      <div className="max-w-7xl mx-auto text-center">
         <h2 className="text-4xl font-bold text-[#243d27] mb-6">About Me</h2>
         <p className="text-lg text-[#243d27] leading-relaxed">
           Hi, I’m Yeabsira! I’m a web developer who loves bringing creative ideas to life. I specialize in 
