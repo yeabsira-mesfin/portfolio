@@ -14,7 +14,7 @@ const AboutMe = () => {
         }
       },
       {
-        threshold: 0.3, // Trigger when 30% of the section is visible
+        threshold: 0.3, 
       }
     );
 
@@ -58,7 +58,7 @@ const AboutMe = () => {
             better.
           </p>
           <p className="text-lg text-[#1B4332] leading-relaxed mt-4">
-            At my current job, I’ve been promoted twice — proof of how much I
+            At my current job, I’ve been promoted twice, proof of how much I
             value building trust with clients and delivering work that truly
             makes an impact. Outside of coding, I’m a big football fan (weekends
             are for games!) and an avid reader of thriller novels. Oh, and I also
