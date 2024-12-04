@@ -4,15 +4,14 @@ import myImage from "../images/MyPicture.png";
 
 const HeroSection = () => {
   return (
-    <div className="h-[70vh] bg-dark-green text-white flex items-center justify-center relative overflow-hidden mt-16">
-      {/* Background Animations: Glowing Circles */}
+    <div className="h-[75vh] bg-dark-green text-white flex items-center justify-center relative overflow-hidden mt-16">
+      {/* Background Animations */}
       <motion.div
         className="absolute top-0 left-0 z-0 w-full h-full"
         initial={{ opacity: 0 }}
         animate={{ opacity: 0.15 }}
         transition={{ duration: 3, ease: "easeInOut" }}
       >
-        {/* Floating white circles */}
         {[...Array(6)].map((_, index) => (
           <motion.div
             key={index}
@@ -39,16 +38,18 @@ const HeroSection = () => {
       {/* Hero Content */}
       <div className="z-10 px-6 text-center">
         <motion.div
-          className="relative inline-block mx-auto mb-6 w-56 h-56 rounded-lg border-8 border-gradient-to-r from-[#2a9d8f] via-[#38b2ac] to-[#43c6ac] shadow-xl overflow-hidden"
+          className="relative w-64 h-64 p-2 mx-auto mb-8 overflow-hidden bg-white rounded-full shadow-2xl"
           initial={{ opacity: 0, scale: 0.8, y: -50 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ duration: 2, ease: "easeInOut" }}
         >
-          <img
-            src={myImage}
-            alt="Your Name"
-            className="object-cover w-full h-full"
-          />
+          <div className="relative w-full h-full overflow-hidden rounded-full">
+            <img
+              src={myImage}
+              alt="Your Name"
+              className="object-cover w-full h-full"
+            />
+          </div>
         </motion.div>
         <motion.h1
           className="text-5xl font-bold md:text-6xl"
