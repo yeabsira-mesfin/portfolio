@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+import { motion } from "framer-motion";
 const AboutMe = () => {
   const [isVisible, setIsVisible] = useState(false);
 
@@ -44,6 +44,16 @@ const AboutMe = () => {
             Let’s connect on LinkedIn or GitHub whether to chat, collaborate, or maybe even work together. Who knows? I
             could be the person you’ve been looking for!
           </p>
+          <motion.a
+              href="/path-to-your-cv.pdf"
+              download="Your-Name-CV"
+              className="bg-[#1B4332] text-white px-6 py-2 rounded-lg shadow-lg hover:bg-[#2a9d8f] transition duration-300 "
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1, delay: 1 }}
+            >
+              Download My CV
+            </motion.a>
         </div>
       </div>
 
