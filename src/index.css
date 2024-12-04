@@ -3,16 +3,25 @@
 @tailwind utilities;
 
 /* Hide scrollbars across the entire page */
-body {
-  overflow: scroll;
-}
+
 
 /* For Webkit-based browsers (Chrome, Safari) */
 body::-webkit-scrollbar {
   display: none;
 }
 
-/* For Firefox */
 body {
   scrollbar-width: none;
+}
+h1 {
+  font-family: 'Great Vibes', cursive;
+  font-weight: normal;
+  font-size: 3rem; /* Adjust size as needed */
+  color: white;
+}
+
+p {
+  font-family: 'Roboto', sans-serif; /* Keeping the paragraph text clean */
+  font-weight: 400;
+  color: #d1d5db; /* Light gray for contrast */
 }
