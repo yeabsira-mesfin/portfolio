@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import logo from '../images/Logo.jpg'
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -11,7 +11,7 @@ const Navbar = () => {
           <div className="flex-shrink-0">
             <a href="#hero">
               <img
-                src="/your-logo.png"
+                src={logo}
                 alt="Logo"
                 className="h-8 sm:h-10"
               />
