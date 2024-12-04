@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-
+import myImage from '../images/MyPicture.png'
 const HeroSection = () => {
   return (
     <div className="h-[65vh] bg-dark-green text-white flex items-center justify-center relative overflow-hidden">
@@ -37,21 +37,29 @@ const HeroSection = () => {
 
       {/* Hero Content */}
       <div className="z-10 px-6 text-center">
+        <motion.img
+          src={myImage}
+          alt="Your Name"
+          className="mx-auto mb-6 w-40 h-40 rounded-full border-4 border-[#2a9d8f] shadow-lg"
+          initial={{ opacity: 0, scale: 0.8, y: -50 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ duration: 2, ease: "easeInOut" }}
+        />
         <motion.h1
           className="text-5xl font-bold md:text-6xl"
           initial={{ opacity: 0, scale: 0.9, y: 50 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ duration: 2, ease: "easeInOut" }}
         >
-          Welcome to My Portfolio
+          Hi, I'm Yeabsira Mesfin
         </motion.h1>
         <motion.p
-          className="mt-4 text-lg  md:text-xl"
+          className="mt-4 text-lg md:text-xl"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.8, delay: 0.5, ease: "easeInOut" }}
         >
-          Crafting Elegant Web Experiences with Modern Technologies
+          A Web Developer Specializing in React.js & Modern Technologies
         </motion.p>
       </div>
     </div>
