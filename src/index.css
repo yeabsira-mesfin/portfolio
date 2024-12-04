@@ -5,15 +5,14 @@
 body {
   scrollbar-width: none;
 }
-h1,h2,h6 {
+h1,h3,h2,h6 {
   font-family: 'Cinzel ', cursive;
   font-weight: normal;
   font-size: 3rem; 
 
 }
-
-p {
-  font-family: 'Roboto', sans-serif; 
-  font-weight: 400;
-
+a,p{
+  font-family: 'Cinzel ', cursive;
+  font-weight: normal;
 }
+
