@@ -38,7 +38,7 @@ const HeroSection = () => {
       {/* Hero Content */}
       <div className="z-10 px-6 text-center">
         <motion.div
-          className="relative p-1 mx-auto mb-8 overflow-hidden bg-white rounded-full shadow-2xl w-80 h-80"
+          className="relative w-64 h-64 p-2 mx-auto mb-8 overflow-hidden bg-white rounded-full shadow-2xl"
           initial={{ opacity: 0, scale: 0.8, y: -50 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ duration: 2, ease: "easeInOut" }}
