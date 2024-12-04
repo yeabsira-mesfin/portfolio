@@ -40,7 +40,7 @@ const AboutMe = () => {
             games!) and an avid reader of thriller novels. Oh, and I also enjoy tinkering with fun side projects when
             inspiration strikes.
           </p>
-          <p className="text-lg text-[#1B4332] leading-relaxed mt-4">
+          <p className="text-lg text-[#1B4332] leading-relaxed mt-4 mb-5">
             Let’s connect on LinkedIn or GitHub whether to chat, collaborate, or maybe even work together. Who knows? I
             could be the person you’ve been looking for!
           </p>
