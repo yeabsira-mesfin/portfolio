@@ -11,8 +11,8 @@ const AboutMe = () => {
   }, []);
 
   return (
-    <section id="about" className="py-6 px-8 bg-gray-50">
-      <div className="max-w-7xl mx-auto text-center">
+    <section id="about" className="px-8 py-6 bg-gray-50">
+      <div className="mx-auto text-center max-w-7xl">
         {/* Heading with fade-in effect */}
         <h2
           className={`text-4xl font-bold text-[#1B4332] mb-6 transition-opacity duration-1000 ${
@@ -41,21 +41,21 @@ const AboutMe = () => {
             inspiration strikes.
           </p>
           <p className="text-lg text-[#1B4332] leading-relaxed mt-4">
-            Let’s connect on LinkedIn or GitHub—whether to chat, collaborate, or maybe even work together. Who knows? I
+            Let’s connect on LinkedIn or GitHub whether to chat, collaborate, or maybe even work together. Who knows? I
             could be the person you’ve been looking for!
           </p>
         </div>
       </div>
 
       {/* Social Media Links with hover animations */}
-      <div className="flex justify-center space-x-6 mt-10">
+      <div className="flex justify-center mt-10 space-x-6">
         <a
           href="https://www.linkedin.com/in/yeabsira-mesfin-76379928a"
           target="_blank"
           rel="noopener noreferrer"
           className="text-[#1B4332] hover:text-[#2a9d8f] transition transform hover:scale-110"
         >
-          <i className="fab fa-linkedin text-4xl"></i>
+          <i className="text-4xl fab fa-linkedin"></i>
         </a>
         <a
           href="https://x.com/YeabsiraMesfin9"
@@ -63,7 +63,7 @@ const AboutMe = () => {
           rel="noopener noreferrer"
           className="text-[#1B4332] hover:text-[#2a9d8f] transition transform hover:scale-110"
         >
-          <i className="fab fa-twitter text-4xl"></i>
+          <i className="text-4xl fab fa-twitter"></i>
         </a>
         <a
           href="https://github.com/yeabsira-mesfin"
@@ -71,7 +71,7 @@ const AboutMe = () => {
           rel="noopener noreferrer"
           className="text-[#1B4332] hover:text-[#2a9d8f] transition transform hover:scale-110"
         >
-          <i className="fab fa-github text-4xl"></i>
+          <i className="text-4xl fab fa-github"></i>
         </a>
       </div>
     </section>
