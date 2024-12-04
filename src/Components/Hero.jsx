@@ -1,9 +1,10 @@
 import React from "react";
 import { motion } from "framer-motion";
-import myImage from '../images/MyPicture.png'
+import myImage from "../images/MyPicture.png";
+
 const HeroSection = () => {
   return (
-    <div className="h-[65vh] bg-dark-green text-white flex items-center justify-center relative overflow-hidden">
+    <div className="h-[70vh] bg-dark-green text-white flex items-center justify-center relative overflow-hidden mt-16">
       {/* Background Animations: Glowing Circles */}
       <motion.div
         className="absolute top-0 left-0 z-0 w-full h-full"
@@ -37,14 +38,18 @@ const HeroSection = () => {
 
       {/* Hero Content */}
       <div className="z-10 px-6 text-center">
-        <motion.img
-          src={myImage}
-          alt="Your Name"
-          className="mx-auto mb-6 w-40 h-40 rounded-full border-4 border-[#2a9d8f] shadow-lg"
+        <motion.div
+          className="relative inline-block mx-auto mb-6 w-56 h-56 rounded-lg border-8 border-gradient-to-r from-[#2a9d8f] via-[#38b2ac] to-[#43c6ac] shadow-xl overflow-hidden"
           initial={{ opacity: 0, scale: 0.8, y: -50 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ duration: 2, ease: "easeInOut" }}
-        />
+        >
+          <img
+            src={myImage}
+            alt="Your Name"
+            className="object-cover w-full h-full"
+          />
+        </motion.div>
         <motion.h1
           className="text-5xl font-bold md:text-6xl"
           initial={{ opacity: 0, scale: 0.9, y: 50 }}
