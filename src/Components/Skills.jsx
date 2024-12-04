@@ -1,5 +1,5 @@
 import { motion } from "framer-motion"; // For animations
-import { FaHtml5, FaCss3Alt, FaJs, FaReact, FaNodeJs, FaCss3 } from "react-icons/fa"; // Import icons from react-icons
+import { FaHtml5, FaCss3Alt, FaJs, FaReact, FaNodeJs, FaCss3 } from "react-icons/fa"; 
 
 const skills = [
   { name: "HTML/CSS", icon: <FaHtml5 className="text-[#F16529] h-12 w-12" /> },

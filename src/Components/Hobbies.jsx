@@ -7,7 +7,7 @@ import Hiking from '../images/Hikinggg.jpg';
 import Reading from '../images/Reading.jpeg';
 import VideoGames from '../images/VideoGames.jpg';
 
-// Hobby data
+
 const hobbies = [
   { name: "Coding", image: Code },
   { name: "Exercising", image: Exercise },
@@ -20,17 +20,17 @@ const hobbies = [
 const Hobbies = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Auto-slide every 15 seconds
+  
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % hobbies.length); // Loop the images
-    }, 3500); // 3500 ms = 3.5 seconds
+    }, 3500); 
     return () => clearInterval(interval);
   }, []);
 
   return (
     <section id="hobbies" className="bg-[#1B4332] text-white py-16 px-8 relative">
-      {/* Animated background */}
+     
       <motion.div
         className="absolute inset-0 z-0"
         key={currentIndex}

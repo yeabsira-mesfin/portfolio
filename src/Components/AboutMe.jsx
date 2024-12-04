@@ -6,14 +6,14 @@ const AboutMe = () => {
   useEffect(() => {
     const timeout = setTimeout(() => {
       setIsVisible(true);
-    }, 100); // Delay to trigger animations
+    }, 100); 
     return () => clearTimeout(timeout);
   }, []);
 
   return (
     <section id="about" className="px-8 py-6 bg-gray-50">
       <div className="mx-auto text-center max-w-7xl">
-        {/* Heading with fade-in effect */}
+      
         <h2
           className={`text-4xl font-bold text-[#1B4332] mb-6 transition-opacity duration-1000 ${
             isVisible ? "opacity-100" : "opacity-0"
@@ -22,7 +22,7 @@ const AboutMe = () => {
           About Me
         </h2>
 
-        {/* Grouped paragraphs with synchronized animation */}
+       
         <div
           className={`transform transition-all duration-1000 ${
             isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
@@ -57,7 +57,7 @@ const AboutMe = () => {
         </div>
       </div>
 
-      {/* Social Media Links with hover animations */}
+    
       <div className="flex justify-center mt-10 space-x-6">
         <a
           href="https://www.linkedin.com/in/yeabsira-mesfin-76379928a"

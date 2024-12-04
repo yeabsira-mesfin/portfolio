@@ -7,7 +7,6 @@ const Navbar = () => {
     <nav className="fixed top-0 z-50 w-full text-white shadow-lg bg-dark-green">
       <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Logo */}
           <div className="flex-shrink-0">
             <a href="#hero">
               <img
@@ -18,7 +17,7 @@ const Navbar = () => {
             </a>
           </div>
 
-          {/* Desktop Menu */}
+         
           <div className="hidden space-x-6 md:flex">
             <a
               href="#about"
@@ -52,7 +51,7 @@ const Navbar = () => {
             </a>
           </div>
 
-          {/* Mobile Menu Button */}
+        
           <div className="md:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
@@ -86,7 +85,7 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile Dropdown */}
+      
       {isOpen && (
         <div className="md:hidden bg-dark-green">
           <a

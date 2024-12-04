@@ -1,7 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
 
-// Adding global styles for scrollbars in the app (for Chrome, Safari, and Firefox)
 const GlobalStyles = () => (
   <style>
     {`
@@ -39,7 +38,7 @@ const Projects = () => {
 
   return (
     <>
-      <GlobalStyles /> {/* Apply global styles for scrollbars */}
+      <GlobalStyles /> 
       <div id="projects" className="px-8 py-16 text-white bg-dark-green">
         <h2 className="mb-5 text-4xl font-bold text-center md:text-5xl">My Projects</h2>
         <p className="py-1 mb-3 text-center">
@@ -55,7 +54,7 @@ const Projects = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: index * 0.2 }}
             >
-              {/* Embedded Preview */}
+             
               <div className="mb-6 overflow-hidden shadow-lg rounded-2xl">
                 <iframe
                   src={project.embedLink}
@@ -66,7 +65,7 @@ const Projects = () => {
                 ></iframe>
               </div>
 
-              {/* Project Info Bar without background */}
+             
               <div className="p-4 mb-4 text-center rounded-lg">
                 <h3 className="text-xl font-semibold text-white">{project.title}</h3>
                 <p className="mb-4 text-lg text-white">

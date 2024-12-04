@@ -18,29 +18,29 @@ const ScrollProgressCircle = () => {
         viewBox="0 0 100 100"
         xmlns="http://www.w3.org/2000/svg"
       >
-        {/* Static Background Circle */}
+       
         <circle
           cx="50"
           cy="50"
           r="45"
           fill="none"
-          stroke="white" /* Adjusted to hero section color */
+          stroke="white" 
           strokeWidth="5"
           className="opacity-70"
         />
 
-        {/* Smooth Progress Circle */}
+       
         <motion.circle
           cx="50"
           cy="50"
           r="45"
           fill="none"
-          stroke="#1B4332" /* Progress stroke color */
+          stroke="#1B4332" 
           strokeWidth="5"
           strokeDasharray="282.6"
           strokeDashoffset="282.6"
           style={{
-            pathLength: smoothProgress, // Use smooth progress for smooth animation
+            pathLength: smoothProgress, 
           }}
           className="transition-all ease-linear"
         />
