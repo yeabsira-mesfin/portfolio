@@ -31,9 +31,10 @@ const GlobalStyles = () => (
 const Projects = () => {
   const projectData = [
     
-    { id: 2, title: "Shop Here", embedLink: "https://shop-ease-sigma-jade.vercel.app/ " },
+   
     { id: 3, title: "Tourist Trail", embedLink: "https://tourist-trail.vercel.app/" },
     { id: 4, title: "Task Manager", embedLink: "https://project-managment-ten.vercel.app/" },
+    { id: 2, title: "Shop Here", embedLink: "https://shop-ease-sigma-jade.vercel.app/ " },
     { id: 1, title: "Home Of Games", embedLink: "https://homeofgames.vercel.app/" },
   ];
 
