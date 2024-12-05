@@ -5,13 +5,13 @@ const Contact = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent default form behavior
+    e.preventDefault(); 
     setIsSubmitted(true);
 
-    // Wait for a few seconds to show the success message before refreshing
+    
     setTimeout(() => {
-      window.location.reload(); // Refresh the page
-    }, 2000); // Adjust delay as needed
+      window.location.reload(); 
+    }, 1000); 
   };
 
   return (

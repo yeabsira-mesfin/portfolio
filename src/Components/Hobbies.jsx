@@ -23,7 +23,7 @@ const Hobbies = () => {
   
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % hobbies.length); // Loop the images
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % hobbies.length); 
     }, 3500); 
     return () => clearInterval(interval);
   }, []);
