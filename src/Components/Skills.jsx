@@ -14,11 +14,10 @@ const skills = [
 const Skills = () => {
   const controls = useAnimation();
   const [ref, inView] = useInView({
-    triggerOnce: true, // Animates only once when the section enters the viewport
-    threshold: 0.2, // Adjusts when the animation triggers (20% of the section is visible)
+    triggerOnce: true, 
+    threshold: 0.2, 
   });
 
-  // Start animation when the section comes into view
   if (inView) {
     controls.start("visible");
   }
@@ -38,7 +37,8 @@ const Skills = () => {
       id="skills"
       className="bg-white text-[#243d27] py-16 px-8 relative overflow-hidden"
     >
-      <div className="absolute inset-0 bg-gradient-to-r from-[#243d27] to-[#4CAF50] opacity-20 -z-10"></div>
+      <div className="absolute inset-0 bg-gradient-to-r from-[#243d27] to-[#4CAF50]
+       opacity-20 -z-10"></div>
       <motion.div
         ref={ref}
         initial="hidden"
@@ -59,7 +59,9 @@ const Skills = () => {
           {skills.map((skill, index) => (
             <motion.div
               key={index}
-              className="flex items-center bg-[#f0f8f8] shadow-lg rounded-xl p-6 transition-all duration-500 ease-in-out hover:scale-105 hover:shadow-2xl"
+              className="flex items-center bg-[#f0f8f8] shadow-lg
+               rounded-xl p-6 transition-all duration-500 ease-in-out hover:scale-105 
+               hover:shadow-2xl"
               variants={itemVariants}
             >
               {skill.icon}

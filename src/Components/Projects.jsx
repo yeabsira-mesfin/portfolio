@@ -39,8 +39,8 @@ const Projects = () => {
 
   const controls = useAnimation();
   const [ref, inView] = useInView({
-    triggerOnce: true, // Animates only once
-    threshold: 0.2, // Animation triggers when 20% of the section is visible
+    triggerOnce: true, 
+    threshold: 0.2, 
   });
 
   if (inView) {
