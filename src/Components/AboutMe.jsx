@@ -14,7 +14,7 @@ const AboutMe = () => {
         }
       },
       {
-        threshold: 0.3, 
+        threshold: 0.3,
       }
     );
 
@@ -65,7 +65,7 @@ const AboutMe = () => {
             enjoy tinkering with fun side projects when inspiration strikes.
           </p>
           <p className="text-lg text-[#1B4332] leading-relaxed mt-4 mb-5">
-            Let’s connect on LinkedIn or GitHub whether to chat, collaborate, or
+            Let’s connect on LinkedIn, GitHub, or Twitter, whether to chat, collaborate, or
             maybe even work together. Who knows? I could be the person you’ve been
             looking for!
           </p>
@@ -106,6 +106,15 @@ const AboutMe = () => {
           className="text-[#1B4332] hover:text-[#2a9d8f] transition transform hover:scale-110"
         >
           <i className="text-4xl fab fa-github"></i>
+        </a>
+       
+        <a
+          href="mailto:yeabsira.mesfin29@gmail.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-[#1B4332] hover:text-[#2a9d8f] transition transform hover:scale-110"
+        >
+          <i className="text-4xl fas fa-envelope"></i>
         </a>
       </div>
     </section>
