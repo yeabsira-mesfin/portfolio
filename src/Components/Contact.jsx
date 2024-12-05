@@ -1,11 +1,17 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
+
 const Contact = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent default form behavior
     setIsSubmitted(true);
+
+    // Wait for a few seconds to show the success message before refreshing
+    setTimeout(() => {
+      window.location.reload(); // Refresh the page
+    }, 2000); // Adjust delay as needed
   };
 
   return (
@@ -67,7 +73,7 @@ const Contact = () => {
 
         {isSubmitted && (
           <p className="mt-4 text-green-500">
-            Thank you! Your message has been sent successfully.
+            Thank you! Your message has been sent successfully. The page will refresh shortly.
           </p>
         )}
       </div>
