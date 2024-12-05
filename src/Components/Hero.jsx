@@ -65,7 +65,7 @@ const HeroSection = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.8, delay: 0.5, ease: "easeInOut" }}
         >
-          A Web Developer Specializing in React.js & Modern Technologies
+          A Web Developer Specializing in Front-End Technologies
         </motion.h6>
       </div>
     </div>
