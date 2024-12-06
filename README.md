@@ -1,4 +1,4 @@
-eabsira Mesfin's Portfolio
+Yeabsira Mesfin's Portfolio
 Welcome to my personal portfolio website! This project showcases my journey as a web developer, featuring my skills, projects, and experience in the tech field. The site is built with React.js and styled with Tailwind CSS, offering a modern, responsive design optimized for mobile and desktop devices.
 
 Features
