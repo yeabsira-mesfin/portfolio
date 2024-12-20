@@ -1,17 +1,34 @@
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useState, useRef } from "react";
+import emailjs from "emailjs-com";
 
 const Contact = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const formRef = useRef(); // Create a reference for the form
 
-  const handleSubmit = (e) => {
-    e.preventDefault(); 
-    setIsSubmitted(true);
+  const sendEmail = (e) => {
+    e.preventDefault();
 
-    
-    setTimeout(() => {
-      window.location.reload(); 
-    }, 1000); 
+    emailjs
+      .sendForm(
+        "service_qysizmh",
+        "template_s45s82r",
+        formRef.current, // Correctly access the form element using formRef.current
+        "ZZiHJFeALtd2IPva-"
+      )
+      .then(
+        (response) => {
+          console.log("Email sent successfully!", response);
+          // Reset the form after email is sent successfully
+          e.target.reset();
+        },
+        (error) => {
+          console.error("Error sending email:", error);
+        }
+      )
+      .catch((error) => {
+        console.error("Error sending email:", error);
+      });
   };
 
   return (
@@ -32,9 +49,9 @@ const Contact = () => {
         </p>
 
         <form
-          action="https://formspree.io/f/manyvlbb"
+          ref={formRef} // Attach the ref to the form element
           method="POST"
-          onSubmit={handleSubmit}
+          onSubmit={sendEmail}
           className="mt-6 space-y-4"
         >
           <input
