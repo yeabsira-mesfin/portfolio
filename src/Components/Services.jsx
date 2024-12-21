@@ -9,43 +9,50 @@ import UX from '../images/UX.png'
 import WD from '../images/WD.png'
 
 const servicesData = [
-  {
-    title: "Account Management",
-    img: AM,
-    description: "Ensuring seamless communication and efficient workflows.",
-  },
-  {
-    title: "Backend Development",
-    img: BE,
-    description: "Ensuring seamless communication and efficient workflows.",
-  },
-  {
-    title: "Event Tech Solutions",
-    img: EM,
-    description: "Streamlining event logistics with tech-driven solutions.",
-  },
-  {
-    title: "Frontend Development",
-    img: FE,
-    description: "Streamlining event logistics with tech-driven solutions.",
-  },
-  {
-    title: "Mobile Development",
-    img: MA,
-    description: "Building sleek and efficient mobile applications.",
-  },
-  {
-    title: "UX/UI Design",
-    img: UX,
-    description: "Crafting intuitive and visually appealing user interfaces.",
-  },
-  {
-    title: "Web Design",
-    img: WD,
-    description: "Designing stunning layouts that captivate users.",
-  },
+    {
+      title: "Account Management",
+      img: AM,
+      description:
+        "Effectively managing client accounts, fostering strong relationships, and ensuring their needs are met with customized solutions.",
+    },
+    {
+      title: "Backend Development",
+      img: BE,
+      description:
+        "Developing robust server-side systems and APIs to power seamless application functionality and data processing.",
+    },
+    {
+      title: "Event Tech Solutions",
+      img: EM,
+      description:
+        "Leveraging cutting-edge technology to streamline event planning, execution, and attendee engagement for successful outcomes.",
+    },
+    {
+      title: "Frontend Development",
+      img: FE,
+      description:
+        "Building dynamic and interactive user interfaces that deliver seamless and engaging user experiences.",
+    },
+    {
+      title: "Mobile Development",
+      img: MA,
+      description:
+        "Creating user-friendly and performant mobile applications that cater to diverse platforms and business needs.",
+    },
+    {
+      title: "UX/UI Design",
+      img: UX,
+      description:
+        "Designing intuitive, user-centered interfaces and experiences that captivate and enhance usability.",
+    },
+    {
+      title: "Web Design",
+      img: WD,
+      description:
+        "Crafting visually stunning, responsive, and functional websites that effectively communicate your brand's vision.",
+    },
+  ];
   
-];
 
 const Services = () => {
   return (
@@ -53,7 +60,7 @@ const Services = () => {
       <div className="mx-auto text-center max-w-7xl">
         <h2 className="mb-8 text-4xl font-bold">Services</h2>
         <p className="mb-12 text-lg">
-          Here’s what I specialize in—bringing your ideas to life through innovative and tailored solutions.
+          Here’s what I specialize in bringing your ideas to life through innovative and tailored solutions.
         </p>
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">

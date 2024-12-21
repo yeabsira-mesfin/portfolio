@@ -1,9 +1,10 @@
 import { motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { FaHtml5, FaCss3Alt, FaJs, FaReact, FaNodeJs } from "react-icons/fa";
+import { FaHtml5, FaCss3Alt, FaJs, FaReact, FaNodeJs,FaJava } from "react-icons/fa";
 
 const skills = [
   { name: "HTML/CSS", icon: <FaHtml5 className="text-[#F16529] h-12 w-12" /> },
+  { name: "Java", icon: <FaJava className="text-[#c25656] h-12 w-12" /> },
   { name: "JavaScript", icon: <FaJs className="text-[#F7DF1E] h-12 w-12" /> },
   { name: "React.js", icon: <FaReact className="text-[#61DBFB] h-12 w-12" /> },
   { name: "Node.js", icon: <FaNodeJs className="text-[#68A063] h-12 w-12" /> },
