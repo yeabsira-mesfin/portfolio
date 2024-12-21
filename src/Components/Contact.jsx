@@ -4,7 +4,8 @@ import emailjs from "emailjs-com";
 
 const Contact = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const formRef = useRef(); // Create a reference for the form
+  const [errorMessage, setErrorMessage] = useState(null); 
+  const formRef = useRef();
 
   const sendEmail = (e) => {
     e.preventDefault();
@@ -13,21 +14,24 @@ const Contact = () => {
       .sendForm(
         "service_qysizmh",
         "template_s45s82r",
-        formRef.current, // Correctly access the form element using formRef.current
+        formRef.current,
         "ZZiHJFeALtd2IPva-"
       )
       .then(
         (response) => {
           console.log("Email sent successfully!", response);
-          // Reset the form after email is sent successfully
-          e.target.reset();
+          setIsSubmitted(true); // Show success message
+          setErrorMessage(null); // Clear error state
+          e.target.reset(); // Reset the form
         },
         (error) => {
           console.error("Error sending email:", error);
+          setErrorMessage("Something went wrong. Please try again later."); 
         }
       )
       .catch((error) => {
-        console.error("Error sending email:", error);
+        console.error("Error:", error);
+        setErrorMessage("An unexpected error occurred. Please try again."); 
       });
   };
 
@@ -49,27 +53,27 @@ const Contact = () => {
         </p>
 
         <form
-          ref={formRef} // Attach the ref to the form element
+          ref={formRef}
           method="POST"
           onSubmit={sendEmail}
           className="mt-6 space-y-4"
         >
           <input
             type="text"
-            name="name"
+            name="name" 
             placeholder="Your Name"
             className="w-full px-4 py-2 rounded-lg bg-[#f0f0f0] border border-[#1B4332] focus:outline-none"
             required
           />
           <input
             type="email"
-            name="email"
+            name="from_email" 
             placeholder="Your Email"
             className="w-full px-4 py-2 rounded-lg bg-[#f0f0f0] border border-[#1B4332] focus:outline-none"
             required
           />
           <textarea
-            name="message"
+            name="message" 
             placeholder="Your Message"
             className="w-full px-4 py-2 rounded-lg bg-[#f0f0f0] border border-[#1B4332] focus:outline-none"
             required
@@ -90,7 +94,13 @@ const Contact = () => {
 
         {isSubmitted && (
           <p className="mt-4 text-green-500">
-            Thank you! Your message has been sent successfully. The page will refresh shortly.
+            Thank you! Your message has been sent successfully.
+          </p>
+        )}
+
+        {errorMessage && (
+          <p className="mt-4 text-red-500">
+            {errorMessage}
           </p>
         )}
       </div>
