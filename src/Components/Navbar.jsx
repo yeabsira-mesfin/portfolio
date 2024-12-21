@@ -35,6 +35,13 @@ const Navbar = () => {
               href="#skills"
               className="transition duration-300 hover:text-gray-300"
             >
+              Services
+            </a>
+            
+            <a
+              href="#skills"
+              className="transition duration-300 hover:text-gray-300"
+            >
               Skills
             </a>
             <a
@@ -101,6 +108,13 @@ const Navbar = () => {
             onClick={() => setIsOpen(false)}
           >
             Projects
+          </a>
+          <a
+            href="#services"
+            className="block px-4 py-2 hover:bg-[#2a9d8f] hover:text-white"
+            onClick={() => setIsOpen(false)}
+          >
+            Services
           </a>
           <a
             href="#skills"
