@@ -1,37 +1,50 @@
 import React from "react";
 import { motion } from "framer-motion";
+import AM from '../images/AM.png'
+import EM from '../images/EM.png'
+import BE from '../images/BE.png'
+import FE from '../images/FE.png'
+import MA from '../images/MA.png'
+import UX from '../images/UX.png'
+import WD from '../images/WD.png'
 
 const servicesData = [
   {
     title: "Account Management",
-    img: "account-management.jpg",
+    img: AM,
     description: "Ensuring seamless communication and efficient workflows.",
   },
   {
-    title: "Event Management",
-    img: "event-management.jpg",
+    title: "Backend Development",
+    img: BE,
+    description: "Ensuring seamless communication and efficient workflows.",
+  },
+  {
+    title: "Event Tech Solutions",
+    img: EM,
+    description: "Streamlining event logistics with tech-driven solutions.",
+  },
+  {
+    title: "Frontend Development",
+    img: FE,
     description: "Streamlining event logistics with tech-driven solutions.",
   },
   {
     title: "Mobile Development",
-    img: "mobile-development.jpg",
+    img: MA,
     description: "Building sleek and efficient mobile applications.",
   },
   {
     title: "UX/UI Design",
-    img: "ux-ui.jpg",
+    img: UX,
     description: "Crafting intuitive and visually appealing user interfaces.",
   },
   {
     title: "Web Design",
-    img: "web-design.jpg",
+    img: WD,
     description: "Designing stunning layouts that captivate users.",
   },
-  {
-    title: "Web Development",
-    img: "web-development.jpg",
-    description: "Creating responsive, modern, and user-friendly websites.",
-  },
+  
 ];
 
 const Services = () => {
@@ -53,7 +66,7 @@ const Services = () => {
               transition={{ duration: 0.6, delay: index * 0.2 }}
             >
               <img
-                src={`/images/${service.img}`}
+                src={service.img}
                 alt={service.title}
                 className="object-cover w-full h-48"
               />
