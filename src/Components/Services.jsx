@@ -2,60 +2,65 @@ import React from "react";
 import { motion } from "framer-motion";
 
 const servicesData = [
-  { name: "Web Development", img: "web-development.jpg" },
-  { name: "Event Management", img: "event-management.jpg" },
-  { name: "Account Management", img: "account-management.jpg" },
-  { name: "Mobile Development", img: "mobile-development.jpg" },
-  { name: "UX/UI Design", img: "ux-ui.jpg" },
-  { name: "Web Design", img: "web-design.jpg" },
+  {
+    title: "Account Management",
+    img: "account-management.jpg",
+    description: "Ensuring seamless communication and efficient workflows.",
+  },
+  {
+    title: "Event Management",
+    img: "event-management.jpg",
+    description: "Streamlining event logistics with tech-driven solutions.",
+  },
+  {
+    title: "Mobile Development",
+    img: "mobile-development.jpg",
+    description: "Building sleek and efficient mobile applications.",
+  },
+  {
+    title: "UX/UI Design",
+    img: "ux-ui.jpg",
+    description: "Crafting intuitive and visually appealing user interfaces.",
+  },
+  {
+    title: "Web Design",
+    img: "web-design.jpg",
+    description: "Designing stunning layouts that captivate users.",
+  },
+  {
+    title: "Web Development",
+    img: "web-development.jpg",
+    description: "Creating responsive, modern, and user-friendly websites.",
+  },
 ];
 
 const Services = () => {
   return (
-    <section
-      id="services"
-      className="py-16 px-8 bg-gray-50 text-[#1B4332] relative"
-    >
-      <div className="absolute inset-0 bg-gradient-to-r from-[#1B4332] to-[#4CAF50] opacity-10 -z-10"></div>
+    <section id="services" className="py-16 px-8 bg-gray-50 text-[#1B4332]">
       <div className="mx-auto text-center max-w-7xl">
-        <motion.h2
-          className="mb-8 text-4xl font-bold"
-          initial={{ opacity: 0, y: -50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}
-        >
-          Services
-        </motion.h2>
-        <motion.p
-          className="mb-12 text-lg"
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.3 }}
-        >
-          I offer a range of professional services to help bring your vision to
-          life. Explore below:
-        </motion.p>
+        <h2 className="mb-8 text-4xl font-bold">Services</h2>
+        <p className="mb-12 text-lg">
+          Here’s what I specialize in—bringing your ideas to life through innovative and tailored solutions.
+        </p>
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {servicesData.map((service, index) => (
             <motion.div
-              key={service.name}
-              className="relative p-8 overflow-hidden transition bg-white rounded-lg shadow-lg hover:shadow-xl"
+              key={service.title}
+              className="overflow-hidden transition-transform transform bg-white rounded-lg shadow-lg hover:shadow-xl hover:scale-105"
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: index * 0.2 }}
             >
-              <div
-                className="absolute inset-0 bg-center bg-cover opacity-20"
-                style={{
-                  backgroundImage: `url(/images/${service.img})`,
-                }}
-              ></div>
-              <h3 className="relative text-xl font-bold">{service.name}</h3>
-              <p className="relative mt-4 text-sm">
-                Professional {service.name.toLowerCase()} services designed to
-                deliver excellence.
-              </p>
+              <img
+                src={`/images/${service.img}`}
+                alt={service.title}
+                className="object-cover w-full h-48"
+              />
+              <div className="p-6">
+                <h3 className="mb-2 text-2xl font-semibold">{service.title}</h3>
+                <p className="text-gray-700">{service.description}</p>
+              </div>
             </motion.div>
           ))}
         </div>
