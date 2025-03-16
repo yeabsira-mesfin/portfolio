@@ -55,7 +55,7 @@ const AboutMe = () => {
   Currently, I work as a web developer, where I build and optimize web applications that enhance user engagement and streamline workflows. I thrive on problem-solving, collaboration, and continuously refining my skills to stay ahead in the ever-evolving tech landscape. Whether it’s developing dynamic event tech solutions or crafting intuitive UI/UX designs, I always aim to deliver high-quality work that exceeds expectations.
 </p>
 <p className="text-lg text-[#1B4332] leading-relaxed mt-4 mb-5">
-Let’s connect on <span className="font-medium">LinkedIn, GitHub, X (Twitter), or Gmail</span> whether to chat, collaborate, or maybe even work together. 
+Let’s connect on <span className="font-medium">LinkedIn, X (Twitter), GitHub or Gmail</span> whether to chat, collaborate, or maybe even work together. 
 Who knows? I could be the person you’ve been looking for!
 </p>
 
