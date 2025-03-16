@@ -16,29 +16,24 @@ const servicesData = [
         "Effectively managing client accounts, fostering strong relationships, and ensuring their needs are met with customized solutions.",
     },
     {
-      title: "Backend Development",
-      img: BE,
-      description:
-        "Developing robust server-side systems and APIs to power seamless application functionality and data processing.",
-    },
+      "title": "Data Entry & Management",
+      "img": FE,
+      "description": "Accurately inputting, organizing, and managing data to ensure efficiency, consistency, and easy accessibility for businesses."
+    }
+, 
+   
     {
-      title: "Event Tech Solutions",
-      img: EM,
-      description:
-        "Leveraging cutting-edge technology to streamline event planning, execution, and attendee engagement for successful outcomes.",
-    },
+      "title": "Event Tech Solutions",
+      "img": EM,
+      "description": "Utilizing Cvent and SpotMe to streamline event planning, execution, and attendee engagement through innovative technology solutions."
+    }
+,    
     {
-      title: "Frontend Development",
-      img: FE,
-      description:
-        "Building dynamic and interactive user interfaces that deliver seamless and engaging user experiences.",
+      "title": "Full Stack Development",
+      "img": BE,
+      "description": "Designing and developing end-to-end web applications with intuitive user interfaces, scalable backend systems, and seamless API integration."
     },
-    {
-      title: "Mobile Development",
-      img: MA,
-      description:
-        "Creating user-friendly and performant mobile applications that cater to diverse platforms and business needs.",
-    },
+     
     {
       title: "UX/UI Design",
       img: UX,
