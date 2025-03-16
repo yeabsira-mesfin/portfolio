@@ -61,7 +61,7 @@ const Skills = () => {
             <motion.div
               key={index}
               className="flex items-center bg-[#f0f8f8] shadow-lg
-               rounded-xl p-6 transition-all duration-500 ease-in-out hover:scale-105 
+               rounded-xl p-6 w-44 transition-all duration-500 ease-in-out hover:scale-105 
                hover:shadow-2xl"
               variants={itemVariants}
             >
