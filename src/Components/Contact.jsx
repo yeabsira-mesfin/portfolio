@@ -4,11 +4,21 @@ import emailjs from "emailjs-com";
 
 const Contact = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(null); 
+  const [errorMessage, setErrorMessage] = useState(null);
   const formRef = useRef();
+
+  const validateEmail = (email) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email); 
+  };
 
   const sendEmail = (e) => {
     e.preventDefault();
+    const emailInput = e.target.from_email.value;
+
+    if (!validateEmail(emailInput)) {
+      setErrorMessage("Please enter a valid email address (e.g., example@mail.com).");
+      return;
+    }
 
     emailjs
       .sendForm(
@@ -20,18 +30,21 @@ const Contact = () => {
       .then(
         (response) => {
           console.log("Email sent successfully!", response);
-          setIsSubmitted(true); // Show success message
-          setErrorMessage(null); // Clear error state
-          e.target.reset(); // Reset the form
+          setIsSubmitted(true);
+          setErrorMessage(null);
+          e.target.reset();
+
+          // Auto-refresh success message after 1 seconds
+          setTimeout(() => setIsSubmitted(false), 1000);
         },
         (error) => {
           console.error("Error sending email:", error);
-          setErrorMessage("Something went wrong. Please try again later."); 
+          setErrorMessage("Something went wrong. Please try again later.");
         }
       )
       .catch((error) => {
         console.error("Error:", error);
-        setErrorMessage("An unexpected error occurred. Please try again."); 
+        setErrorMessage("An unexpected error occurred. Please try again.");
       });
   };
 
@@ -60,22 +73,22 @@ const Contact = () => {
         >
           <input
             type="text"
-            name="name" 
+            name="name"
             placeholder="Your Name"
-            className="w-full px-4 py-2 rounded-lg bg-[#f0f0f0] border border-[#1B4332] focus:outline-none"
+            className="w-full px-4 py-2 text-[#fff] placeholder-white rounded-lg bg-[#1B4332] border border-[#1B4332] focus:outline-none"
             required
           />
           <input
             type="email"
-            name="from_email" 
+            name="from_email"
             placeholder="Your Email"
-            className="w-full px-4 py-2 rounded-lg bg-[#f0f0f0] border border-[#1B4332] focus:outline-none"
+            className="w-full px-4 py-2 text-[#fff] placeholder-white rounded-lg bg-[#1B4332] border border-[#1B4332] focus:outline-none"
             required
           />
           <textarea
-            name="message" 
+            name="message"
             placeholder="Your Message"
-            className="w-full px-4 py-2 rounded-lg bg-[#f0f0f0] border border-[#1B4332] focus:outline-none"
+            className="w-full px-4 py-2 text-[#fff] placeholder-white rounded-lg bg-[#1B4332] border border-[#1B4332] focus:outline-none"
             required
           ></textarea>
 
