@@ -104,7 +104,7 @@ const Projects = () => {
               <div className="mb-6 overflow-hidden shadow-lg rounded-2xl">
                 <iframe
                   src={project.embedLink}
-                  className="w-full h-48 transition-all duration-300 ease-in-out transform rounded-2xl hover:scale-110"
+                  className="w-full h-64 transition-all duration-300 ease-in-out transform sm:h-72 md:h-80 rounded-2xl hover:scale-110"
                   title={project.title}
                   scrolling="no"
                   style={{
