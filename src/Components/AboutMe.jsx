@@ -48,16 +48,12 @@ const AboutMe = () => {
           animate={isVisible ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 1, delay: 0.2 }}
         >
+          <p className="text-lg text-[#1B4332] leading-relaxed mb-3">
+            I’m an entry-level software engineer with experience in building web applications and a foundation in cybersecurity. I enjoy working on projects that combine clean user interfaces with reliable, secure functionality.
+          </p>
           <p className="text-lg text-[#1B4332] leading-relaxed">
-  Hi, I’m Yeabsira! I’m a web developer with a passion for turning ideas into interactive, user-friendly experiences. Whether it’s crafting sleek frontend interfaces or ensuring seamless backend functionality, I love building projects that make an impact. My expertise lies in technologies like <span className="font-medium">React.js, JavaScript, Node.js, HTML/CSS, TypeScript, and more</span>, allowing me to bring designs to life with clean, efficient code.
-</p>
-<p className="text-lg text-[#1B4332] leading-relaxed mt-4">
-  Currently, I work as a web developer, where I build and optimize web applications that enhance user engagement and streamline workflows. I thrive on problem-solving, collaboration, and continuously refining my skills to stay ahead in the ever-evolving tech landscape. Whether it’s developing dynamic event tech solutions or crafting intuitive UI/UX designs, I always aim to deliver high-quality work that exceeds expectations.
-</p>
-<p className="text-lg text-[#1B4332] leading-relaxed mt-4 mb-5">
-Let’s connect on <span className="font-medium">LinkedIn, X (Twitter), GitHub or Gmail</span> whether to chat, collaborate, or maybe even work together. 
-Who knows? I could be the person you’ve been looking for!
-</p>
+            My background includes developing full-stack applications, collaborating with clients and teams, and organizing technical data into clear, usable solutions. I’m currently pursuing an M.S. in Cybersecurity and am interested in roles where I can grow as an engineer while contributing to secure, scalable systems.
+          </p>
 
           <motion.a
             href={CV}

@@ -4,10 +4,11 @@ import myImage from "../images/MyPicture.png";
 
 const HeroSection = () => {
   return (
-    <div className="h-[75vh] bg-dark-green text-white flex items-center justify-center relative overflow-hidden mt-16">
+    <section className="relative flex items-center justify-center min-h-screen pt-24 pb-16 overflow-hidden text-white bg-dark-green">
+      
       {/* Background Animations */}
       <motion.div
-        className="absolute top-0 left-0 z-0 w-full h-full"
+        className="absolute inset-0 z-0"
         initial={{ opacity: 0 }}
         animate={{ opacity: 0.15 }}
         transition={{ duration: 3, ease: "easeInOut" }}
@@ -17,16 +18,15 @@ const HeroSection = () => {
             key={index}
             className="absolute w-32 h-32 bg-white rounded-full opacity-20"
             style={{
-              top: `${Math.random() * 100}vh`,
-              left: `${Math.random() * 100}vw`,
-              transform: "translate(-50%, -50%)",
+              top: `${Math.random() * 100}%`,
+              left: `${Math.random() * 100}%`,
             }}
             animate={{
-              y: [0, Math.random() * 100, 0],
-              x: [0, Math.random() * 100, 0],
+              y: [0, 80, 0],
+              x: [0, 80, 0],
             }}
             transition={{
-              duration: Math.random() * 4 + 2,
+              duration: 6,
               repeat: Infinity,
               repeatType: "reverse",
               ease: "easeInOut",
@@ -36,39 +36,72 @@ const HeroSection = () => {
       </motion.div>
 
       {/* Hero Content */}
-      <div className="z-10 px-6 text-center">
+      <div className="relative z-10 w-full max-w-4xl px-6 text-center">
+        
+        {/* Profile Image */}
         <motion.div
-          className="relative w-64 h-64 p-2 mx-auto mb-8 overflow-hidden bg-white rounded-full shadow-2xl"
-          initial={{ opacity: 0, scale: 0.8, y: -50 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          transition={{ duration: 2, ease: "easeInOut" }}
+          className="w-48 p-2 mx-auto mb-8 bg-white rounded-full shadow-2xl sm:w-56 md:w-64 aspect-square"
+          initial={{ opacity: 0, y: -30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.2, ease: "easeOut" }}
         >
-          <div className="relative w-full h-full overflow-hidden rounded-full">
-            <img
-              src={myImage}
-              alt="Your Name"
-              className="object-cover w-full h-full"
-            />
-          </div>
+          <img
+            src={myImage}
+            alt="Profile"
+            className="object-cover w-full h-full rounded-full"
+          />
         </motion.div>
+
+        {/* Title */}
         <motion.h1
-          className="text-5xl font-bold md:text-6xl"
-          initial={{ opacity: 0, scale: 0.9, y: 50 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          transition={{ duration: 2, ease: "easeInOut" }}
+          className="
+            font-bold 
+            text-[clamp(2.2rem,5vw,3.75rem)]
+            leading-tight
+            tracking-tight
+          "
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
         >
-          Hi, I'm Yeabsira Mesfin
+          Entry-Level Software Engineer
         </motion.h1>
-        <motion.h6
-          className="mt-4 text-lg md:text-xl"
+
+        {/* Subtitle */}
+        <motion.h2
+          className="
+            mt-4 
+            text-[clamp(1.25rem,3vw,1.75rem)]
+            font-semibold
+            text-[#d2f5e3]
+          "
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.8, delay: 0.5, ease: "easeInOut" }}
+          transition={{ duration: 1, delay: 0.15 }}
         >
-          A Web Developer Specializing in Front-End Technologies
-        </motion.h6>
+          Web Development & Cybersecurity Foundations
+        </motion.h2>
+
+        {/* Description */}
+        <motion.p
+          className="
+            mt-4 
+            text-base sm:text-lg 
+            text-[#c7eedc]
+            max-w-2xl 
+            mx-auto
+          "
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.3 }}
+        >
+          Focused on secure, user-friendly applications and practical security analysis.
+        </motion.p>
+
+        {/* CTA Buttons (optional) */}
+        {/* Add buttons here if you want */}
       </div>
-    </div>
+    </section>
   );
 };
 

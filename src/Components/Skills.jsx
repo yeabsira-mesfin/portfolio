@@ -1,6 +1,7 @@
 import { motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { FaHtml5, FaCss3Alt, FaJs, FaReact, FaNodeJs,FaJava } from "react-icons/fa";
+import { FaShieldAlt, FaLock, FaChartBar, FaBug, FaTachometerAlt } from "react-icons/fa";
 
 const skills = [
   { name: "HTML/CSS", icon: <FaHtml5 className="text-[#F16529] h-12 w-12" /> },
@@ -10,6 +11,14 @@ const skills = [
   { name: "Node.js", icon: <FaNodeJs className="text-[#68A063] h-12 w-12" /> },
   { name: "Tailwind CSS", icon: <FaCss3Alt className="text-[#38B2AC] h-12 w-12" /> },
   { name: "TypeScript", icon: <FaCss3Alt className="text-[#007ACC] h-12 w-12" /> },
+];
+
+const cybersecuritySkills = [
+  { name: "Network Security Fundamentals", icon: <FaShieldAlt className="text-[#4CAF50] h-12 w-12" /> },
+  { name: "Secure Authentication Concepts", icon: <FaLock className="text-[#1B4332] h-12 w-12" /> },
+  { name: "Security Data Analysis", icon: <FaChartBar className="text-[#007ACC] h-12 w-12" /> },
+  { name: "OWASP Top 10 Awareness", icon: <FaBug className="text-[#c25656] h-12 w-12" /> },
+  { name: "SIEM Exposure", icon: <FaTachometerAlt className="text-[#243d27] h-12 w-12" /> },
 ];
 
 const Skills = () => {
@@ -60,9 +69,30 @@ const Skills = () => {
           {skills.map((skill, index) => (
             <motion.div
               key={index}
-              className="flex items-center bg-[#f0f8f8] shadow-lg
-               rounded-xl p-6 w-44 transition-all duration-500 ease-in-out hover:scale-105 
-               hover:shadow-2xl"
+              className="flex items-center bg-[#f0f8f8] shadow-lg rounded-xl p-6 w-44 transition-all duration-500 ease-in-out hover:scale-105 hover:shadow-2xl"
+              variants={itemVariants}
+            >
+              {skill.icon}
+              <span className="ml-4 text-lg text-[#243d27] font-semibold">
+                {skill.name}
+              </span>
+            </motion.div>
+          ))}
+        </motion.div>
+        <motion.h3
+          className="text-2xl font-bold text-white mt-12"
+          variants={itemVariants}
+        >
+          Cybersecurity Foundations
+        </motion.h3>
+        <motion.div
+          className="flex flex-wrap justify-center gap-10 mt-8"
+          variants={containerVariants}
+        >
+          {cybersecuritySkills.map((skill, index) => (
+            <motion.div
+              key={index}
+              className="flex items-center bg-[#f0f8f8] shadow-lg rounded-xl p-6 w-56 transition-all duration-500 ease-in-out hover:scale-105 hover:shadow-2xl"
               variants={itemVariants}
             >
               {skill.icon}
