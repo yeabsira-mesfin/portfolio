@@ -1,24 +1,34 @@
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useState, useRef } from "react";
-import emailjs from "emailjs-com";
+import emailjs from "@emailjs/browser";
 
 const Contact = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
-  const formRef = useRef();
+  const [isSending, setIsSending] = useState(false);
+  const formRef = useRef(null);
 
-  const validateEmail = (email) => {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email); 
-  };
+  const validateEmail = (email) =>
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
   const sendEmail = (e) => {
     e.preventDefault();
-    const emailInput = e.target.from_email.value;
+    if (isSending) return;
+
+    const form = e.currentTarget;
+    const emailInput = form.reply_to.value;
+
+    setErrorMessage(null);
+    setIsSubmitted(false);
 
     if (!validateEmail(emailInput)) {
-      setErrorMessage("Please enter a valid email address (e.g., example@mail.com).");
+      setErrorMessage(
+        "Please enter a valid email address (e.g., example@mail.com)."
+      );
       return;
     }
+
+    setIsSending(true);
 
     emailjs
       .sendForm(
@@ -27,95 +37,117 @@ const Contact = () => {
         formRef.current,
         "ZZiHJFeALtd2IPva-"
       )
-      .then(
-        (response) => {
-          console.log("Email sent successfully!", response);
-          setIsSubmitted(true);
-          setErrorMessage(null);
-          e.target.reset();
-
-          // Auto-refresh success message after 1 seconds
-          setTimeout(() => setIsSubmitted(false), 1000);
-        },
-        (error) => {
-          console.error("Error sending email:", error);
-          setErrorMessage("Something went wrong. Please try again later.");
-        }
-      )
+      .then(() => {
+        setIsSubmitted(true);
+        form.reset();
+        setTimeout(() => setIsSubmitted(false), 3000);
+      })
       .catch((error) => {
-        console.error("Error:", error);
-        setErrorMessage("An unexpected error occurred. Please try again.");
-      });
+        console.error("EmailJS Error:", error);
+        setErrorMessage(
+          error?.text || "Something went wrong. Please try again later."
+        );
+      })
+      .finally(() => setIsSending(false));
   };
+
+  const fieldClass =
+    "w-full px-4 py-3 rounded-lg border border-[#1B4332] bg-[#1B4332] " +
+    "text-white placeholder-white focus:bg-[#234f3b] focus:outline-none " +
+    "focus:ring-2 focus:ring-[#2a9d8f] focus:border-[#2a9d8f] transition duration-200";
 
   return (
     <section id="contact" className="bg-white text-[#1B4332] py-16 px-8 relative">
-      <div className="absolute inset-0 bg-gradient-to-r from-[#1B4332] to-[#4CAF50] opacity-10 -z-10"></div>
+      <div className="absolute inset-0 bg-gradient-to-r from-[#1B4332] to-[#4CAF50] opacity-10 -z-10" />
 
       <div className="max-w-5xl mx-auto space-y-4 text-center">
         <motion.h2
-          className="text-3xl font-bold text-[#1B4332]"
-          initial={{ opacity: 0, y: 50 }}
+          className="text-3xl font-bold"
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}
+          transition={{ duration: 0.6 }}
         >
           Contact
         </motion.h2>
+
         <p className="text-lg">
           Feel free to reach out to me for collaborations or just to say hi!
         </p>
 
         <form
           ref={formRef}
-          method="POST"
           onSubmit={sendEmail}
           className="mt-6 space-y-4"
         >
           <input
             type="text"
-            name="name"
+            name="from_name"
             placeholder="Your Name"
-            className="w-full px-4 py-2 text-[#fff] placeholder-white rounded-lg bg-[#1B4332] border border-[#1B4332] focus:outline-none"
+            className={fieldClass}
             required
           />
+
           <input
             type="email"
-            name="from_email"
+            name="reply_to"
             placeholder="Your Email"
-            className="w-full px-4 py-2 text-[#fff] placeholder-white rounded-lg bg-[#1B4332] border border-[#1B4332] focus:outline-none"
+            className={fieldClass}
             required
           />
+
           <textarea
             name="message"
             placeholder="Your Message"
-            className="w-full px-4 py-2 text-[#fff] placeholder-white rounded-lg bg-[#1B4332] border border-[#1B4332] focus:outline-none"
+            className={`${fieldClass} min-h-[140px] resize-none`}
             required
-          ></textarea>
+          />
 
-          <div className="flex justify-center gap-4 mt-6">
+          <div className="flex justify-center mt-6">
             <motion.button
               type="submit"
-              className="bg-[#1B4332] text-white px-6 py-2 rounded-lg shadow-lg hover:bg-[#2a9d8f] transition duration-300"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 0.5 }}
+              disabled={isSending}
+              whileTap={{ scale: 0.97 }}
+              className={`px-6 py-2 rounded-lg shadow-lg text-white transition duration-300 ${
+                isSending
+                  ? "bg-gray-500 cursor-not-allowed"
+                  : "bg-[#1B4332] hover:bg-[#2a9d8f]"
+              }`}
             >
-              Send Message
+              {isSending ? "Sending..." : "Send Message"}
             </motion.button>
           </div>
         </form>
 
-        {isSubmitted && (
-          <p className="mt-4 text-green-500">
-            Thank you! Your message has been sent successfully.
-          </p>
-        )}
+        {/* Success / Error message */}
+        <div className="flex justify-center mt-6">
+          <AnimatePresence mode="wait">
+            {isSubmitted && (
+              <motion.div
+                key="success"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 10 }}
+                transition={{ duration: 0.25 }}
+                className="px-4 py-2 text-green-700 bg-green-100 border border-green-200 rounded-lg"
+              >
+                ✅ Message sent successfully!
+              </motion.div>
+            )}
 
-        {errorMessage && (
-          <p className="mt-4 text-red-500">
-            {errorMessage}
-          </p>
-        )}
+            {errorMessage && (
+              <motion.div
+                key="error"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 10 }}
+                transition={{ duration: 0.25 }}
+                className="px-4 py-2 text-red-700 bg-red-100 border border-red-200 rounded-lg"
+              >
+                ⚠️ {errorMessage}
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
       </div>
     </section>
   );
