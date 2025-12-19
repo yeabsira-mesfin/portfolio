@@ -32,7 +32,7 @@ const Navbar = () => {
               Projects
             </a>
             <a
-              href="#skills"
+              href="#services"
               className="transition duration-300 hover:text-gray-300"
             >
               Services
