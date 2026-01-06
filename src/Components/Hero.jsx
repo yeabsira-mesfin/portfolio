@@ -64,7 +64,7 @@ const HeroSection = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
         >
-          Entry-Level Software Engineer
+          Software Engineer
         </motion.h1>
 
         {/* Subtitle */}
@@ -83,7 +83,7 @@ const HeroSection = () => {
         </motion.h2>
 
         {/* Description */}
-        <motion.p
+        {/* <motion.p
           className="
             mt-4 
             text-base sm:text-lg 
@@ -96,7 +96,7 @@ const HeroSection = () => {
           transition={{ duration: 1, delay: 0.3 }}
         >
           Focused on secure, user-friendly applications and practical security analysis.
-        </motion.p>
+        </motion.p> */}
 
         {/* CTA Buttons (optional) */}
         {/* Add buttons here if you want */}

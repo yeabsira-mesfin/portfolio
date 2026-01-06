@@ -22,9 +22,9 @@ const highlightsData = [
     tag: "Web Development",
   },
   {
-    title: "Secure Web Application Design (Entry-Level)",
+    title: "Secure Web Application Design",
     img: WD,
-    description: "Applying secure coding basics—input validation, auth fundamentals, and OWASP Top 10 awareness.",
+    description: "Applying secure coding basics input validation, auth fundamentals, and OWASP Top 10 awareness.",
     tag: "Cybersecurity",
   },
   {
@@ -85,7 +85,7 @@ const Services = () => {
       <div className="mx-auto text-center max-w-7xl">
         <h2 className="mb-4 text-4xl font-bold">Services</h2>
         <p className="mb-12 text-lg text-[#1B4332]/80">
-          Areas where I can contribute as an entry-level engineer,web development, cybersecurity foundations, and troubleshooting.
+          Areas where I can contribute as a software engineer, web development, cybersecurity foundations, and troubleshooting.
         </p>
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">

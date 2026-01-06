@@ -59,8 +59,8 @@ const AboutMe = () => {
           animate={isVisible ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.1 }}
         >
-          Entry-level Software Engineer with experience in customer-facing support, web development,
-          and entry-level cybersecurity foundations.
+          Software Engineer with experience in customer-facing support, web development,
+          and cybersecurity foundations.
         </motion.p>
 
         <motion.div
@@ -87,7 +87,7 @@ const AboutMe = () => {
     </p>
 
     <p>
-      Entry-level Software Engineer with strong experience in{" "}
+     Software Engineer with strong experience in{" "}
       <span className="font-semibold text-[#1B4332]">
         web development and customer-facing applications
       </span>.
@@ -170,11 +170,11 @@ const AboutMe = () => {
             transition={{ duration: 0.7, delay: 0.05 }}
             className="p-6 bg-white border border-gray-100 shadow-lg lg:col-span-2 rounded-2xl"
           >
-            <h3 className="text-xl font-bold text-[#1B4332]">My Story</h3>
+            {/* <h3 className="text-xl font-bold text-[#1B4332]">My Story</h3> */}
 
             <div className="mt-4 space-y-4 text-[#1B4332]/80 leading-relaxed">
               <p>
-                I’m an entry-level software engineer with experience building and supporting web
+                I’m a software engineer with experience building and supporting web
                 applications in customer-facing environments. I enjoy working on problems that
                 require careful troubleshooting, clear communication, and reliable system behavior.
               </p>
@@ -182,7 +182,7 @@ const AboutMe = () => {
               <p>
                 Alongside web development, I’m building an{" "}
                 <span className="font-semibold text-[#1B4332]">
-                  entry-level cybersecurity foundation
+                  cybersecurity foundation
                 </span>{" "}
                 focused on secure coding practices, authentication concepts, and awareness of
                 common web vulnerabilities.
