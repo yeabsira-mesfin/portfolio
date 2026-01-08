@@ -108,7 +108,7 @@ const AboutMe = () => {
       download="Yeabsira_Mesfin_Resume"
       className="inline-flex items-center justify-center rounded-xl bg-[#1B4332] text-white px-5 py-3 font-semibold shadow-md hover:bg-[#2a9d8f] transition"
     >
-      Download Resume (PDF)
+      Download Resume 
     </a>
 
     <a
