@@ -57,7 +57,7 @@ const cloudSupportSkills = [
   { name: "Networking (HTTP/DNS/TCP/IP)", icon: <FaNetworkWired className="text-[#4CAF50] h-12 w-12" /> },
   { name: "Linux CLI (Foundations)", icon: <SiLinux className="text-[#1B4332] h-12 w-12" /> },
   { name: "Troubleshooting & RCA", icon: <FaTools className="text-[#243d27] h-12 w-12" /> },
-  { name: "Logging & Monitoring (Basics)", icon: <FaTachometerAlt className="text-[#243d27] h-12 w-12" /> },
+  { name: "Logging & Monitoring", icon: <FaTachometerAlt className="text-[#243d27] h-12 w-12" /> },
   { name: "API Testing (Postman)", icon: <SiPostman className="text-[#FF6C37] h-12 w-12" /> },
 ];
 
@@ -65,7 +65,7 @@ const cybersecuritySkills = [
   { name: "Network Security Fundamentals", icon: <FaShieldAlt className="text-[#4CAF50] h-12 w-12" /> },
   { name: "Secure Authentication", icon: <FaLock className="text-[#1B4332] h-12 w-12" /> },
   { name: "OWASP Top 10 Awareness", icon: <FaBug className="text-[#c25656] h-12 w-12" /> },
-  { name: "SIEM Exposure (Basics)", icon: <FaTachometerAlt className="text-[#243d27] h-12 w-12" /> },
+  { name: "SIEM Exposure", icon: <FaTachometerAlt className="text-[#243d27] h-12 w-12" /> },
 ];
 
 const Skills = () => {
