@@ -180,7 +180,7 @@ const AboutMe = () => {
               </p>
 
               <p>
-                Alongside web development, I’m building an{" "}
+                Alongside web development, I’m building a{" "}
                 <span className="font-semibold text-[#1B4332]">
                   cybersecurity foundation
                 </span>{" "}
