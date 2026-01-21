@@ -160,7 +160,8 @@ const Skills = () => {
   );
 
   return (
-    <section id="skills" className="relative overflow-hidden bg-[#0b1f12] py-16 px-6 sm:px-10">
+    <section id="skills" className="relative px-6 py-16 overflow-hidden bg-dark-green sm:px-10">
+
       {/* background glow */}
       <div className="absolute inset-0 pointer-events-none opacity-35">
         <div className="absolute rounded-full -top-24 -left-24 h-80 w-80 bg-emerald-500/30 blur-3xl" />
