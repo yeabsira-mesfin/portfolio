@@ -8,7 +8,7 @@ import Services from './Components/Services';
 import Skills from './Components/Skills';
 import Hobbies from './Components/Hobbies';
 import Contact from './Components/Contact';
-import ScrollProgressCircle from './Components/ScrollProgressCircle';
+import ScrollProgressCircle from './Components/ScrollProgressCircle'
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
