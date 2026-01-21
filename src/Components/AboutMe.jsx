@@ -40,8 +40,19 @@ const AboutMe = () => {
     { label: "Client-Facing Work", value: "Hands-On" },
   ];
 
-  const chip =
+  
+  const chipClass =
     "inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold bg-gray-50 text-[#1B4332] ring-1 ring-inset ring-[#1B4332]/10";
+
+  const chips = [
+    "React",
+    "JavaScript",
+    "HTML/CSS",
+    "Node/Express",
+    "SQL",
+    "Git/GitHub",
+    "OWASP Basics",
+  ];
 
   return (
     <section
@@ -50,7 +61,6 @@ const AboutMe = () => {
       className="relative px-6 py-16 overflow-hidden bg-gray-50"
       aria-label="About me section"
     >
-      {/* background accents */}
       <div className="pointer-events-none absolute -top-24 -right-24 h-80 w-80 rounded-full bg-gradient-to-br from-[#2a9d8f] to-[#4CAF50] opacity-15 blur-3xl" />
       <div className="pointer-events-none absolute -bottom-28 -left-24 h-80 w-80 rounded-full bg-gradient-to-tr from-[#1B4332] to-[#2a9d8f] opacity-10 blur-3xl" />
 
@@ -75,7 +85,6 @@ const AboutMe = () => {
           client-facing delivery.
         </motion.p>
 
-        {/* Proof strip */}
         <motion.div
           initial={reduceMotion ? false : { opacity: 0, y: 10 }}
           animate={isVisible ? { opacity: 1, y: 0 } : {}}
@@ -104,7 +113,6 @@ const AboutMe = () => {
               : { visible: { transition: { staggerChildren: 0.08 } } }
           }
         >
-          {/* Left card: Quick Profile */}
           <motion.div
             variants={reduceMotion ? undefined : fadeUp}
             transition={{ duration: 0.65 }}
@@ -137,14 +145,14 @@ const AboutMe = () => {
               </p>
             </div>
 
-            {/* <div className="flex flex-wrap gap-2 mt-5">
-              <span className={chip}>React</span>
-              <span className={chip}>JavaScript</span>
-              <span className={chip}>Node/Express</span>
-              <span className={chip}>SQL</span>
-              <span className={chip}>OWASP Basics</span>
-              <span className={chip}>Git/GitHub</span>
-            </div> */}
+            
+            <div className="flex flex-wrap gap-2 mt-5">
+              {chips.map((c) => (
+                <span key={c} className={chipClass}>
+                  {c}
+                </span>
+              ))}
+            </div>
 
             <div className="flex flex-col gap-3 mt-6">
               <a
@@ -204,7 +212,6 @@ const AboutMe = () => {
             </div>
           </motion.div>
 
-          {/* Right card: Story */}
           <motion.div
             variants={reduceMotion ? undefined : fadeUp}
             transition={{ duration: 0.65, delay: 0.05 }}
