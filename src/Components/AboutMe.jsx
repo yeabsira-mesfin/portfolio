@@ -40,9 +40,6 @@ const AboutMe = () => {
     { label: "Client-Facing Work", value: "Hands-On" },
   ];
 
-  
-  const chipClass =
-    "inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold bg-gray-50 text-[#1B4332] ring-1 ring-inset ring-[#1B4332]/10";
 
  
 
