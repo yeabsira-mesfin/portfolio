@@ -133,7 +133,7 @@ const Services = () => {
         <div className="text-center">
           <h2 className="mb-3 text-4xl font-bold">What I Do</h2>
           <p className="mx-auto mb-6 max-w-3xl text-lg text-[#1B4332]/80">
-            Practical, hands-on focus areas where I contribute across software
+            Practical, hands on focus areas where I contribute across software
             development, security foundations, and troubleshooting.
           </p>
 
