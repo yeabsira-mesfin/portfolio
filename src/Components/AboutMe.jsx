@@ -44,15 +44,7 @@ const AboutMe = () => {
   const chipClass =
     "inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold bg-gray-50 text-[#1B4332] ring-1 ring-inset ring-[#1B4332]/10";
 
-  const chips = [
-    "React",
-    "JavaScript",
-    "HTML/CSS",
-    "Node/Express",
-    "SQL",
-    "Git/GitHub",
-    "OWASP Basics",
-  ];
+ 
 
   return (
     <section
@@ -146,13 +138,7 @@ const AboutMe = () => {
             </div>
 
             
-            <div className="flex flex-wrap gap-2 mt-5">
-              {chips.map((c) => (
-                <span key={c} className={chipClass}>
-                  {c}
-                </span>
-              ))}
-            </div>
+          
 
             <div className="flex flex-col gap-3 mt-6">
               <a
