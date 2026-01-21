@@ -18,7 +18,7 @@ const AboutMe = () => {
       ([entry]) => {
         if (entry.isIntersecting) setIsVisible(true);
       },
-      { threshold: 0.25 }
+      { threshold: 0.25 },
     );
 
     observer.observe(el);
@@ -30,18 +30,15 @@ const AboutMe = () => {
       hidden: { opacity: 0, y: 22 },
       visible: { opacity: 1, y: 0 },
     }),
-    []
+    [],
   );
 
   const metrics = [
-    { label: "Projects Delivered", value: "50+" },
-    { label: "Promotions", value: "3" },
-    { label: "Peak Active Projects", value: "20+" },
-    { label: "Client-Facing Work", value: "Hands-On" },
+    { label: "Projects Built", value: "50+" },
+    { label: "Promotions Earned", value: "3" },
+    { label: "Client Work", value: "Hands-On" },
+    { label: "Focus Areas", value: "Web & Python" },
   ];
-
-
- 
 
   return (
     <section
@@ -50,6 +47,7 @@ const AboutMe = () => {
       className="relative px-6 py-16 overflow-hidden bg-gray-50"
       aria-label="About me section"
     >
+      {/* Background accents */}
       <div className="pointer-events-none absolute -top-24 -right-24 h-80 w-80 rounded-full bg-gradient-to-br from-[#2a9d8f] to-[#4CAF50] opacity-15 blur-3xl" />
       <div className="pointer-events-none absolute -bottom-28 -left-24 h-80 w-80 rounded-full bg-gradient-to-tr from-[#1B4332] to-[#2a9d8f] opacity-10 blur-3xl" />
 
@@ -69,11 +67,13 @@ const AboutMe = () => {
           animate={isVisible ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, delay: 0.08 }}
         >
-          Software developer with web development experience, a cybersecurity
-          foundation, and a strong track record in troubleshooting and
-          client-facing delivery.
+          I’m Yeabsira, a web developer and master’s student in cybersecurity in
+          computer science at GWU. I enjoy building clean, reliable web
+          applications, working with real users, and continuously improving my
+          skills across software development, and secure-by-design systems.
         </motion.p>
 
+        {/* Highlights */}
         <motion.div
           initial={reduceMotion ? false : { opacity: 0, y: 10 }}
           animate={isVisible ? { opacity: 1, y: 0 } : {}}
@@ -102,6 +102,7 @@ const AboutMe = () => {
               : { visible: { transition: { staggerChildren: 0.08 } } }
           }
         >
+          {/* Quick Profile */}
           <motion.div
             variants={reduceMotion ? undefined : fadeUp}
             transition={{ duration: 0.65 }}
@@ -112,30 +113,39 @@ const AboutMe = () => {
             <div className="mt-4 space-y-3 text-[#1B4332]/80">
               <p>
                 <span className="font-semibold text-[#1B4332]">
-                  M.S. Cybersecurity in Computer Science
+                  M.S. in Cybersecurity (Computer Science track)
                 </span>{" "}
-                @ GWU (Expected 2027)
+                @ The George Washington University (Expected 2027)
               </p>
 
               <p>
-                Software developer with experience building{" "}
+                Web developer with hands-on experience building{" "}
                 <span className="font-semibold text-[#1B4332]">
-                  client-facing web applications
+                  real client-facing applications
                 </span>{" "}
-                and supporting delivery across the full lifecycle.
+                using React, JavaScript, and backend tools.
               </p>
 
               <p>
-                Growing focus on{" "}
+                Currently focused on{" "}
                 <span className="font-semibold text-[#1B4332]">
-                  secure-by-default practices
+                  Python development, software engineering fundamentals, and
+                  secure web practices
                 </span>
-                , authentication concepts, and common web risks.
+                , with an interest in building systems that are both useful and
+                safe.
+              </p>
+
+              <p className="text-sm text-[#1B4332]/70">
+                Open to full-time roles, internships, and part-time
+                opportunities.
+              </p>
+
+              <p className="text-sm text-[#1B4332]/70">
+                Outside of tech, I enjoy soccer and running to stay disciplined
+                and focused.
               </p>
             </div>
-
-            
-          
 
             <div className="flex flex-col gap-3 mt-6">
               <a
@@ -195,54 +205,73 @@ const AboutMe = () => {
             </div>
           </motion.div>
 
-          <motion.div
-            variants={reduceMotion ? undefined : fadeUp}
-            transition={{ duration: 0.65, delay: 0.05 }}
-            className="p-6 bg-white border border-gray-100 shadow-lg lg:col-span-2 rounded-2xl"
-          >
-            <h3 className="text-xl font-bold text-[#1B4332]">My Story</h3>
+          {/* My Story */}
+          
+<motion.div
+  variants={reduceMotion ? undefined : fadeUp}
+  transition={{ duration: 0.65, delay: 0.05 }}
+  className="flex flex-col h-full p-6 bg-white border border-gray-100 shadow-lg lg:col-span-2 rounded-2xl"
+>
+  <h3 className="text-xl font-bold text-[#1B4332]">My Story</h3>
 
-            <div className="mt-4 space-y-4 text-[#1B4332]/80 leading-relaxed">
-              <p>
-                I build and support web applications in customer-facing
-                environments, where reliability and communication matter. I enjoy
-                shipping improvements quickly, fixing bugs thoroughly, and making
-                sure users feel the product is stable and intuitive.
-              </p>
+  <div className="mt-4 space-y-4 text-[#1B4332]/80 leading-relaxed">
+    <p>
+      I started my journey by building web projects for real users and learning
+      quickly through hands-on work. Over time, I took on more responsibility,
+      supported multiple clients, and learned how to stay focused and reliable
+      even when managing several tasks at once.
+    </p>
 
-              <p>
-                I am also building a cybersecurity foundation alongside software
-                development, focusing on secure coding habits, authentication
-                concepts, and awareness of common web vulnerabilities. My goal is
-                to grow into roles where I can help teams build systems that are
-                both useful and secure.
-              </p>
+    <p>
+      I enjoy working across the stack, from front-end development and user
+      experience to backend logic, debugging, and problem solving. I like fixing
+      bugs, improving existing features, and turning ideas into simple, reliable
+      solutions through collaboration and clear communication.
+    </p>
 
-              <p>
-                Right now I am pursuing an M.S. in{" "}
-                <span className="font-semibold text-[#1B4332]">
-                  Cybersecurity in Computer Science
-                </span>{" "}
-                at GWU and looking for opportunities where I can contribute
-                immediately while leveling up fast.
-              </p>
-            </div>
+    <p>
+      I am currently pursuing a master’s degree in{" "}
+      <span className="font-semibold text-[#1B4332]">
+        Cybersecurity in Computer Science
+      </span>{" "}
+      at GWU. I’m looking for opportunities where I can continue building
+      software, learn from strong teams, and grow into roles that value both
+      solid engineering and security awareness.
+    </p>
+  </div>
 
-            <div className="flex flex-col gap-3 mt-6 sm:flex-row">
-              <a
-                href="#services"
-                className="inline-flex items-center justify-center rounded-xl bg-gray-50 px-5 py-3 text-sm font-semibold text-[#1B4332] ring-1 ring-inset ring-[#1B4332]/10 hover:bg-gray-100 transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#1B4332]/30"
-              >
-                See Focus Areas
-              </a>
-              <a
-                href="#contact"
-                className="inline-flex items-center justify-center rounded-xl bg-[#1B4332] px-5 py-3 text-sm font-semibold text-white hover:opacity-95 transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#1B4332]/30"
-              >
-                Contact Me
-              </a>
-            </div>
-          </motion.div>
+ 
+  {/* Bottom section */}
+<div className="flex flex-col items-center gap-4 pt-8 mt-auto">
+  {/* subtle divider */}
+  <div className="w-16 h-[2px] bg-[#1B4332]/20 rounded-full" />
+
+  {/* small personal line */}
+  <p className="text-sm text-[#1B4332]/70 text-center max-w-md">
+    Always learning, building, and looking for opportunities where I can grow
+    and contribute meaningfully.
+  </p>
+
+  {/* buttons */}
+  <div className="flex flex-col justify-center gap-3 sm:flex-row sm:gap-4">
+    <a
+      href="#services"
+      className="inline-flex items-center justify-center rounded-xl bg-gray-50 px-6 py-3 text-sm font-semibold text-[#1B4332] ring-1 ring-inset ring-[#1B4332]/10 hover:bg-gray-100 transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#1B4332]/30"
+    >
+      See Focus Areas
+    </a>
+
+    <a
+      href="#contact"
+      className="inline-flex items-center justify-center rounded-xl bg-[#1B4332] px-6 py-3 text-sm font-semibold text-white hover:opacity-95 transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#1B4332]/30"
+    >
+      Contact Me
+    </a>
+  </div>
+</div>
+
+</motion.div>
+
         </motion.div>
       </div>
     </section>
