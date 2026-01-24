@@ -37,7 +37,7 @@ const AboutMe = () => {
     { label: "Projects Built", value: "50+" },
     { label: "Promotions Earned", value: "3" },
     { label: "Client Work", value: "Hands-On" },
-    { label: "Focus Areas", value: "Web & Python" },
+    { label: "Focus Areas", value: "Full-Stack Development & Security" },
   ];
 
   return (
