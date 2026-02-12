@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import CV from "../images/YEABSIRA MESFIN.pdf";
+// import CV from "../images/YEABSIRA MESFIN.pdf";
 
 import { FaLinkedin, FaGithub, FaEnvelope } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
@@ -104,106 +104,96 @@ const AboutMe = () => {
         >
           {/* Quick Profile */}
           <motion.div
-            variants={reduceMotion ? undefined : fadeUp}
-            transition={{ duration: 0.65 }}
-            className="p-6 bg-white border border-gray-100 shadow-lg lg:col-span-1 rounded-2xl"
-          >
-            <h3 className="text-xl font-bold text-[#1B4332]">Quick Profile</h3>
+  variants={reduceMotion ? undefined : fadeUp}
+  transition={{ duration: 0.65 }}
+  className="p-6 bg-white border border-gray-100 shadow-lg lg:col-span-1 rounded-2xl"
+>
+  <h3 className="text-xl font-bold text-[#1B4332]">Quick Profile</h3>
 
-            <div className="mt-4 space-y-3 text-[#1B4332]/80">
-              <p>
-                <span className="font-semibold text-[#1B4332]">
-                  M.S. in Cybersecurity (Computer Science track)
-                </span>{" "}
-                @ The George Washington University (Expected 2027)
-              </p>
+  <div className="mt-4 space-y-3 text-[#1B4332]/80">
+    <p>
+      <span className="font-semibold text-[#1B4332]">
+        M.S. in Cybersecurity (Computer Science Track)
+      </span>{" "}
+      @ The George Washington University (Expected 2027)
+    </p>
 
-              <p>
-                Web developer with hands-on experience building{" "}
-                <span className="font-semibold text-[#1B4332]">
-                  real client-facing applications
-                </span>{" "}
-                using React, JavaScript, and backend tools.
-              </p>
+    <p>
+      Software engineer with 3+ years of experience building{" "}
+      <span className="font-semibold text-[#1B4332]">
+        scalable full-stack applications
+      </span>{" "}
+      using Python, JavaScript, React, Node.js, and RESTful APIs.
+    </p>
 
-              <p>
-                Currently focused on{" "}
-                <span className="font-semibold text-[#1B4332]">
-                  Python development, software engineering fundamentals, and
-                  secure web practices
-                </span>
-                , with an interest in building systems that are both useful and
-                safe.
-              </p>
+    <p>
+      Delivered 50+ production-ready systems with measurable impact on
+      performance and client retention. Strong foundation in{" "}
+      <span className="font-semibold text-[#1B4332]">
+        algorithms, object-oriented design, and backend architecture
+      </span>.
+    </p>
 
-              <p className="text-sm text-[#1B4332]/70">
-                Open to full-time roles, internships, and part-time
-                opportunities.
-              </p>
+    <p>
+      Interested in distributed systems, cloud-native development, and
+      AI-powered applications.
+    </p>
 
-              <p className="text-sm text-[#1B4332]/70">
-                Outside of tech, I enjoy soccer and running to stay disciplined
-                and focused.
-              </p>
-            </div>
+    <p className="text-sm text-[#1B4332]/70">
+      Seeking Software Engineering internships and full-time opportunities.
+    </p>
+  </div>
 
-            <div className="flex flex-col gap-3 mt-6">
-              <a
-                href={CV}
-                download="Yeabsira_Mesfin_Resume.pdf"
-                className="inline-flex items-center justify-center rounded-xl bg-[#1B4332] text-white px-5 py-3 font-semibold shadow-md hover:bg-[#2a9d8f] transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#1B4332]/30"
-              >
-                Download Resume
-              </a>
+  <div className="flex flex-col gap-3 mt-6">
+    <a
+      href="#projects"
+      className="inline-flex items-center justify-center rounded-xl border border-[#1B4332] text-[#1B4332] px-5 py-3 font-semibold hover:bg-[#1B4332] hover:text-white transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#1B4332]/30"
+    >
+      View Projects
+    </a>
+  </div>
 
-              <a
-                href="#projects"
-                className="inline-flex items-center justify-center rounded-xl border border-[#1B4332] text-[#1B4332] px-5 py-3 font-semibold hover:bg-[#1B4332] hover:text-white transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#1B4332]/30"
-              >
-                View Projects
-              </a>
-            </div>
+  <div className="flex items-center justify-center gap-5 mt-6">
+    <a
+      href="https://www.linkedin.com/in/yeabsira-mesfin-76379928a"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="text-[#1B4332] hover:text-[#2a9d8f] transition transform hover:scale-110"
+      aria-label="LinkedIn"
+    >
+      <FaLinkedin className="h-7 w-7" />
+    </a>
 
-            <div className="flex items-center justify-center gap-5 mt-6">
-              <a
-                href="https://www.linkedin.com/in/yeabsira-mesfin-76379928a"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[#1B4332] hover:text-[#2a9d8f] transition transform hover:scale-110"
-                aria-label="LinkedIn"
-              >
-                <FaLinkedin className="h-7 w-7" />
-              </a>
+    <a
+      href="https://github.com/yeabsira-mesfin"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="text-[#1B4332] hover:text-[#2a9d8f] transition transform hover:scale-110"
+      aria-label="GitHub"
+    >
+      <FaGithub className="h-7 w-7" />
+    </a>
 
-              <a
-                href="https://github.com/yeabsira-mesfin"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[#1B4332] hover:text-[#2a9d8f] transition transform hover:scale-110"
-                aria-label="GitHub"
-              >
-                <FaGithub className="h-7 w-7" />
-              </a>
+    <a
+      href="https://x.com/YeabsiraMesfin9"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="text-[#1B4332] hover:text-[#2a9d8f] transition transform hover:scale-110"
+      aria-label="X"
+    >
+      <FaXTwitter className="h-7 w-7" />
+    </a>
 
-              <a
-                href="https://x.com/YeabsiraMesfin9"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[#1B4332] hover:text-[#2a9d8f] transition transform hover:scale-110"
-                aria-label="X"
-              >
-                <FaXTwitter className="h-7 w-7" />
-              </a>
+    <a
+      href="mailto:yeabsira.mesfin@gwmail.gwu.edu"
+      className="text-[#1B4332] hover:text-[#2a9d8f] transition transform hover:scale-110"
+      aria-label="Email"
+    >
+      <FaEnvelope className="h-7 w-7" />
+    </a>
+  </div>
+</motion.div>
 
-              <a
-                href="mailto:yeabsira.mesfin@gwmail.gwu.edu"
-                className="text-[#1B4332] hover:text-[#2a9d8f] transition transform hover:scale-110"
-                aria-label="Email"
-              >
-                <FaEnvelope className="h-7 w-7" />
-              </a>
-            </div>
-          </motion.div>
 
           {/* My Story */}
           
