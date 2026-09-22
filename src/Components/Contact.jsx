@@ -84,10 +84,10 @@ const Contact = () => {
           <div className="mt-8 rounded-2xl border border-white/10 bg-white/[0.045] p-5 backdrop-blur">
             <p className="text-sm font-bold text-white">Direct email</p>
             <a
-              href="mailto:yeabsira.mesfin@gwmail.gwu.edu"
+              href="mailto:yeabsira.mesfin29@gmail.com"
               className="mt-2 inline-block text-sm font-semibold text-emerald-300 hover:text-emerald-200"
             >
-              yeabsira.mesfin@gwmail.gwu.edu
+              yeabsira.mesfin29@gmail.com
             </a>
           </div>
         </motion.div>
