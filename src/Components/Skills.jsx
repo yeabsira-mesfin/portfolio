@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from "react";
-import { motion, useAnimation } from "framer-motion";
+import { motion, useAnimation, useReducedMotion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 
 import {
@@ -15,6 +15,10 @@ import {
   FaTachometerAlt,
   FaNetworkWired,
   FaTools,
+  FaWindows,
+  FaServer,
+  FaTerminal,
+  FaCloud,
 } from "react-icons/fa";
 
 import {
@@ -26,165 +30,159 @@ import {
   SiMysql,
   SiPython,
   SiTailwindcss,
-  SiVercel,
 } from "react-icons/si";
 
-/* ---------- Level meta ---------- */
 const levelMeta = (level) => {
-  const badgeBase =
-    "inline-flex items-center justify-center rounded-full px-3 py-1 text-xs font-semibold whitespace-nowrap ring-1 ring-black/5";
-  switch (level) {
-    case "Advanced":
-      return { badge: `${badgeBase} bg-emerald-100 text-emerald-800`, value: 92, bar: "bg-emerald-500" };
-    case "Intermediate":
-      return { badge: `${badgeBase} bg-sky-100 text-sky-800`, value: 76, bar: "bg-sky-500" };
-    case "Foundations":
-      return { badge: `${badgeBase} bg-orange-100 text-orange-800`, value: 62, bar: "bg-orange-500" };
-    default:
-      return { badge: `${badgeBase} bg-gray-100 text-gray-700`, value: 60, bar: "bg-emerald-500" };
-  }
+  if (level === "Advanced") return { value: 92, label: "Advanced" };
+  if (level === "Intermediate") return { value: 76, label: "Intermediate" };
+  return { value: 60, label: "Foundations" };
 };
 
-/* ---------- Skills ---------- */
 const devSkills = [
-  { name: "HTML", level: "Advanced", icon: <FaHtml5 className="h-10 w-10 text-[#F16529]" /> },
-  { name: "CSS", level: "Advanced", icon: <FaCss3Alt className="h-10 w-10 text-[#1572B6]" /> },
-  { name: "Tailwind CSS", level: "Advanced", icon: <SiTailwindcss className="h-10 w-10 text-[#38B2AC]" /> },
-  { name: "JavaScript", level: "Advanced", icon: <FaJs className="h-10 w-10 text-[#F7DF1E]" /> },
-  { name: "TypeScript", level: "Intermediate", icon: <SiTypescript className="h-10 w-10 text-[#007ACC]" /> },
-  { name: "React.js", level: "Advanced", icon: <FaReact className="h-10 w-10 text-[#61DBFB]" /> },
-  { name: "Node.js", level: "Intermediate", icon: <FaNodeJs className="h-10 w-10 text-[#68A063]" /> },
-  { name: "Python", level: "Advanced", icon: <SiPython className="h-10 w-10 text-[#3776AB]" /> },
-  { name: "Java", level: "Intermediate", icon: <FaJava className="h-10 w-10 text-[#c25656]" /> },
-  { name: "MySQL", level: "Intermediate", icon: <SiMysql className="h-10 w-10 text-[#00758F]" /> },
-  { name: "MongoDB", level: "Intermediate", icon: <SiMongodb className="h-10 w-10 text-[#47A248]" /> },
-  { name: "GitHub", level: "Advanced", icon: <SiGithub className="h-10 w-10 text-[#111827]" /> },
+  { name: "Python", level: "Advanced", icon: <SiPython /> },
+  { name: "JavaScript", level: "Advanced", icon: <FaJs /> },
+  { name: "React", level: "Advanced", icon: <FaReact /> },
+  { name: "HTML", level: "Advanced", icon: <FaHtml5 /> },
+  { name: "CSS", level: "Advanced", icon: <FaCss3Alt /> },
+  { name: "Tailwind CSS", level: "Advanced", icon: <SiTailwindcss /> },
+  { name: "TypeScript", level: "Intermediate", icon: <SiTypescript /> },
+  { name: "Node.js", level: "Intermediate", icon: <FaNodeJs /> },
+  { name: "Java", level: "Intermediate", icon: <FaJava /> },
+  { name: "MySQL", level: "Intermediate", icon: <SiMysql /> },
+  { name: "MongoDB", level: "Intermediate", icon: <SiMongodb /> },
+  { name: "Git & GitHub", level: "Advanced", icon: <SiGithub /> },
 ];
 
-const cloudSupportSkills = [
-  { name: "Networking", level: "Intermediate", icon: <FaNetworkWired className="h-10 w-10 text-[#4CAF50]" /> },
-  { name: "Linux CLI", level: "Intermediate", icon: <SiLinux className="h-10 w-10 text-[#1B4332]" /> },
-  { name: "Vercel", level: "Advanced", icon: <SiVercel className="h-10 w-10 text-[#111827]" /> },
-  { name: "Troubleshooting & RCA", level: "Advanced", icon: <FaTools className="h-10 w-10 text-[#243d27]" /> },
-  { name: "Logging & Monitoring", level: "Foundations", icon: <FaTachometerAlt className="h-10 w-10 text-[#243d27]" /> },
-  { name: "API Testing", level: "Intermediate", icon: <SiPostman className="h-10 w-10 text-[#FF6C37]" /> },
+const infrastructureSkills = [
+  { name: "Networking & DNS", level: "Intermediate", icon: <FaNetworkWired /> },
+  { name: "Linux CLI", level: "Intermediate", icon: <SiLinux /> },
+  { name: "Windows Infrastructure", level: "Foundations", icon: <FaWindows /> },
+  { name: "PowerShell Automation", level: "Foundations", icon: <FaTerminal /> },
+  { name: "Containers & Docker", level: "Foundations", icon: <FaServer /> },
+  { name: "Infrastructure as Code", level: "Foundations", icon: <FaCloud /> },
+  { name: "Monitoring & Reliability", level: "Foundations", icon: <FaTachometerAlt /> },
+  { name: "Troubleshooting & RCA", level: "Advanced", icon: <FaTools /> },
+  { name: "API Testing", level: "Intermediate", icon: <SiPostman /> },
 ];
 
-const cybersecuritySkills = [
-  { name: "Network Security Fundamentals", level: "Foundations", icon: <FaShieldAlt className="h-10 w-10 text-[#4CAF50]" /> },
-  { name: "Secure Authentication", level: "Foundations", icon: <FaLock className="h-10 w-10 text-[#1B4332]" /> },
-  { name: "OWASP Top 10 Awareness", level: "Foundations", icon: <FaBug className="h-10 w-10 text-[#c25656]" /> },
-  { name: "SIEM Exposure", level: "Foundations", icon: <FaTachometerAlt className="h-10 w-10 text-[#243d27]" /> },
+const securitySkills = [
+  { name: "Network Security", level: "Foundations", icon: <FaShieldAlt /> },
+  { name: "Authentication & Access Control", level: "Foundations", icon: <FaLock /> },
+  { name: "OWASP Awareness", level: "Foundations", icon: <FaBug /> },
+  { name: "Security Monitoring", level: "Foundations", icon: <FaTachometerAlt /> },
 ];
 
-/* ---------- Component ---------- */
+const SkillCard = ({ skill, inView, reduceMotion }) => {
+  const meta = levelMeta(skill.level);
+
+  return (
+    <motion.article
+      whileHover={reduceMotion ? undefined : { y: -5 }}
+      className="rounded-2xl border border-white/10 bg-white/[0.065] p-5 text-left shadow-xl backdrop-blur"
+    >
+      <div className="flex items-start gap-4">
+        <div className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-emerald-300/10 text-2xl text-emerald-200">
+          {skill.icon}
+        </div>
+        <div className="min-w-0 flex-1">
+          <h4 className="font-extrabold text-white">{skill.name}</h4>
+          <span className="mt-2 inline-flex rounded-full border border-white/10 bg-black/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-emerald-100/65">
+            {meta.label}
+          </span>
+        </div>
+      </div>
+
+      <div className="mt-5 h-1.5 overflow-hidden rounded-full bg-black/20">
+        <motion.div
+          initial={{ width: 0 }}
+          animate={inView ? { width: meta.value + "%" } : { width: 0 }}
+          transition={{ duration: reduceMotion ? 0 : 0.85, ease: "easeOut" }}
+          className="h-full rounded-full bg-gradient-to-r from-emerald-300 to-cyan-300"
+        />
+      </div>
+    </motion.article>
+  );
+};
+
+const SkillGroup = ({ title, subtitle, skills, inView, reduceMotion }) => (
+  <div className="mt-14">
+    <div className="max-w-2xl">
+      <h3 className="text-2xl font-black text-white">{title}</h3>
+      <p className="mt-2 text-sm leading-6 text-emerald-50/55">{subtitle}</p>
+    </div>
+    <div className="mt-7 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {skills.map((skill) => (
+        <SkillCard
+          key={skill.name}
+          skill={skill}
+          inView={inView}
+          reduceMotion={reduceMotion}
+        />
+      ))}
+    </div>
+  </div>
+);
+
 const Skills = () => {
   const controls = useAnimation();
-  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.2 });
+  const reduceMotion = useReducedMotion();
+  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.08 });
 
   useEffect(() => {
     if (inView) controls.start("visible");
   }, [inView, controls]);
 
-  const containerVariants = useMemo(
+  const variants = useMemo(
     () => ({
-      hidden: { opacity: 0, y: 22 },
-      visible: { opacity: 1, y: 0, transition: { staggerChildren: 0.08, duration: 0.45 } },
+      hidden: { opacity: 0, y: 20 },
+      visible: { opacity: 1, y: 0, transition: { duration: 0.55 } },
     }),
-    []
-  );
-
-  const itemVariants = useMemo(
-    () => ({
-      hidden: { opacity: 0, y: 12 },
-      visible: { opacity: 1, y: 0 },
-    }),
-    []
-  );
-
-  const SkillCard = ({ skill }) => {
-    const meta = levelMeta(skill.level);
-
-    return (
-      <motion.div
-        variants={itemVariants}
-        whileHover={{ y: -4 }}
-        className="relative p-5 overflow-hidden transition border shadow-xl group rounded-3xl border-white/10 bg-white/85 backdrop-blur hover:shadow-2xl"
-      >
-        {/* glow */}
-        <div className="absolute inset-0 transition opacity-0 pointer-events-none group-hover:opacity-100">
-          <div className="absolute rounded-full -top-20 -right-20 h-52 w-52 bg-emerald-400/20 blur-3xl" />
-          <div className="absolute rounded-full -bottom-24 -left-24 h-52 w-52 bg-white/25 blur-3xl" />
-        </div>
-
-        {/* top row */}
-        <div className="relative flex items-start gap-4">
-          <div className="shrink-0 rounded-2xl bg-[#f0f8f8] p-3 shadow-sm ring-1 ring-black/5">
-            {skill.icon}
-          </div>
-
-          <div className="flex-1 min-w-0">
-            <h4 className="text-left text-base sm:text-lg font-extrabold text-[#243d27] leading-snug">
-              {skill.name}
-            </h4>
-
-            <div className="flex justify-center mt-3 sm:justify-start">
-              <span className={meta.badge}>{skill.level}</span>
-            </div>
-          </div>
-        </div>
-
-        {/* bar (kept where it belongs) */}
-        <div className="relative mt-5 h-2.5 w-full rounded-full bg-gray-200">
-          <motion.div
-            initial={{ width: 0 }}
-            animate={inView ? { width: `${meta.value}%` } : { width: 0 }}
-            transition={{ duration: 0.85, ease: "easeOut" }}
-            className={`h-2.5 rounded-full ${meta.bar}`}
-          />
-          <div className="absolute inset-0 rounded-full pointer-events-none ring-1 ring-black/5" />
-        </div>
-      </motion.div>
-    );
-  };
-
-  const SkillGrid = ({ items }) => (
-    <motion.div
-      variants={containerVariants}
-      className="grid grid-cols-1 gap-6 mt-8 sm:grid-cols-2 lg:grid-cols-3"
-    >
-      {items.map((skill, i) => (
-        <SkillCard key={`${skill.name}-${i}`} skill={skill} />
-      ))}
-    </motion.div>
+    [],
   );
 
   return (
-    <section id="skills" className="relative px-6 py-16 overflow-hidden bg-dark-green sm:px-10">
-
-      {/* background glow */}
-      <div className="absolute inset-0 pointer-events-none opacity-35">
-        <div className="absolute rounded-full -top-24 -left-24 h-80 w-80 bg-emerald-500/30 blur-3xl" />
-        <div className="absolute rounded-full -bottom-24 -right-24 h-80 w-80 bg-white/10 blur-3xl" />
-      </div>
+    <section id="skills" className="relative overflow-hidden bg-[#061b15] px-6 py-24 sm:px-8">
+      <div className="absolute left-1/2 top-0 h-80 w-80 -translate-x-1/2 rounded-full bg-emerald-400/8 blur-3xl" />
 
       <motion.div
         ref={ref}
+        variants={variants}
         initial="hidden"
         animate={controls}
-        variants={containerVariants}
-        className="relative max-w-6xl mx-auto text-center"
+        className="relative mx-auto max-w-7xl"
       >
-        <h2 className="text-4xl font-extrabold text-white">Skills</h2>
+        <div className="mx-auto max-w-3xl text-center">
+          <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-emerald-300">
+            Technical toolkit
+          </p>
+          <h2 className="mt-3 text-4xl font-black tracking-[-0.04em] text-white sm:text-5xl">
+            Software depth with infrastructure and security breadth.
+          </h2>
+        </div>
 
-        <h3 className="mt-10 text-2xl font-bold text-white">Software Development</h3>
-        <SkillGrid items={devSkills} />
+        <SkillGroup
+          title="Software Development"
+          subtitle="The strongest and most established part of my technical background."
+          skills={devSkills}
+          inView={inView}
+          reduceMotion={reduceMotion}
+        />
 
-        <h3 className="text-2xl font-bold text-white mt-14">Cloud Support Foundations</h3>
-        <SkillGrid items={cloudSupportSkills} />
+        <SkillGroup
+          title="Infrastructure & Cloud"
+          subtitle="Hands-on labs and project work focused on reliable systems, networking, automation, containers, and operations."
+          skills={infrastructureSkills}
+          inView={inView}
+          reduceMotion={reduceMotion}
+        />
 
-        <h3 className="text-2xl font-bold text-white mt-14">Cybersecurity Foundations</h3>
-        <SkillGrid items={cybersecuritySkills} />
+        <SkillGroup
+          title="Cybersecurity"
+          subtitle="Graduate study and practical projects centered on defensive security, secure systems, and monitoring."
+          skills={securitySkills}
+          inView={inView}
+          reduceMotion={reduceMotion}
+        />
       </motion.div>
     </section>
   );

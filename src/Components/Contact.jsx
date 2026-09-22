@@ -52,102 +52,145 @@ const Contact = () => {
   };
 
   const fieldClass =
-    "w-full px-4 py-3 rounded-lg border border-[#1B4332] bg-[#1B4332] " +
-    "text-white placeholder-white focus:bg-[#234f3b] focus:outline-none " +
-    "focus:ring-2 focus:ring-[#2a9d8f] focus:border-[#2a9d8f] transition duration-200";
+    "w-full rounded-xl border border-white/10 bg-white/[0.055] px-4 py-3.5 " +
+    "text-white placeholder:text-emerald-50/35 focus:border-emerald-300/45 " +
+    "focus:bg-white/[0.075] focus:outline-none focus:ring-2 focus:ring-emerald-300/10 transition";
 
   return (
-    <section id="contact" className="bg-white text-[#1B4332] py-16 px-8 relative">
-      <div className="absolute inset-0 bg-gradient-to-r from-[#1B4332] to-[#4CAF50] opacity-10 -z-10" />
+    <section id="contact" className="relative overflow-hidden bg-[#04130f] px-6 py-24 text-white sm:px-8">
+      <div className="absolute left-[-10rem] top-10 h-96 w-96 rounded-full bg-emerald-400/10 blur-3xl" />
+      <div className="absolute bottom-[-12rem] right-[-8rem] h-96 w-96 rounded-full bg-cyan-400/8 blur-3xl" />
 
-      <div className="max-w-5xl mx-auto space-y-4 text-center">
-        <motion.h2
-          className="text-3xl font-bold"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+      <div className="relative mx-auto grid max-w-6xl gap-10 lg:grid-cols-[.85fr_1.15fr]">
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.55 }}
+          className="flex flex-col justify-center"
         >
-          Contact
-        </motion.h2>
+          <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-emerald-300">
+            Contact
+          </p>
+          <h2 className="mt-3 text-4xl font-black tracking-[-0.04em] sm:text-5xl">
+            Have a role, project, or technical challenge in mind?
+          </h2>
+          <p className="mt-6 max-w-xl text-base leading-8 text-emerald-50/60">
+            I am interested in software engineering, infrastructure, security,
+            and technical delivery opportunities where I can build, troubleshoot,
+            automate, and keep learning.
+          </p>
 
-        <p className="text-lg">
-          Feel free to reach out to me for collaborations or just to say hi!
-        </p>
+          <div className="mt-8 rounded-2xl border border-white/10 bg-white/[0.045] p-5 backdrop-blur">
+            <p className="text-sm font-bold text-white">Direct email</p>
+            <a
+              href="mailto:yeabsira.mesfin@gwmail.gwu.edu"
+              className="mt-2 inline-block text-sm font-semibold text-emerald-300 hover:text-emerald-200"
+            >
+              yeabsira.mesfin@gwmail.gwu.edu
+            </a>
+          </div>
+        </motion.div>
 
-        <form
-          ref={formRef}
-          onSubmit={sendEmail}
-          className="mt-6 space-y-4"
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.55, delay: 0.08 }}
+          className="rounded-[1.8rem] border border-white/10 bg-white/[0.055] p-6 shadow-2xl backdrop-blur-xl sm:p-8"
         >
-          <input
-            type="text"
-            name="from_name"
-            placeholder="Your Name"
-            className={fieldClass}
-            required
-          />
+          <div className="mb-6">
+            <p className="text-lg font-extrabold">Send me a message</p>
+            <p className="mt-1 text-sm text-emerald-50/45">
+              This form uses the same working email delivery logic already on the site.
+            </p>
+          </div>
 
-          <input
-            type="email"
-            name="reply_to"
-            placeholder="Your Email"
-            className={fieldClass}
-            required
-          />
+          <form ref={formRef} onSubmit={sendEmail} className="space-y-4">
+            <div>
+              <label htmlFor="from_name" className="mb-2 block text-xs font-bold uppercase tracking-wide text-emerald-100/55">
+                Name
+              </label>
+              <input
+                id="from_name"
+                type="text"
+                name="from_name"
+                placeholder="Your name"
+                className={fieldClass}
+                required
+              />
+            </div>
 
-          <textarea
-            name="message"
-            placeholder="Your Message"
-            className={`${fieldClass} min-h-[140px] resize-none`}
-            required
-          />
+            <div>
+              <label htmlFor="reply_to" className="mb-2 block text-xs font-bold uppercase tracking-wide text-emerald-100/55">
+                Email
+              </label>
+              <input
+                id="reply_to"
+                type="email"
+                name="reply_to"
+                placeholder="you@example.com"
+                className={fieldClass}
+                required
+              />
+            </div>
 
-          <div className="flex justify-center mt-6">
+            <div>
+              <label htmlFor="message" className="mb-2 block text-xs font-bold uppercase tracking-wide text-emerald-100/55">
+                Message
+              </label>
+              <textarea
+                id="message"
+                name="message"
+                placeholder="Tell me what you are working on..."
+                className={fieldClass + " min-h-[160px] resize-none"}
+                required
+              />
+            </div>
+
             <motion.button
               type="submit"
               disabled={isSending}
-              whileTap={{ scale: 0.97 }}
-              className={`px-6 py-2 rounded-lg shadow-lg text-white transition duration-300 ${
-                isSending
-                  ? "bg-gray-500 cursor-not-allowed"
-                  : "bg-[#1B4332] hover:bg-[#2a9d8f]"
-              }`}
+              whileTap={{ scale: 0.98 }}
+              className={
+                "mt-2 w-full rounded-xl px-6 py-3.5 text-sm font-extrabold transition " +
+                (isSending
+                  ? "cursor-not-allowed bg-white/10 text-white/45"
+                  : "bg-emerald-300 text-[#061b15] shadow-[0_14px_36px_rgba(110,231,183,0.14)] hover:bg-emerald-200")
+              }
             >
               {isSending ? "Sending..." : "Send Message"}
             </motion.button>
+          </form>
+
+          <div className="mt-5 min-h-10">
+            <AnimatePresence mode="wait">
+              {isSubmitted && (
+                <motion.div
+                  key="success"
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 8 }}
+                  className="rounded-xl border border-emerald-300/20 bg-emerald-300/10 px-4 py-3 text-sm font-semibold text-emerald-200"
+                >
+                  Message sent successfully.
+                </motion.div>
+              )}
+
+              {errorMessage && (
+                <motion.div
+                  key="error"
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 8 }}
+                  className="rounded-xl border border-red-300/20 bg-red-300/10 px-4 py-3 text-sm font-semibold text-red-200"
+                >
+                  {errorMessage}
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
-        </form>
-
-        {/* Success / Error message */}
-        <div className="flex justify-center mt-6">
-          <AnimatePresence mode="wait">
-            {isSubmitted && (
-              <motion.div
-                key="success"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 10 }}
-                transition={{ duration: 0.25 }}
-                className="px-4 py-2 text-green-700 bg-green-100 border border-green-200 rounded-lg"
-              >
-                ✅ Message sent successfully!
-              </motion.div>
-            )}
-
-            {errorMessage && (
-              <motion.div
-                key="error"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 10 }}
-                transition={{ duration: 0.25 }}
-                className="px-4 py-2 text-red-700 bg-red-100 border border-red-200 rounded-lg"
-              >
-                ⚠️ {errorMessage}
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

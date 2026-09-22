@@ -1,268 +1,217 @@
-import { useEffect, useMemo, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-// import CV from "../images/YEABSIRA MESFIN.pdf";
-
 import { FaLinkedin, FaGithub, FaEnvelope } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 
+const metrics = [
+  { value: "5+", label: "Years Building" },
+  { value: "200+", label: "Client Deliveries" },
+  { value: "M.S.", label: "Cybersecurity @ GWU" },
+  { value: "3", label: "Engineering Lanes" },
+];
+
+const focusAreas = [
+  {
+    title: "Software Engineering",
+    text: "Full-stack applications, APIs, debugging, product-minded development, and maintainable code.",
+  },
+  {
+    title: "Infrastructure Reliability",
+    text: "Linux and Windows fundamentals, networking, containers, automation, monitoring, failover, and backup thinking.",
+  },
+  {
+    title: "Cybersecurity",
+    text: "Authentication, network security, secure coding, incident thinking, and security-focused graduate coursework.",
+  },
+];
+
 const AboutMe = () => {
-  const [isVisible, setIsVisible] = useState(false);
-  const sectionRef = useRef(null);
   const reduceMotion = useReducedMotion();
-
-  useEffect(() => {
-    const el = sectionRef.current;
-    if (!el) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) setIsVisible(true);
-      },
-      { threshold: 0.25 },
-    );
-
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-
-  const fadeUp = useMemo(
-    () => ({
-      hidden: { opacity: 0, y: 22 },
-      visible: { opacity: 1, y: 0 },
-    }),
-    [],
-  );
-
-  const metrics = [
-    { label: "Projects Built", value: "50+" },
-    { label: "Promotions Earned", value: "3" },
-    { label: "Client Work", value: "Hands-On" },
-    { label: "Focus Areas", value: "Full-Stack Development & Security" },
-  ];
 
   return (
     <section
-      ref={sectionRef}
       id="about"
-      className="relative px-6 py-16 overflow-hidden bg-gray-50"
-      aria-label="About me section"
+      className="relative overflow-hidden bg-[#f4f8f6] px-6 py-24 text-[#0d2c22] sm:px-8"
     >
-      {/* Background accents */}
-      <div className="pointer-events-none absolute -top-24 -right-24 h-80 w-80 rounded-full bg-gradient-to-br from-[#2a9d8f] to-[#4CAF50] opacity-15 blur-3xl" />
-      <div className="pointer-events-none absolute -bottom-28 -left-24 h-80 w-80 rounded-full bg-gradient-to-tr from-[#1B4332] to-[#2a9d8f] opacity-10 blur-3xl" />
+      <div className="absolute -right-24 -top-24 h-80 w-80 rounded-full bg-emerald-300/20 blur-3xl" />
+      <div className="absolute -bottom-28 -left-24 h-80 w-80 rounded-full bg-cyan-300/10 blur-3xl" />
 
-      <div className="max-w-6xl mx-auto">
-        <motion.h2
-          className="text-4xl font-bold text-[#1B4332] text-center"
-          initial={reduceMotion ? false : { opacity: 0 }}
-          animate={isVisible ? { opacity: 1 } : {}}
-          transition={{ duration: 0.7 }}
-        >
-          About Me
-        </motion.h2>
-
-        <motion.p
-          className="mt-4 text-center text-[#1B4332]/80 text-lg max-w-3xl mx-auto"
-          initial={reduceMotion ? false : { opacity: 0, y: 10 }}
-          animate={isVisible ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7, delay: 0.08 }}
-        >
-          I’m Yeabsira, a web developer and master’s student in cybersecurity in
-          computer science at GWU. I enjoy building clean, reliable web
-          applications, working with real users, and continuously improving my
-          skills across software development, and secure-by-design systems.
-        </motion.p>
-
-        {/* Highlights */}
+      <div className="relative mx-auto max-w-7xl">
         <motion.div
-          initial={reduceMotion ? false : { opacity: 0, y: 10 }}
-          animate={isVisible ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7, delay: 0.12 }}
-          className="grid grid-cols-2 gap-3 mt-8 sm:grid-cols-4"
-          aria-label="Highlights"
+          initial={reduceMotion ? false : { opacity: 0, y: 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.35 }}
+          transition={{ duration: 0.55 }}
+          className="mx-auto max-w-3xl text-center"
         >
-          {metrics.map((m) => (
+          <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-emerald-700">
+            About me
+          </p>
+          <h2 className="mt-3 text-4xl font-black tracking-[-0.04em] sm:text-5xl">
+            Software engineer expanding deeper into infrastructure and security.
+          </h2>
+          <p className="mt-6 text-base leading-8 text-[#315447] sm:text-lg">
+            I am Yeabsira Mesfin, a software engineer and M.S. Cybersecurity in
+            Computer Science candidate at The George Washington University. My
+            background combines full-stack development, client-facing technical
+            delivery, troubleshooting, and team leadership. I am now applying
+            that engineering foundation to reliable systems, infrastructure
+            automation, networking, cloud, and secure operations.
+          </p>
+        </motion.div>
+
+        <motion.div
+          initial={reduceMotion ? false : { opacity: 0, y: 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.55, delay: 0.08 }}
+          className="mt-12 grid grid-cols-2 gap-3 sm:grid-cols-4"
+        >
+          {metrics.map((metric) => (
             <div
-              key={m.label}
-              className="px-4 py-3 text-center bg-white border border-gray-100 shadow-sm rounded-2xl"
+              key={metric.label}
+              className="rounded-2xl border border-emerald-900/8 bg-white px-4 py-5 text-center shadow-[0_12px_35px_rgba(20,65,49,0.06)]"
             >
-              <div className="text-xl font-bold text-[#1B4332]">{m.value}</div>
-              <div className="text-xs text-[#1B4332]/70">{m.label}</div>
+              <div className="text-2xl font-black tracking-tight text-[#0d2c22]">
+                {metric.value}
+              </div>
+              <div className="mt-1 text-[11px] font-bold uppercase tracking-wide text-[#527064]">
+                {metric.label}
+              </div>
             </div>
           ))}
         </motion.div>
 
-        <motion.div
-          className="grid grid-cols-1 gap-8 mt-10 lg:grid-cols-3"
-          initial="hidden"
-          animate={isVisible ? "visible" : "hidden"}
-          variants={
-            reduceMotion
-              ? undefined
-              : { visible: { transition: { staggerChildren: 0.08 } } }
-          }
-        >
-          {/* Quick Profile */}
-          <motion.div
-  variants={reduceMotion ? undefined : fadeUp}
-  transition={{ duration: 0.65 }}
-  className="p-6 bg-white border border-gray-100 shadow-lg lg:col-span-1 rounded-2xl"
->
-  <h3 className="text-xl font-bold text-[#1B4332]">Quick Profile</h3>
+        <div className="mt-10 grid gap-6 lg:grid-cols-[.9fr_1.1fr]">
+          <motion.article
+            initial={reduceMotion ? false : { opacity: 0, x: -22 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.25 }}
+            transition={{ duration: 0.6 }}
+            className="rounded-[1.7rem] border border-emerald-900/8 bg-[#0b2a20] p-7 text-white shadow-2xl"
+          >
+            <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-emerald-300">
+              Quick profile
+            </p>
+            <h3 className="mt-3 text-2xl font-black">Engineering foundation</h3>
 
-  <div className="mt-4 space-y-3 text-[#1B4332]/80">
-    <p>
-      <span className="font-semibold text-[#1B4332]">
-        M.S. in Cybersecurity (Computer Science Track)
-      </span>{" "}
-      @ The George Washington University (Expected 2027)
-    </p>
+            <div className="mt-6 space-y-5 text-sm leading-7 text-emerald-50/70">
+              <p>
+                <span className="font-bold text-white">Education:</span> M.S.
+                Cybersecurity in Computer Science at GWU, expected 2027, with a
+                B.S. in Computer Science.
+              </p>
+              <p>
+                <span className="font-bold text-white">Development:</span>{" "}
+                Python, JavaScript, React, Node.js, REST APIs, databases,
+                debugging, and full-stack application delivery.
+              </p>
+              <p>
+                <span className="font-bold text-white">Systems direction:</span>{" "}
+                infrastructure reliability, Linux, Windows, networking,
+                containers, Infrastructure as Code, monitoring, backup
+                verification, and automation.
+              </p>
+              <p>
+                <span className="font-bold text-white">Career focus:</span>{" "}
+                software engineering, infrastructure engineering, security
+                engineering, and adjacent technical roles where coding and
+                systems thinking meet.
+              </p>
+            </div>
 
-    <p>
-      Software engineer with 3+ years of experience building{" "}
-      <span className="font-semibold text-[#1B4332]">
-        scalable full-stack applications
-      </span>{" "}
-      using Python, JavaScript, React, Node.js, and RESTful APIs.
-    </p>
+            <div className="mt-7 flex flex-wrap gap-3">
+              <a
+                href="#projects"
+                className="rounded-xl bg-emerald-300 px-5 py-3 text-sm font-extrabold text-[#061b15] transition hover:bg-emerald-200"
+              >
+                View Projects
+              </a>
+              <a
+                href="#contact"
+                className="rounded-xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-bold text-white transition hover:bg-white/10"
+              >
+                Contact Me
+              </a>
+            </div>
+          </motion.article>
 
-    <p>
-      Delivered 50+ production-ready systems with measurable impact on
-      performance and client retention. Strong foundation in{" "}
-      <span className="font-semibold text-[#1B4332]">
-        algorithms, object-oriented design, and backend architecture
-      </span>.
-    </p>
+          <motion.article
+            initial={reduceMotion ? false : { opacity: 0, x: 22 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.25 }}
+            transition={{ duration: 0.6, delay: 0.06 }}
+            className="rounded-[1.7rem] border border-emerald-900/8 bg-white p-7 shadow-[0_18px_55px_rgba(20,65,49,0.08)]"
+          >
+            <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-emerald-700">
+              How I am growing
+            </p>
+            <h3 className="mt-3 text-2xl font-black">Three connected engineering lanes</h3>
+            <p className="mt-4 max-w-2xl text-sm leading-7 text-[#4a695d]">
+              I do not see software, infrastructure, and security as separate
+              identities. The most useful systems work often sits at the
+              intersection of all three.
+            </p>
 
-    <p>
-      Interested in distributed systems, cloud-native development, and
-      AI-powered applications.
-    </p>
+            <div className="mt-7 grid gap-4 sm:grid-cols-3">
+              {focusAreas.map((area, index) => (
+                <motion.div
+                  key={area.title}
+                  whileHover={reduceMotion ? undefined : { y: -5 }}
+                  className="rounded-2xl border border-emerald-900/8 bg-[#f7faf8] p-5"
+                >
+                  <div className="mb-4 grid h-9 w-9 place-items-center rounded-xl bg-emerald-700 text-sm font-black text-white">
+                    {index + 1}
+                  </div>
+                  <h4 className="font-extrabold">{area.title}</h4>
+                  <p className="mt-2 text-sm leading-6 text-[#587267]">{area.text}</p>
+                </motion.div>
+              ))}
+            </div>
 
-    <p className="text-sm text-[#1B4332]/70">
-      Seeking Software Engineering internships and full-time opportunities.
-    </p>
-  </div>
-
-  <div className="flex flex-col gap-3 mt-6">
-    <a
-      href="#projects"
-      className="inline-flex items-center justify-center rounded-xl border border-[#1B4332] text-[#1B4332] px-5 py-3 font-semibold hover:bg-[#1B4332] hover:text-white transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#1B4332]/30"
-    >
-      View Projects
-    </a>
-  </div>
-
-  <div className="flex items-center justify-center gap-5 mt-6">
-    <a
-      href="https://www.linkedin.com/in/yeabsira-mesfin-76379928a"
-      target="_blank"
-      rel="noopener noreferrer"
-      className="text-[#1B4332] hover:text-[#2a9d8f] transition transform hover:scale-110"
-      aria-label="LinkedIn"
-    >
-      <FaLinkedin className="h-7 w-7" />
-    </a>
-
-    <a
-      href="https://github.com/yeabsira-mesfin"
-      target="_blank"
-      rel="noopener noreferrer"
-      className="text-[#1B4332] hover:text-[#2a9d8f] transition transform hover:scale-110"
-      aria-label="GitHub"
-    >
-      <FaGithub className="h-7 w-7" />
-    </a>
-
-    <a
-      href="https://x.com/YeabsiraMesfin9"
-      target="_blank"
-      rel="noopener noreferrer"
-      className="text-[#1B4332] hover:text-[#2a9d8f] transition transform hover:scale-110"
-      aria-label="X"
-    >
-      <FaXTwitter className="h-7 w-7" />
-    </a>
-
-    <a
-      href="mailto:yeabsira.mesfin@gwmail.gwu.edu"
-      className="text-[#1B4332] hover:text-[#2a9d8f] transition transform hover:scale-110"
-      aria-label="Email"
-    >
-      <FaEnvelope className="h-7 w-7" />
-    </a>
-  </div>
-</motion.div>
-
-
-          {/* My Story */}
-          
-<motion.div
-  variants={reduceMotion ? undefined : fadeUp}
-  transition={{ duration: 0.65, delay: 0.05 }}
-  className="flex flex-col h-full p-6 bg-white border border-gray-100 shadow-lg lg:col-span-2 rounded-2xl"
->
-  <h3 className="text-xl font-bold text-[#1B4332]">My Story</h3>
-
-  <div className="mt-4 space-y-4 text-[#1B4332]/80 leading-relaxed">
-    <p>
-      I started my journey by building web projects for real users and learning
-      quickly through hands-on work. Over time, I took on more responsibility,
-      supported multiple clients, and learned how to stay focused and reliable
-      even when managing several tasks at once.
-    </p>
-
-    <p>
-      I enjoy working across the stack, from front-end development and user
-      experience to backend logic, debugging, and problem solving. I like fixing
-      bugs, improving existing features, and turning ideas into simple, reliable
-      solutions through collaboration and clear communication.
-    </p>
-
-    <p>
-      I am currently pursuing a master’s degree in{" "}
-      <span className="font-semibold text-[#1B4332]">
-        Cybersecurity in Computer Science
-      </span>{" "}
-      at GWU. I’m looking for opportunities where I can continue building
-      software, learn from strong teams, and grow into roles that value both
-      solid engineering and security awareness.
-    </p>
-  </div>
-
- 
-  {/* Bottom section */}
-<div className="flex flex-col items-center gap-4 pt-8 mt-auto">
-  {/* subtle divider */}
-  <div className="w-16 h-[2px] bg-[#1B4332]/20 rounded-full" />
-
-  {/* small personal line */}
-  <p className="text-sm text-[#1B4332]/70 text-center max-w-md">
-    Always learning, building, and looking for opportunities where I can grow
-    and contribute meaningfully.
-  </p>
-
-  {/* buttons */}
-  <div className="flex flex-col justify-center gap-3 sm:flex-row sm:gap-4">
-    <a
-      href="#services"
-      className="inline-flex items-center justify-center rounded-xl bg-gray-50 px-6 py-3 text-sm font-semibold text-[#1B4332] ring-1 ring-inset ring-[#1B4332]/10 hover:bg-gray-100 transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#1B4332]/30"
-    >
-      See Focus Areas
-    </a>
-
-    <a
-      href="#contact"
-      className="inline-flex items-center justify-center rounded-xl bg-[#1B4332] px-6 py-3 text-sm font-semibold text-white hover:opacity-95 transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#1B4332]/30"
-    >
-      Contact Me
-    </a>
-  </div>
-</div>
-
-</motion.div>
-
-        </motion.div>
+            <div className="mt-8 flex items-center justify-between border-t border-emerald-900/8 pt-6">
+              <p className="max-w-lg text-sm leading-6 text-[#587267]">
+                I value practical work, clear communication, measurable
+                reliability, and systems that can be understood and maintained.
+              </p>
+              <div className="ml-5 hidden items-center gap-4 sm:flex">
+                <a
+                  href="https://www.linkedin.com/in/yeabsira-mesfin-76379928a"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#174b39] transition hover:-translate-y-0.5 hover:text-emerald-600"
+                  aria-label="LinkedIn"
+                >
+                  <FaLinkedin className="h-6 w-6" />
+                </a>
+                <a
+                  href="https://github.com/yeabsira-mesfin"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#174b39] transition hover:-translate-y-0.5 hover:text-emerald-600"
+                  aria-label="GitHub"
+                >
+                  <FaGithub className="h-6 w-6" />
+                </a>
+                <a
+                  href="https://x.com/YeabsiraMesfin9"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#174b39] transition hover:-translate-y-0.5 hover:text-emerald-600"
+                  aria-label="X"
+                >
+                  <FaXTwitter className="h-6 w-6" />
+                </a>
+                <a
+                  href="mailto:yeabsira.mesfin@gwmail.gwu.edu"
+                  className="text-[#174b39] transition hover:-translate-y-0.5 hover:text-emerald-600"
+                  aria-label="Email"
+                >
+                  <FaEnvelope className="h-6 w-6" />
+                </a>
+              </div>
+            </div>
+          </motion.article>
+        </div>
       </div>
     </section>
   );

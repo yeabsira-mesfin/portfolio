@@ -12,208 +12,178 @@ import WD from "../images/WD.png";
 const FILTERS = [
   "All",
   "Software Development",
+  "Infrastructure",
   "Cybersecurity",
-  "Cloud Support",
+  "Event Technology",
   "Product",
-  "Collaboration",
 ];
 
-const highlightsData = [
+const services = [
   {
-    title: "Front-End Development",
+    title: "Front-End & Product Engineering",
     img: FE,
     description:
-      "Building responsive, accessible interfaces with React, Tailwind CSS, and modern JavaScript.",
+      "Responsive, accessible interfaces built with React, modern JavaScript, Tailwind CSS, and product-focused iteration.",
     tag: "Software Development",
-    proof: "Shipped 50+ client-facing pages and UI updates across multiple projects.",
+    proof:
+      "Hands-on experience building client-facing interfaces, dashboards, workflows, and portfolio applications.",
   },
   {
-    title: "Back-End & REST APIs",
+    title: "Back-End & API Development",
     img: BE,
     description:
-      "Developing server-side logic and REST APIs with Node.js/Express and integrating databases.",
+      "Server-side logic, REST APIs, authentication flows, data handling, validation, and integration work.",
     tag: "Software Development",
-    proof: "Built endpoints, validations, and data flows that support real client workflows.",
+    proof:
+      "Python, Node.js, Express, databases, Postman, and practical debugging across full-stack systems.",
   },
   {
-    title: "Troubleshooting & Root Cause Thinking",
+    title: "Infrastructure Reliability & Automation",
     img: EM,
     description:
-      "Diagnosing deployment/runtime issues, reproducing bugs, and communicating fixes clearly.",
-    tag: "Cloud Support",
-    proof: "Handled time-sensitive issues across multiple clients and platforms.",
+      "Building hands-on labs around Linux and Windows operations, monitoring, failover, backup verification, containers, and automation.",
+    tag: "Infrastructure",
+    proof:
+      "Portfolio work includes Docker, NGINX, Prometheus, Terraform, PowerShell, health checks, and incident runbooks.",
   },
   {
-    title: "UX-Focused Development",
-    img: UX,
-    description:
-      "Prioritizing usability and clarity while keeping performance and reliability in mind.",
-    tag: "Product",
-    proof: "Improved UI/UX through iterations, feedback, and practical edge-case handling.",
-  },
-  {
-    title: "Client & Team Collaboration",
-    img: AM,
-    description:
-      "Working directly with clients and cross-functional teams to gather requirements and deliver reliably.",
-    tag: "Collaboration",
-    proof: "Led communication and coordination across ~20 parallel projects at peak times.",
-  },
-  {
-    title: "Secure Web Practices (Foundations)",
-    img: WD,
-    description:
-      "Applying secure coding basics like input validation, authentication fundamentals, and OWASP Top 10 best practices.",
-    tag: "Cybersecurity",
-    proof: "Security mindset from coursework and practical web development experience.",
-  },
-  {
-    title: "Security Monitoring Concepts (Foundations)",
+    title: "Networking & Operational Troubleshooting",
     img: MA,
     description:
-      "Exploring logging, monitoring, and SIEM fundamentals through labs and coursework.",
+      "Working through DNS, TCP/IP, service health, network security concepts, logs, and structured root-cause thinking.",
+    tag: "Infrastructure",
+    proof:
+      "Graduate cybersecurity labs and infrastructure projects focused on availability, evidence, and recovery.",
+  },
+  {
+    title: "Secure Application Practices",
+    img: WD,
+    description:
+      "Applying authentication, validation, secure coding, least-privilege thinking, and OWASP-aware development practices.",
     tag: "Cybersecurity",
-    proof: "Comfortable reading logs, organizing technical data, and learning tooling quickly.",
+    proof:
+      "Security-focused graduate coursework plus practical login analysis and infrastructure security projects.",
+  },
+  {
+    title: "Security Monitoring & Detection",
+    img: MA,
+    description:
+      "Exploring security events, suspicious authentication behavior, monitoring logic, incident evidence, and defensive workflows.",
+    tag: "Cybersecurity",
+    proof:
+      "Built a secure login analyzer and operational monitoring utilities with automated testing.",
+  },
+  {
+    title: "Cvent & SpotMe Event Technology Builds",
+    img: AM,
+    description:
+      "Building registration websites, attendee experiences, mobile event apps, and event workflows using Cvent and SpotMe.",
+    tag: "Event Technology",
+    proof:
+      "Delivered 200+ end-to-end event builds including registration, attendee experiences, mobile app work, custom code, analytics, and live troubleshooting.",
+  },
+  {
+    title: "UX-Focused Technical Delivery",
+    img: UX,
+    description:
+      "Turning requirements into clear, usable experiences while balancing reliability, performance, maintainability, and stakeholder needs.",
+    tag: "Product",
+    proof:
+      "Client-facing delivery experience with iterative feedback, edge-case handling, and cross-functional communication.",
   },
 ];
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 22 },
-  visible: (i) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, delay: i * 0.08 },
-  }),
-};
-
-const tagStyle = (tag) => {
-  const base =
-    "inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold ring-1 ring-inset";
-
-  switch (tag) {
-    case "Software Development":
-      return `${base} bg-[#e6f6f6] text-[#1B4332] ring-[#1B4332]/10`;
-    case "Cybersecurity":
-      return `${base} bg-[#eaf3ea] text-[#1B4332] ring-[#1B4332]/10`;
-    case "Cloud Support":
-      return `${base} bg-[#eef2ff] text-[#1B4332] ring-[#1B4332]/10`;
-    case "Collaboration":
-      return `${base} bg-[#fff7ed] text-[#1B4332] ring-[#1B4332]/10`;
-    case "Product":
-      return `${base} bg-[#f3e8ff] text-[#1B4332] ring-[#1B4332]/10`;
-    default:
-      return `${base} bg-gray-100 text-[#1B4332] ring-[#1B4332]/10`;
-  }
-};
-
-const chipStyle = (active) => {
-  const base =
-    "px-4 py-2 rounded-full text-sm font-semibold transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#1B4332]/30";
-  return active
-    ? `${base} bg-[#1B4332] text-white`
-    : `${base} bg-white text-[#1B4332] border border-gray-200 hover:bg-gray-50`;
-};
 
 const Services = () => {
   const [activeFilter, setActiveFilter] = useState("All");
   const reduceMotion = useReducedMotion();
 
   const filtered = useMemo(() => {
-    if (activeFilter === "All") return highlightsData;
-    return highlightsData.filter((x) => x.tag === activeFilter);
+    if (activeFilter === "All") return services;
+    return services.filter((item) => item.tag === activeFilter);
   }, [activeFilter]);
 
   return (
-    <section
-      id="services"
-      className="scroll-mt-24 py-16 px-6 sm:px-8 bg-gray-50 text-[#1B4332]"
-      aria-label="Services and focus areas"
-    >
-      <div className="mx-auto max-w-7xl">
-        <div className="text-center">
-          <h2 className="mb-3 text-4xl font-bold">What I Do</h2>
-          <p className="mx-auto mb-6 max-w-3xl text-lg text-[#1B4332]/80">
-            Practical, hands-on focus areas where I contribute across software
-            development,security foundations, and troubleshooting.
+    <section id="services" className="relative overflow-hidden bg-[#f5f8f6] px-6 py-24 text-[#0d2c22] sm:px-8">
+      <div className="absolute right-[-12rem] top-8 h-96 w-96 rounded-full bg-emerald-300/16 blur-3xl" />
+
+      <div className="relative mx-auto max-w-7xl">
+        <motion.div
+          initial={reduceMotion ? false : { opacity: 0, y: 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.35 }}
+          className="mx-auto max-w-3xl text-center"
+        >
+          <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-emerald-700">
+            What I do
           </p>
+          <h2 className="mt-3 text-4xl font-black tracking-[-0.04em] sm:text-5xl">
+            Technical work across software, infrastructure, security, and event technology.
+          </h2>
+          <p className="mt-5 text-base leading-7 text-[#4f6c61]">
+            My strongest value comes from being able to move between coding,
+            troubleshooting, systems thinking, client requirements, and
+            operational reliability.
+          </p>
+        </motion.div>
 
-          <div className="flex flex-wrap justify-center gap-2 mb-8">
-            {FILTERS.map((label) => (
-              <button
-                key={label}
-                type="button"
-                onClick={() => setActiveFilter(label)}
-                className={chipStyle(activeFilter === label)}
-                aria-pressed={activeFilter === label}
-              >
-                {label}
-              </button>
-            ))}
-          </div>
-
-          <div className="flex flex-col items-center justify-center gap-3 mb-10 sm:flex-row">
-            <a
-              href="#projects"
-              className="inline-flex items-center justify-center rounded-xl bg-[#1B4332] px-5 py-3 text-sm font-semibold text-white shadow-sm hover:opacity-95 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#1B4332]/30"
+        <div className="mt-9 flex flex-wrap justify-center gap-2">
+          {FILTERS.map((filter) => (
+            <button
+              key={filter}
+              type="button"
+              onClick={() => setActiveFilter(filter)}
+              className={
+                "rounded-full px-4 py-2 text-sm font-bold transition " +
+                (activeFilter === filter
+                  ? "bg-[#0d2c22] text-white shadow-lg"
+                  : "border border-emerald-900/10 bg-white text-[#315447] hover:border-emerald-500/30 hover:text-emerald-700")
+              }
             >
-              View Projects
-            </a>
-            <a
-              href="#contact"
-              className="inline-flex items-center justify-center rounded-xl bg-white px-5 py-3 text-sm font-semibold text-[#1B4332] border border-gray-200 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#1B4332]/30"
-            >
-              Contact Me
-            </a>
-          </div>
+              {filter}
+            </button>
+          ))}
         </div>
 
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <motion.div
+          layout
+          className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3"
+        >
           {filtered.map((item, index) => (
             <motion.article
+              layout
               key={item.title}
-              custom={index}
-              variants={reduceMotion ? undefined : cardVariants}
-              initial={reduceMotion ? false : "hidden"}
-              whileInView={reduceMotion ? undefined : "visible"}
-              viewport={{ once: true, amount: 0.2 }}
-              whileHover={reduceMotion ? undefined : { scale: 1.02 }}
-              className="overflow-hidden transition bg-white border border-gray-100 shadow-lg rounded-2xl hover:shadow-xl"
-              aria-label={item.title}
+              initial={reduceMotion ? false : { opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: Math.min(index * 0.04, 0.2) }}
+              whileHover={reduceMotion ? undefined : { y: -6 }}
+              className="group overflow-hidden rounded-[1.6rem] border border-emerald-900/8 bg-white shadow-[0_18px_45px_rgba(19,67,50,0.07)]"
             >
-              <div className="relative">
+              <div className="relative overflow-hidden">
                 <img
                   src={item.img}
-                  alt={item.title}
-                  className="object-cover w-full h-44"
+                  alt=""
+                  className="h-44 w-full object-cover transition duration-700 group-hover:scale-105"
                   loading="lazy"
-                  decoding="async"
                 />
-
-                <div className="absolute top-4 left-4">
-                  <span className={tagStyle(item.tag)}>{item.tag}</span>
-                </div>
-
-                <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/5 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#071e17]/45 via-transparent to-transparent" />
+                <span className="absolute left-4 top-4 rounded-full border border-white/20 bg-[#071e17]/75 px-3 py-1 text-[10px] font-extrabold uppercase tracking-wide text-white backdrop-blur">
+                  {item.tag}
+                </span>
               </div>
 
-              <div className="p-6 text-left">
-                <h3 className="mb-2 text-xl font-semibold">{item.title}</h3>
-                <p className="leading-relaxed text-gray-700">
-                  {item.description}
-                </p>
-
-                {item.proof && (
-                  <p className="mt-4 text-sm text-gray-600">
-                    <span className="font-semibold text-[#1B4332]">
-                      Proof:
-                    </span>{" "}
+              <div className="p-6">
+                <h3 className="text-xl font-extrabold tracking-tight">{item.title}</h3>
+                <p className="mt-3 text-sm leading-6 text-[#587267]">{item.description}</p>
+                <div className="mt-5 border-t border-emerald-900/8 pt-4">
+                  <p className="text-xs leading-5 text-[#6b8178]">
+                    <span className="font-extrabold text-[#174b39]">Proof:</span>{" "}
                     {item.proof}
                   </p>
-                )}
+                </div>
               </div>
             </motion.article>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
