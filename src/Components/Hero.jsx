@@ -24,7 +24,13 @@ const Hero = () => {
           <motion.div
             key={index}
             className="absolute rounded-full border border-emerald-300/10 bg-emerald-300/5 blur-sm"
-            style={item}
+            style={{
+              top: item.top,
+              left: item.left,
+              right: item.right,
+              width: item.size,
+              height: item.size,
+            }}
             animate={{ y: [0, -22, 0], x: [0, 14, 0], rotate: [0, 5, 0] }}
             transition={{
               duration: 8 + index,
@@ -52,7 +58,7 @@ const Hero = () => {
             </span>
           </h1>
 
-          <p className="mt-7 max-w-2xl text-lg leading-8 text-emerald-50/72 sm:text-xl">
+          <p className="mt-7 max-w-2xl text-lg leading-8 text-emerald-50/70 sm:text-xl">
             M.S. Cybersecurity in Computer Science candidate at GWU with a
             software engineering foundation and growing hands-on focus in
             infrastructure reliability, automation, networking, cloud, and
