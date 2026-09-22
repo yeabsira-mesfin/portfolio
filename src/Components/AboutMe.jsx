@@ -202,7 +202,7 @@ const AboutMe = () => {
                   <FaXTwitter className="h-6 w-6" />
                 </a>
                 <a
-                  href="mailto:yeabsira.mesfin@gwmail.gwu.edu"
+                  href="mailto:yeabsira.mesfin29@gmail.com"
                   className="text-[#174b39] transition hover:-translate-y-0.5 hover:text-emerald-600"
                   aria-label="Email"
                 >
