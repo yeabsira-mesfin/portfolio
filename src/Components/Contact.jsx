@@ -1,6 +1,8 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useRef } from "react";
 import emailjs from "@emailjs/browser";
+import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
 
 const Contact = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -85,10 +87,38 @@ const Contact = () => {
             <p className="text-sm font-bold text-white">Direct email</p>
             <a
               href="mailto:yeabsira.mesfin29@gmail.com"
-              className="mt-2 inline-block text-sm font-semibold text-emerald-300 hover:text-emerald-200"
+              className="mt-2 inline-flex items-center gap-2 text-sm font-semibold text-emerald-300 hover:text-emerald-200"
             >
+              <FaEnvelope className="h-4 w-4" />
               yeabsira.mesfin29@gmail.com
             </a>
+
+            <div className="mt-5 flex flex-wrap gap-3" aria-label="Contact and social links">
+              <a
+                href="https://github.com/yeabsira-mesfin"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-2 text-xs font-bold text-white/75 transition hover:bg-white/10 hover:text-white"
+              >
+                <FaGithub className="h-4 w-4" /> GitHub
+              </a>
+              <a
+                href="https://www.linkedin.com/in/yeabsira-mesfin-76379928a"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-2 text-xs font-bold text-white/75 transition hover:bg-white/10 hover:text-white"
+              >
+                <FaLinkedin className="h-4 w-4" /> LinkedIn
+              </a>
+              <a
+                href="https://x.com/YeabsiraMesfin9"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-2 text-xs font-bold text-white/75 transition hover:bg-white/10 hover:text-white"
+              >
+                <FaXTwitter className="h-4 w-4" /> X
+              </a>
+            </div>
           </div>
         </motion.div>
 
