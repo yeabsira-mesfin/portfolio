@@ -173,7 +173,7 @@ const AboutMe = () => {
                 I value practical work, clear communication, measurable
                 reliability, and systems that can be understood and maintained.
               </p>
-              <div className="ml-5 hidden items-center gap-4 sm:flex">
+              <div className="ml-5 flex flex-wrap items-center gap-4">
                 <a
                   href="https://www.linkedin.com/in/yeabsira-mesfin-76379928a"
                   target="_blank"
