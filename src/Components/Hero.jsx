@@ -1,5 +1,7 @@
 import React from "react";
 import { motion, useReducedMotion } from "framer-motion";
+import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
 import myImage from "../images/MyPicture.png";
 
 const accents = [
@@ -90,6 +92,39 @@ const Hero = () => {
               className="inline-flex items-center justify-center rounded-xl border border-white/15 bg-white/5 px-6 py-3.5 text-sm font-bold text-white backdrop-blur transition hover:-translate-y-0.5 hover:bg-white/10"
             >
               Contact Me
+            </a>
+          </div>
+
+          <div className="mt-6 flex flex-wrap items-center gap-3" aria-label="Professional links">
+            <a
+              href="https://github.com/yeabsira-mesfin"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3.5 py-2 text-xs font-bold text-white/80 transition hover:-translate-y-0.5 hover:bg-white/10 hover:text-white"
+            >
+              <FaGithub className="h-4 w-4" /> GitHub
+            </a>
+            <a
+              href="https://www.linkedin.com/in/yeabsira-mesfin-76379928a"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3.5 py-2 text-xs font-bold text-white/80 transition hover:-translate-y-0.5 hover:bg-white/10 hover:text-white"
+            >
+              <FaLinkedin className="h-4 w-4" /> LinkedIn
+            </a>
+            <a
+              href="https://x.com/YeabsiraMesfin9"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3.5 py-2 text-xs font-bold text-white/80 transition hover:-translate-y-0.5 hover:bg-white/10 hover:text-white"
+            >
+              <FaXTwitter className="h-4 w-4" /> X
+            </a>
+            <a
+              href="mailto:yeabsira.mesfin29@gmail.com"
+              className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3.5 py-2 text-xs font-bold text-white/80 transition hover:-translate-y-0.5 hover:bg-white/10 hover:text-white"
+            >
+              <FaEnvelope className="h-4 w-4" /> Gmail
             </a>
           </div>
         </motion.div>
