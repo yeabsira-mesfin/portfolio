@@ -105,7 +105,7 @@ const Hero = () => {
               <FaGithub className="h-4 w-4" /> GitHub
             </a>
             <a
-              href="https://www.linkedin.com/in/yeabsira-mesfin-76379928a"
+              href="https://www.linkedin.com/in/yeabsira-mesfin-76379928a/"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3.5 py-2 text-xs font-bold text-white/80 transition hover:-translate-y-0.5 hover:bg-white/10 hover:text-white"
