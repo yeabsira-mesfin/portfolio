@@ -393,7 +393,9 @@ const Updates = () => {
                   href={X_PROFILE}
                   tabIndex={timelineLoaded ? 0 : -1}
                   style={{ display: timelineLoaded ? "block" : "none" }}
-                />
+                >
+                  <span className="sr-only">Yeabsira Mesfin on X</span>
+                </a>
               </div>
             </motion.div>
           )}
