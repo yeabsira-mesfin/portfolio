@@ -132,6 +132,6 @@ I am currently completing an **M.S. in Cybersecurity in Computer Science at The 
 
 - **Portfolio:** [yeabsira-mesfin.vercel.app](https://yeabsira-mesfin.vercel.app/)
 - **GitHub:** [github.com/yeabsira-mesfin](https://github.com/yeabsira-mesfin)
-- **LinkedIn:** [Yeabsira Mesfin](https://www.linkedin.com/in/yeabsira-mesfin-76379928a)
+- **LinkedIn:** [Yeabsira Mesfin](https://www.linkedin.com/in/yeabsira-mesfin-76379928a/)
 - **X:** [@YeabsiraMesfin9](https://x.com/YeabsiraMesfin9)
 - **Email:** [yeabsira.mesfin29@gmail.com](mailto:yeabsira.mesfin29@gmail.com)
