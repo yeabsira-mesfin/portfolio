@@ -1,5 +1,4 @@
 import './App.css';
-import { useState } from 'react';
 import Hero from './Components/Hero';
 import Navbar from './Components/Navbar';
 import AboutMe from './Components/AboutMe';
@@ -7,15 +6,15 @@ import Projects from './Components/Projects';
 import Services from './Components/Services';
 import Skills from './Components/Skills';
 import Hobbies from './Components/Hobbies';
+import Updates from './Components/Updates';
 import Contact from './Components/Contact';
-import ScrollProgressCircle from './Components/ScrollProgressCircle'
+import PortfolioBot from './Components/PortfolioBot';
+import ScrollProgressCircle from './Components/ScrollProgressCircle';
 
 function App() {
-  const [menuOpen, setMenuOpen] = useState(false);
-
   return (
     <div>
-      <Navbar menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
+      <Navbar />
       <ScrollProgressCircle />
       <Hero />
       <AboutMe />
@@ -23,7 +22,9 @@ function App() {
       <Services />
       <Skills />
       <Hobbies />
+      <Updates />
       <Contact />
+      <PortfolioBot />
     </div>
   );
 }
