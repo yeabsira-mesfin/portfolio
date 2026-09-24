@@ -51,11 +51,13 @@ const AboutMe = () => {
           </h2>
           <p className="mt-6 text-base leading-8 text-[#315447] sm:text-lg">
             I am Yeabsira Mesfin, a software engineer and M.S. Cybersecurity in
-            Computer Science candidate at The George Washington University. My
-            background combines full-stack development, client-facing technical
-            delivery, troubleshooting, and team leadership. I am now applying
-            that engineering foundation to reliable systems, infrastructure
-            automation, networking, cloud, and secure operations.
+            Computer Science candidate at The George Washington University. I
+            started building professionally through freelance work in 2019 and
+            now bring 5+ years of software development experience across
+            full-stack development, client-facing technical delivery,
+            troubleshooting, and team leadership. I am applying that foundation
+            to reliable systems, infrastructure automation, networking, cloud,
+            and secure operations.
           </p>
         </motion.div>
 
@@ -95,6 +97,11 @@ const AboutMe = () => {
             <h3 className="mt-3 text-2xl font-black">Engineering foundation</h3>
 
             <div className="mt-6 space-y-5 text-sm leading-7 text-emerald-50/70">
+              <p>
+                <span className="font-bold text-white">Experience:</span>{" "}
+                5+ years building software, beginning with freelance work in
+                2019 and continuing into enterprise technical delivery.
+              </p>
               <p>
                 <span className="font-bold text-white">Education:</span> M.S.
                 Cybersecurity in Computer Science at GWU, expected 2027, with a
@@ -174,38 +181,16 @@ const AboutMe = () => {
                 reliability, and systems that can be understood and maintained.
               </p>
               <div className="ml-5 flex flex-wrap items-center gap-4">
-                <a
-                  href="https://www.linkedin.com/in/yeabsira-mesfin-76379928a"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[#174b39] transition hover:-translate-y-0.5 hover:text-emerald-600"
-                  aria-label="LinkedIn"
-                >
+                <a href="https://www.linkedin.com/in/yeabsira-mesfin-76379928a" target="_blank" rel="noopener noreferrer" className="text-[#174b39] transition hover:-translate-y-0.5 hover:text-emerald-600" aria-label="LinkedIn">
                   <FaLinkedin className="h-6 w-6" />
                 </a>
-                <a
-                  href="https://github.com/yeabsira-mesfin"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[#174b39] transition hover:-translate-y-0.5 hover:text-emerald-600"
-                  aria-label="GitHub"
-                >
+                <a href="https://github.com/yeabsira-mesfin" target="_blank" rel="noopener noreferrer" className="text-[#174b39] transition hover:-translate-y-0.5 hover:text-emerald-600" aria-label="GitHub">
                   <FaGithub className="h-6 w-6" />
                 </a>
-                <a
-                  href="https://x.com/YeabsiraMesfin9"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[#174b39] transition hover:-translate-y-0.5 hover:text-emerald-600"
-                  aria-label="X"
-                >
+                <a href="https://x.com/YeabsiraMesfin9" target="_blank" rel="noopener noreferrer" className="text-[#174b39] transition hover:-translate-y-0.5 hover:text-emerald-600" aria-label="X">
                   <FaXTwitter className="h-6 w-6" />
                 </a>
-                <a
-                  href="mailto:yeabsira.mesfin29@gmail.com"
-                  className="text-[#174b39] transition hover:-translate-y-0.5 hover:text-emerald-600"
-                  aria-label="Email"
-                >
+                <a href="mailto:yeabsira.mesfin29@gmail.com" className="text-[#174b39] transition hover:-translate-y-0.5 hover:text-emerald-600" aria-label="Email">
                   <FaEnvelope className="h-6 w-6" />
                 </a>
               </div>
