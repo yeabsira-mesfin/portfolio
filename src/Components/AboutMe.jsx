@@ -181,7 +181,7 @@ const AboutMe = () => {
                 reliability, and systems that can be understood and maintained.
               </p>
               <div className="ml-5 flex flex-wrap items-center gap-4">
-                <a href="https://www.linkedin.com/in/yeabsira-mesfin-76379928a" target="_blank" rel="noopener noreferrer" className="text-[#174b39] transition hover:-translate-y-0.5 hover:text-emerald-600" aria-label="LinkedIn">
+                <a href="https://www.linkedin.com/in/yeabsira-mesfin-76379928a/" target="_blank" rel="noopener noreferrer" className="text-[#174b39] transition hover:-translate-y-0.5 hover:text-emerald-600" aria-label="LinkedIn">
                   <FaLinkedin className="h-6 w-6" />
                 </a>
                 <a href="https://github.com/yeabsira-mesfin" target="_blank" rel="noopener noreferrer" className="text-[#174b39] transition hover:-translate-y-0.5 hover:text-emerald-600" aria-label="GitHub">
