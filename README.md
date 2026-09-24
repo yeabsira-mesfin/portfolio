@@ -1,52 +1,137 @@
-# Yeabsira Mesfin's Portfolio
+# Yeabsira Mesfin | Portfolio
 
-Welcome to my personal portfolio website! This project showcases my journey as a web developer, featuring my skills, projects, and experience in the tech field. The site is built with React.js and styled with Tailwind CSS, offering a modern, responsive design optimized for mobile and desktop devices.
+[![Portfolio Build](https://github.com/yeabsira-mesfin/portfolio/actions/workflows/build.yml/badge.svg)](https://github.com/yeabsira-mesfin/portfolio/actions/workflows/build.yml)
 
-## Features
-- ✨ **Fully Responsive Design**: The website adjusts seamlessly across mobile, tablet, and desktop devices.
-- 🎨 **Smooth Animations**: Engaging, scroll-triggered animations bring the content to life, enhancing the user experience.
-- 📧 **Contact Form**: A simple, easy-to-use contact form to reach out to me directly.
-- 🛠️ **Projects Section**: A showcase of my development projects, built using React, Tailwind CSS, and other modern technologies, with detailed descriptions of each project.
-- 📂 **Downloadable CV**: Easily accessible for anyone who wants to view my professional background.
+Personal portfolio for **Yeabsira Mesfin**, a software engineer with **5+ years of software development experience** and an **M.S. Cybersecurity in Computer Science candidate at The George Washington University**.
+
+The site brings together my software engineering background with my growing focus on **cybersecurity, networking, infrastructure reliability, Linux, automation, and secure systems**.
+
+### [View the live portfolio](https://yeabsira-mesfin.vercel.app/)
+
+## What the Portfolio Includes
+
+### Interactive Portfolio Assistant
+A responsive portfolio assistant that helps visitors learn about my:
+- Experience and technical background
+- Software, infrastructure, and security projects
+- Skills and technologies
+- Cybersecurity graduate studies
+- Current engineering focus
+- Target roles and career interests
+
+The assistant uses a curated portfolio knowledge base so answers stay grounded in information presented on the site.
+
+### Security Feed
+A cybersecurity and networking focused section connected to my public X profile.
+
+It includes:
+- Animated network telemetry visualization
+- Gateway, firewall, API, IDS, and database nodes
+- Animated packet paths and security monitoring states
+- TLS, IDS, and authentication indicators
+- Public X profile integration
+- Mobile friendly fallback when embedded X timelines are blocked by browsers or content restrictions
+
+### Projects
+The portfolio highlights both software engineering and infrastructure/security projects, including:
+
+- **Windows Infrastructure Reliability Console**
+- **High Availability Hosting Lab**
+- **Secure Cloud Infrastructure as Code**
+- **Infrastructure Operations Toolkit**
+- **Secure Login Analyzer**
+- Full stack web applications and product projects
+
+### Responsive Design
+The interface is designed for desktop, tablet, and mobile with:
+- Responsive layouts
+- Smooth Framer Motion animations
+- Reduced motion accessibility support
+- Mobile friendly navigation
+- Keyboard aware assistant behavior on mobile devices
+
+### Contact
+The portfolio includes a working contact form powered by EmailJS, along with direct links to GitHub, LinkedIn, X, and email.
 
 ## Tech Stack
-- **Frontend**: React.js, Tailwind CSS
-- **Backend**: None (static site with a contact form integrated with Formspree)
-- **Other Tools**: Framer Motion for animations, Intersection Observer for visibility triggers
 
-## Installation & Setup
+**Frontend**
+- React 18
+- JavaScript
+- Tailwind CSS
+- Framer Motion
+- React Icons
 
-If you'd like to clone the repository and run it locally, follow these steps:
+**Integrations**
+- EmailJS
+- X public timeline integration
 
-1. Clone the repository:
-    ```bash
-    git clone https://github.com/yeabsira-mesfin/portfolio.git
-    ```
+**Engineering**
+- Git and GitHub
+- GitHub Actions CI
+- Responsive design
+- Accessibility considerations
+- Mobile browser compatibility
 
-2. Navigate to the project directory:
-    ```bash
-    cd portfolio
-    ```
+**Deployment**
+- Vercel
 
-3. Install dependencies:
-    ```bash
-    npm install
-    ```
+## Run Locally
 
-4. Run the project:
-    ```bash
-    npm start
-    ```
+Clone the repository:
 
-5. Open your browser and navigate to `http://localhost:3000` to view the site.
+```bash
+git clone https://github.com/yeabsira-mesfin/portfolio.git
+cd portfolio
+```
 
-## Contributing
-Feel free to fork this repository, open issues, or submit pull requests. Contributions are always welcome!
+Install dependencies:
 
-## License
-This project is open-source and available under the MIT License.
+```bash
+npm install
+```
 
-## Contact
-- **Email**: yeabsira.mesfin29@gmail.com
-- **LinkedIn**: [Yeabsira Mesfin](https://www.linkedin.com/in/yeabsira-mesfin)
-- **GitHub**: [yeabsira-mesfin](https://github.com/yeabsira-mesfin)
+Start the development server:
+
+```bash
+npm start
+```
+
+Create a production build:
+
+```bash
+npm run build
+```
+
+The local development server runs at:
+
+```text
+http://localhost:3000
+```
+
+## Continuous Integration
+
+Every push and pull request runs a GitHub Actions workflow that:
+
+1. Checks out the repository
+2. Sets up Node.js
+3. Installs dependencies with `npm ci`
+4. Runs the production build
+
+This helps catch build and integration issues before deployment.
+
+## About Me
+
+I started building software through freelance work in **2019** and now have **5+ years of software development experience**.
+
+My background includes full stack development, APIs, production troubleshooting, enterprise technical delivery, integrations, client support, and team leadership. I have supported enterprise clients including **BCD Travel, YPO, Abbott, and CDW**.
+
+I am currently completing an **M.S. in Cybersecurity in Computer Science at The George Washington University**, where I am expanding deeper into secure systems, networking, infrastructure, authentication, and defensive engineering.
+
+## Connect
+
+- **Portfolio:** [yeabsira-mesfin.vercel.app](https://yeabsira-mesfin.vercel.app/)
+- **GitHub:** [github.com/yeabsira-mesfin](https://github.com/yeabsira-mesfin)
+- **LinkedIn:** [Yeabsira Mesfin](https://www.linkedin.com/in/yeabsira-mesfin-76379928a)
+- **X:** [@YeabsiraMesfin9](https://x.com/YeabsiraMesfin9)
+- **Email:** [yeabsira.mesfin29@gmail.com](mailto:yeabsira.mesfin29@gmail.com)
