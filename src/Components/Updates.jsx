@@ -136,57 +136,144 @@ const NetworkAnimation = ({ reduceMotion }) => (
   </div>
 );
 
+const MobileXCard = ({ reduceMotion }) => (
+  <motion.a
+    href={X_PROFILE}
+    target="_blank"
+    rel="noopener noreferrer"
+    initial={reduceMotion ? false : { opacity: 0, y: 18 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true, amount: 0.3 }}
+    whileHover={reduceMotion ? undefined : { y: -4 }}
+    className="group relative block overflow-hidden rounded-[1.8rem] border border-emerald-200/10 bg-[#041711] p-5 shadow-2xl"
+  >
+    <div className="absolute inset-0 bg-[radial-gradient(circle_at_75%_18%,rgba(103,232,249,0.12),transparent_28%),radial-gradient(circle_at_25%_80%,rgba(110,231,183,0.12),transparent_30%)]" />
+    <div className="relative flex items-center justify-between gap-4">
+      <div className="flex items-center gap-3">
+        <motion.div
+          animate={reduceMotion ? undefined : { rotate: [0, 5, -5, 0], scale: [1, 1.04, 1] }}
+          transition={{ duration: 3.2, repeat: Infinity, repeatDelay: 1 }}
+          className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl border border-white/10 bg-white/5"
+        >
+          <FaXTwitter className="h-5 w-5 text-white" />
+        </motion.div>
+        <div>
+          <p className="text-sm font-extrabold text-white">Latest cybersecurity posts</p>
+          <p className="mt-1 text-xs leading-5 text-emerald-50/45">
+            Networking, Linux, infrastructure, authentication, and security engineering
+          </p>
+        </div>
+      </div>
+      <motion.span
+        animate={reduceMotion ? undefined : { x: [0, 4, 0] }}
+        transition={{ duration: 1.8, repeat: Infinity }}
+        className="text-xl text-emerald-300"
+      >
+        ↗
+      </motion.span>
+    </div>
+
+    <div className="relative mt-5 flex items-center gap-2">
+      {["NETWORK", "LINUX", "SECURITY"].map((tag, index) => (
+        <motion.span
+          key={tag}
+          animate={reduceMotion ? undefined : { opacity: [0.55, 1, 0.55] }}
+          transition={{ duration: 2.4, repeat: Infinity, delay: index * 0.35 }}
+          className="rounded-full border border-emerald-200/10 bg-emerald-300/5 px-2.5 py-1 text-[9px] font-extrabold tracking-widest text-emerald-200/70"
+        >
+          {tag}
+        </motion.span>
+      ))}
+    </div>
+
+    <div className="relative mt-5 flex items-center justify-between border-t border-white/8 pt-4">
+      <div>
+        <p className="text-xs font-bold text-white">@YeabsiraMesfin9</p>
+        <p className="mt-1 text-[10px] text-white/35">Open the newest public posts on X</p>
+      </div>
+      <span className="rounded-xl bg-emerald-300 px-4 py-2 text-xs font-extrabold text-[#061b15] transition group-hover:bg-emerald-200">
+        View latest
+      </span>
+    </div>
+  </motion.a>
+);
+
 const Updates = () => {
   const timelineRef = useRef(null);
   const reduceMotion = useReducedMotion();
   const [timelineLoaded, setTimelineLoaded] = useState(false);
-  const [timelineSlow, setTimelineSlow] = useState(false);
+  const [timelineFailed, setTimelineFailed] = useState(false);
+  const [useCompactX, setUseCompactX] = useState(
+    typeof window !== "undefined" ? window.innerWidth < 768 : true,
+  );
 
   useEffect(() => {
-    if (!timelineRef.current) return undefined;
+    const updateMode = () => setUseCompactX(window.innerWidth < 768);
+    updateMode();
+    window.addEventListener("resize", updateMode);
+    return () => window.removeEventListener("resize", updateMode);
+  }, []);
+
+  useEffect(() => {
+    if (useCompactX || !timelineRef.current) return undefined;
+
+    let slowTimer;
+    let script;
+    let existingScript;
 
     const detectEmbed = () => {
-      if (timelineRef.current?.querySelector("iframe")) {
+      const iframe = timelineRef.current?.querySelector("iframe");
+      if (!iframe) return;
+
+      const markLoaded = () => {
         setTimelineLoaded(true);
-        setTimelineSlow(false);
-      }
+        setTimelineFailed(false);
+      };
+
+      iframe.addEventListener("load", markLoaded, { once: true });
+      slowTimer = window.setTimeout(() => {
+        if (!timelineLoaded) setTimelineFailed(true);
+      }, 6500);
     };
 
     const observer = new MutationObserver(detectEmbed);
     observer.observe(timelineRef.current, { childList: true, subtree: true });
 
-    const slowTimer = window.setTimeout(() => {
-      if (!timelineRef.current?.querySelector("iframe")) setTimelineSlow(true);
-    }, 5000);
-
     const loadTimeline = () => {
       if (window.twttr?.widgets && timelineRef.current) {
         window.twttr.widgets.load(timelineRef.current);
-        window.setTimeout(detectEmbed, 250);
+        window.setTimeout(detectEmbed, 300);
       }
     };
 
-    const existingScript = document.getElementById("x-widgets-script");
+    existingScript = document.getElementById("x-widgets-script");
 
     if (existingScript) {
       loadTimeline();
       existingScript.addEventListener("load", loadTimeline);
     } else {
-      const script = document.createElement("script");
+      script = document.createElement("script");
       script.id = "x-widgets-script";
       script.src = "https://platform.x.com/widgets.js";
       script.async = true;
       script.charset = "utf-8";
       script.addEventListener("load", loadTimeline);
+      script.addEventListener("error", () => setTimelineFailed(true));
       document.body.appendChild(script);
     }
+
+    const absoluteTimeout = window.setTimeout(() => {
+      if (!timelineRef.current?.querySelector("iframe")) setTimelineFailed(true);
+    }, 7000);
 
     return () => {
       observer.disconnect();
       window.clearTimeout(slowTimer);
+      window.clearTimeout(absoluteTimeout);
       existingScript?.removeEventListener("load", loadTimeline);
+      script?.removeEventListener("load", loadTimeline);
     };
-  }, []);
+  }, [useCompactX, timelineLoaded]);
 
   return (
     <section id="updates" className="relative overflow-hidden bg-[#071f18] px-6 py-24 text-white sm:px-8">
@@ -213,7 +300,7 @@ const Updates = () => {
           </p>
         </motion.div>
 
-        <div className="mt-12 grid items-stretch gap-6 lg:grid-cols-[.85fr_1.15fr]">
+        <div className="mt-12 grid items-start gap-6 lg:grid-cols-[.85fr_1.15fr]">
           <motion.div
             initial={reduceMotion ? false : { opacity: 0, x: -24 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -243,85 +330,73 @@ const Updates = () => {
             </motion.a>
           </motion.div>
 
-          <motion.div
-            initial={reduceMotion ? false : { opacity: 0, x: 24 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.15 }}
-            transition={{ duration: 0.6, delay: 0.06 }}
-            className="relative min-h-[430px] overflow-hidden rounded-[1.8rem] border border-white/10 bg-[#041711] p-2 shadow-2xl sm:min-h-[520px]"
-          >
-            <AnimatePresence>
-              {!timelineLoaded && (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0, scale: 0.98 }}
-                  className="absolute inset-2 z-10 flex flex-col items-center justify-center overflow-hidden rounded-[1.45rem] border border-emerald-200/8 bg-[#061b15]"
-                >
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_35%,rgba(52,211,153,0.13),transparent_38%)]" />
-
-                  {!timelineSlow ? (
-                    <div className="relative text-center">
-                      <div className="relative mx-auto h-20 w-20">
-                        {[0, 1, 2].map((ring) => (
-                          <motion.div
-                            key={ring}
-                            className="absolute inset-0 rounded-full border border-emerald-300/25"
-                            animate={reduceMotion ? undefined : { scale: [0.45, 1.25], opacity: [0.8, 0] }}
-                            transition={{ duration: 2, repeat: Infinity, delay: ring * 0.55, ease: "easeOut" }}
-                          />
-                        ))}
-                        <div className="absolute inset-5 grid place-items-center rounded-full bg-emerald-300 text-[#061b15]">
-                          <FaXTwitter className="h-4 w-4" />
-                        </div>
-                      </div>
-                      <p className="mt-5 text-sm font-extrabold">Connecting to the live X feed</p>
-                      <p className="mt-2 text-xs text-white/40">Secure channel • Loading public posts</p>
-                    </div>
-                  ) : (
-                    <motion.div
-                      initial={{ opacity: 0, y: 8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className="relative max-w-sm px-6 text-center"
-                    >
-                      <div className="mx-auto grid h-14 w-14 place-items-center rounded-2xl border border-emerald-200/10 bg-emerald-300/8">
-                        <FaXTwitter className="h-5 w-5 text-emerald-200" />
-                      </div>
-                      <p className="mt-5 text-lg font-extrabold">The live feed is taking longer than expected.</p>
-                      <p className="mt-3 text-sm leading-6 text-white/45">
-                        Some mobile browsers or content blockers can prevent the X embed from loading.
-                        The rest of this section stays fully functional.
-                      </p>
-                      <a
-                        href={X_PROFILE}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="mt-5 inline-flex rounded-xl bg-emerald-300 px-5 py-3 text-sm font-extrabold text-[#061b15]"
-                      >
-                        Open latest posts on X ↗
-                      </a>
-                    </motion.div>
-                  )}
-                </motion.div>
-              )}
-            </AnimatePresence>
-
-            <div
-              ref={timelineRef}
-              className={"h-full min-h-[414px] overflow-hidden rounded-[1.45rem] bg-[#061b15] transition-opacity duration-500 sm:min-h-[504px] " + (timelineLoaded ? "opacity-100" : "opacity-0")}
+          {useCompactX ? (
+            <MobileXCard reduceMotion={reduceMotion} />
+          ) : (
+            <motion.div
+              initial={reduceMotion ? false : { opacity: 0, x: 24 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.15 }}
+              transition={{ duration: 0.6, delay: 0.06 }}
+              className="relative overflow-hidden rounded-[1.8rem] border border-white/10 bg-[#041711] p-2 shadow-2xl"
             >
-              <a
-                className="twitter-timeline"
-                data-theme="dark"
-                data-height="520"
-                data-chrome="noheader nofooter noborders transparent"
-                data-dnt="true"
-                href={X_PROFILE}
+              <AnimatePresence mode="wait">
+                {!timelineLoaded && !timelineFailed && (
+                  <motion.div
+                    key="loading"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="flex min-h-[420px] flex-col items-center justify-center rounded-[1.45rem] border border-emerald-200/8 bg-[#061b15] px-6 text-center"
+                  >
+                    <div className="relative h-20 w-20">
+                      {[0, 1, 2].map((ring) => (
+                        <motion.div
+                          key={ring}
+                          className="absolute inset-0 rounded-full border border-emerald-300/25"
+                          animate={reduceMotion ? undefined : { scale: [0.45, 1.25], opacity: [0.8, 0] }}
+                          transition={{ duration: 2, repeat: Infinity, delay: ring * 0.55, ease: "easeOut" }}
+                        />
+                      ))}
+                      <div className="absolute inset-5 grid place-items-center rounded-full bg-emerald-300 text-[#061b15]">
+                        <FaXTwitter className="h-4 w-4" />
+                      </div>
+                    </div>
+                    <p className="mt-5 text-sm font-extrabold">Connecting to the live X feed</p>
+                    <p className="mt-2 text-xs text-white/40">Loading public posts</p>
+                  </motion.div>
+                )}
+
+                {timelineFailed && !timelineLoaded && (
+                  <motion.div
+                    key="failed"
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="min-h-[420px]"
+                  >
+                    <MobileXCard reduceMotion={reduceMotion} />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              <div
+                ref={timelineRef}
+                className={timelineLoaded ? "block min-h-[500px] overflow-hidden rounded-[1.45rem] bg-[#061b15]" : "absolute h-px w-px overflow-hidden opacity-0 pointer-events-none"}
+                aria-hidden={!timelineLoaded}
               >
-                Yeabsira Mesfin on X
-              </a>
-            </div>
-          </motion.div>
+                <a
+                  className="twitter-timeline"
+                  data-theme="dark"
+                  data-height="520"
+                  data-chrome="noheader nofooter noborders transparent"
+                  data-dnt="true"
+                  href={X_PROFILE}
+                  tabIndex={timelineLoaded ? 0 : -1}
+                  style={{ display: timelineLoaded ? "block" : "none" }}
+                />
+              </div>
+            </motion.div>
+          )}
         </div>
       </div>
     </section>
