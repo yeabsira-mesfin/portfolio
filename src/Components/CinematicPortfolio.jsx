@@ -154,19 +154,19 @@ const RobotAssistant = ({ reduceMotion, onOpen }) => (
     type="button"
     onClick={onOpen}
     aria-label="Open Yeabsira's story"
-    className="group absolute bottom-[1%] right-[1%] z-30 w-[clamp(82px,19vw,118px)] cursor-pointer border-0 bg-transparent p-0 text-left sm:bottom-[2%] sm:right-[2%]"
+    className="group absolute bottom-[2%] right-[2%] z-30 w-[clamp(58px,13vw,82px)] cursor-pointer border-0 bg-transparent p-0 text-left sm:bottom-[3%] sm:right-[3%]"
     animate={reduceMotion ? undefined : { y: [0, -9, 0, -2, 0], rotate: [0, -1.2, 1.2, -0.5, 0] }}
     transition={{ duration: 4.8, repeat: Infinity, repeatDelay: 1.4, ease: [0.22, 1, 0.36, 1] }}
     whileHover={reduceMotion ? undefined : { y: -7, scale: 1.035 }}
     whileTap={reduceMotion ? undefined : { scale: 0.97 }}
   >
     <motion.div
-      className="absolute bottom-[84%] right-[46%] w-[145px] rounded-2xl border border-[#7CEBDD]/16 bg-[#071821]/88 px-3 py-2.5 shadow-[0_16px_50px_rgba(0,8,15,.38)] backdrop-blur-xl sm:w-[165px] sm:px-3.5 sm:py-3"
+      className="absolute bottom-[84%] right-[38%] w-[128px] rounded-2xl border border-[#7CEBDD]/16 bg-[#071821]/88 px-3 py-2.5 shadow-[0_16px_50px_rgba(0,8,15,.38)] backdrop-blur-xl sm:w-[145px] sm:px-3.5 sm:py-3"
       animate={reduceMotion ? undefined : { y: [0, -2, 0], opacity: [0.86, 1, 0.9] }}
       transition={{ duration: 3.8, repeat: Infinity, ease: "easeInOut" }}
     >
-      <p className="text-[10px] font-semibold leading-4 text-[#E8FAF8] sm:text-[11px]">You wanna know more about me?</p>
-      <p className="mt-1 font-mono text-[7px] uppercase tracking-[.16em] text-[#6EE8D7]/55">tap me · I’ll show you</p>
+      <p className="text-[10px] font-semibold leading-4 text-[#E8FAF8] sm:text-[11px]">Touch me to explore</p>
+      <p className="mt-1 font-mono text-[7px] uppercase tracking-[.16em] text-[#6EE8D7]/55">start the journey</p>
       <span className="absolute -bottom-1.5 right-5 h-3 w-3 rotate-45 border-b border-r border-[#7CEBDD]/16 bg-[#071821]" />
     </motion.div>
 
@@ -335,7 +335,7 @@ const HeroVisual = ({ scene, wheelTurn, reduceMotion, onNavigate }) => (
   <div className="relative mx-auto w-full max-w-[640px] px-1 sm:px-3">
     <HeroSignalField reduceMotion={reduceMotion} />
     <Gear scene={scene} wheelTurn={wheelTurn} reduceMotion={reduceMotion} onNavigate={onNavigate} />
-    <RobotAssistant reduceMotion={reduceMotion} onOpen={() => onNavigate(1)} />
+    {scene === 0 && <RobotAssistant reduceMotion={reduceMotion} onOpen={() => onNavigate(1)} />}
   </div>
 );
 
