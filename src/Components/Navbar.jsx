@@ -1,73 +1,118 @@
-import React, { useState } from "react";
-import logo from "../images/Logo.jpg";
+import React, { useEffect, useState } from "react";
+import { FaArrowRight, FaLinkedinIn } from "react-icons/fa";
 
 const links = [
-  ["About", "#about"],
-  ["Projects", "#projects"],
-  ["Services", "#services"],
-  ["Skills", "#skills"],
-  ["Hobbies", "#hobbies"],
-  ["Updates", "#updates"],
-  ["Contact", "#contact"],
+  ["Story", "about"],
+  ["Work", "projects"],
+  ["Stack", "skills"],
+  ["Signals", "updates"],
 ];
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [active, setActive] = useState("hero");
+
+  useEffect(() => {
+    const sections = ["hero", ...links.map(([, id]) => id), "contact"]
+      .map((id) => document.getElementById(id))
+      .filter(Boolean);
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible) setActive(visible.target.id);
+      },
+      { rootMargin: "-35% 0px -50% 0px", threshold: [0, 0.2, 0.5] },
+    );
+
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <nav className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-[#061b15]/86 text-white shadow-[0_10px_40px_rgba(0,0,0,0.18)] backdrop-blur-xl">
-      <div className="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-5 sm:px-7 lg:px-8">
-        <a href="#hero" className="group flex items-center gap-3">
-          <img
-            src={logo}
-            alt="Yeabsira Mesfin logo"
-            className="h-9 w-9 rounded-xl object-cover ring-1 ring-white/15 transition group-hover:scale-105"
-          />
-          <div className="hidden sm:block">
-            <div className="text-sm font-extrabold tracking-tight">Yeabsira Mesfin</div>
-            <div className="text-[10px] font-semibold uppercase tracking-[0.16em] text-emerald-200/65">
-              Software • Infrastructure • Security
-            </div>
+    <nav className="pointer-events-none fixed inset-x-0 top-4 z-50 px-4 sm:px-6">
+      <div className="pointer-events-auto mx-auto max-w-6xl">
+        <div className="flex items-center justify-between rounded-2xl border border-white/10 bg-[#0b0c0e]/85 px-3 py-2 text-white shadow-[0_18px_60px_rgba(0,0,0,0.28)] backdrop-blur-2xl sm:px-4">
+          <a href="#hero" className="group flex min-w-0 items-center gap-3" aria-label="Back to top">
+            <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-[#d9ff43] font-black tracking-[-0.05em] text-[#0b0c0e] transition-transform group-hover:-rotate-3 group-hover:scale-105">
+              YM
+            </span>
+            <span className="hidden min-w-0 sm:block">
+              <span className="block truncate text-sm font-black tracking-[-0.02em]">Yeabsira Mesfin</span>
+              <span className="block text-[10px] font-semibold uppercase tracking-[0.16em] text-white/40">
+                Build / Operate / Secure
+              </span>
+            </span>
+          </a>
+
+          <div className="hidden items-center gap-1 lg:flex">
+            {links.map(([label, id]) => (
+              <a
+                key={id}
+                href={`#${id}`}
+                className={`rounded-xl px-3.5 py-2 text-sm font-bold transition ${
+                  active === id
+                    ? "bg-white/10 text-[#d9ff43]"
+                    : "text-white/55 hover:bg-white/5 hover:text-white"
+                }`}
+              >
+                {label}
+              </a>
+            ))}
           </div>
-        </a>
 
-        <div className="hidden items-center gap-1 md:flex">
-          {links.map(([label, href]) => (
+          <div className="flex items-center gap-2">
             <a
-              key={label}
-              href={href}
-              className="rounded-lg px-3 py-2 text-sm font-semibold text-white/72 transition hover:bg-white/7 hover:text-white"
+              href="https://www.linkedin.com/in/yeabsira-mesfin-76379928a"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden h-10 w-10 place-items-center rounded-xl border border-white/10 bg-white/[0.045] text-white/70 transition hover:border-[#d9ff43]/40 hover:text-[#d9ff43] sm:grid"
+              aria-label="Yeabsira Mesfin on LinkedIn"
             >
-              {label}
+              <FaLinkedinIn />
             </a>
-          ))}
+            <a
+              href="#contact"
+              className="hidden items-center gap-2 rounded-xl bg-[#d9ff43] px-4 py-2.5 text-sm font-black text-[#0b0c0e] transition hover:-translate-y-0.5 hover:bg-[#e5ff7b] md:inline-flex"
+            >
+              Start a conversation <FaArrowRight className="text-xs" />
+            </a>
+            <button
+              type="button"
+              onClick={() => setIsOpen((value) => !value)}
+              className="grid h-10 w-10 place-items-center rounded-xl border border-white/10 bg-white/[0.045] text-lg lg:hidden"
+              aria-label="Toggle navigation"
+              aria-expanded={isOpen}
+            >
+              {isOpen ? "×" : "≡"}
+            </button>
+          </div>
         </div>
 
-        <button
-          type="button"
-          onClick={() => setIsOpen((value) => !value)}
-          className="grid h-10 w-10 place-items-center rounded-xl border border-white/10 bg-white/5 md:hidden"
-          aria-label="Toggle navigation"
-          aria-expanded={isOpen}
-        >
-          <span className="text-xl">{isOpen ? "×" : "☰"}</span>
-        </button>
-      </div>
-
-      {isOpen && (
-        <div className="border-t border-white/10 bg-[#061b15]/98 px-5 py-3 md:hidden">
-          {links.map(([label, href]) => (
+        {isOpen && (
+          <div className="mt-2 overflow-hidden rounded-2xl border border-white/10 bg-[#0b0c0e]/95 p-2 text-white shadow-2xl backdrop-blur-2xl lg:hidden">
+            {links.map(([label, id]) => (
+              <a
+                key={id}
+                href={`#${id}`}
+                onClick={() => setIsOpen(false)}
+                className="flex items-center justify-between rounded-xl px-4 py-3 text-sm font-bold text-white/70 hover:bg-white/5 hover:text-white"
+              >
+                {label} <span className="text-white/25">↘</span>
+              </a>
+            ))}
             <a
-              key={label}
-              href={href}
+              href="#contact"
               onClick={() => setIsOpen(false)}
-              className="block rounded-lg px-3 py-3 text-sm font-semibold text-white/80 hover:bg-white/5 hover:text-white"
+              className="mt-1 flex items-center justify-between rounded-xl bg-[#d9ff43] px-4 py-3 text-sm font-black text-[#0b0c0e]"
             >
-              {label}
+              Contact <FaArrowRight className="text-xs" />
             </a>
-          ))}
-        </div>
-      )}
+          </div>
+        )}
+      </div>
     </nav>
   );
 };
