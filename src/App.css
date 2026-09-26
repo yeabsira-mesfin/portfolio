@@ -4,14 +4,14 @@ input:-webkit-autofill:hover,
 textarea:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 textarea:-webkit-autofill:focus {
-  -webkit-box-shadow: 0 0 0 1000px #0b2a20 inset !important;
+  -webkit-box-shadow: 0 0 0 1000px #121417 inset !important;
   -webkit-text-fill-color: white !important;
   caret-color: white;
   transition: background-color 9999s ease-in-out 0s;
 }
 
 iframe {
-  scrollbar-color: #4fd1a1 #0a241c;
+  scrollbar-color: #d9ff43 #0b0c0e;
   scrollbar-width: thin;
 }
 
@@ -21,10 +21,10 @@ iframe::-webkit-scrollbar {
 }
 
 iframe::-webkit-scrollbar-thumb {
-  background-color: #4fd1a1;
+  background-color: #d9ff43;
   border-radius: 999px;
 }
 
 iframe::-webkit-scrollbar-track {
-  background: #0a241c;
+  background: #0b0c0e;
 }
