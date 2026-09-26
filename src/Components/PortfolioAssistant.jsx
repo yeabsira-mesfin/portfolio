@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion, useAnimationControls, useReducedMotion } from "framer-motion";
 import { FaArrowUp, FaTimes } from "react-icons/fa";
 
@@ -62,9 +62,13 @@ const RobotMark = ({ reduceMotion, controls }) => (
 const PortfolioAssistant = () => {
   const reduceMotion = useReducedMotion();
   const controls = useAnimationControls();
-  const lastTouchRef = useRef(0);
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
+  const [mobileViewport, setMobileViewport] = useState({
+    active: false,
+    height: 0,
+    keyboardInset: 0,
+  });
   const [messages, setMessages] = useState([
     {
       role: "assistant",
@@ -87,14 +91,50 @@ const PortfolioAssistant = () => {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    const viewport = window.visualViewport;
+
+    const syncViewport = () => {
+      const active = window.innerWidth < 640;
+      const height = viewport?.height || window.innerHeight;
+      const keyboardInset = active && viewport
+        ? Math.max(0, window.innerHeight - viewport.height - viewport.offsetTop)
+        : 0;
+
+      setMobileViewport({ active, height, keyboardInset });
+    };
+
+    syncViewport();
+    window.addEventListener("resize", syncViewport);
+    viewport?.addEventListener("resize", syncViewport);
+    viewport?.addEventListener("scroll", syncViewport);
+
+    return () => {
+      window.removeEventListener("resize", syncViewport);
+      viewport?.removeEventListener("resize", syncViewport);
+      viewport?.removeEventListener("scroll", syncViewport);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!open || !mobileViewport.active) return undefined;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [open, mobileViewport.active]);
+
   const visiblePrompts = useMemo(() => quickPrompts.slice(0, 4), []);
 
   const excitedJump = () => {
     if (reduceMotion) return;
     controls.start({
-      y: [0, -11, 0, -5, 0],
-      rotate: [0, -2, 2, -0.75, 0],
-      transition: { duration: 0.68, ease: [0.16, 1, 0.3, 1] },
+      y: [0, -10, 0, -4, 0],
+      rotate: [0, -2, 2, -0.7, 0],
+      transition: { duration: 0.66, ease: [0.16, 1, 0.3, 1] },
     });
   };
 
@@ -104,17 +144,6 @@ const PortfolioAssistant = () => {
       if (next) excitedJump();
       return next;
     });
-  };
-
-  const handleRobotTouchEnd = (event) => {
-    lastTouchRef.current = Date.now();
-    event.preventDefault();
-    toggleChat();
-  };
-
-  const handleRobotClick = () => {
-    if (Date.now() - lastTouchRef.current < 700) return;
-    toggleChat();
   };
 
   const ask = (question) => {
@@ -134,46 +163,54 @@ const PortfolioAssistant = () => {
     ask(input);
   };
 
+  const mobileChatStyle = mobileViewport.active
+    ? {
+        bottom: `${Math.max(96, mobileViewport.keyboardInset + 88)}px`,
+        maxHeight: `${Math.max(210, mobileViewport.height - 116)}px`,
+      }
+    : undefined;
+
   return (
     <div className="pointer-events-none fixed inset-0 z-[90]">
       <AnimatePresence>
         {open && (
           <motion.section
-            initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 12, scale: 0.985, filter: "blur(3px)" }}
-            animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
-            exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 8, scale: 0.99, filter: "blur(2px)" }}
-            transition={{ duration: reduceMotion ? 0.08 : 0.34, ease: [0.16, 1, 0.3, 1] }}
-            className="pointer-events-auto absolute bottom-[108px] right-3 z-[100] flex max-h-[min(70vh,620px)] w-[min(380px,calc(100vw-24px))] flex-col overflow-hidden rounded-[1.6rem] border border-[#7cebdd]/16 bg-[#03131a]/95 shadow-[0_28px_90px_rgba(0,5,11,.62),0_0_40px_rgba(88,230,209,.06)] backdrop-blur-2xl sm:bottom-[116px] sm:right-5"
+            initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 10, scale: 0.99 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 7, scale: 0.992 }}
+            transition={{ duration: reduceMotion ? 0.08 : 0.3, ease: [0.16, 1, 0.3, 1] }}
+            style={mobileChatStyle}
+            className="pointer-events-auto fixed inset-x-2 z-[100] flex max-h-[calc(100dvh-116px)] flex-col overflow-hidden rounded-[1.45rem] border border-[#7cebdd]/18 bg-[#03131a]/98 shadow-[0_28px_90px_rgba(0,5,11,.68),0_0_40px_rgba(88,230,209,.07)] backdrop-blur-2xl sm:absolute sm:inset-x-auto sm:bottom-[116px] sm:right-5 sm:max-h-[min(70vh,620px)] sm:w-[380px]"
             aria-label="Chat with Yeabsira's portfolio assistant"
           >
-            <div className="flex items-center justify-between border-b border-[#7cebdd]/10 px-4 py-3.5">
+            <div className="flex shrink-0 items-center justify-between border-b border-[#7cebdd]/10 px-4 py-3.5">
               <div className="flex items-center gap-3">
-                <div className="grid h-9 w-9 place-items-center rounded-full border border-[#7cebdd]/15 bg-[#7cebdd]/[.045]">
+                <div className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-[#7cebdd]/15 bg-[#7cebdd]/[.045]">
                   <div className="flex gap-1">
                     <span className="h-1.5 w-2 rounded-full bg-[#58e6d1] shadow-[0_0_7px_rgba(88,230,209,.8)]" />
                     <span className="h-1.5 w-2 rounded-full bg-[#58e6d1] shadow-[0_0_7px_rgba(88,230,209,.8)]" />
                   </div>
                 </div>
-                <div>
-                  <p className="text-sm font-semibold text-[#effffc]">Ask about Yeabsira</p>
-                  <p className="mt-0.5 font-mono text-[8px] uppercase tracking-[.16em] text-[#7cebdd]/45">portfolio assistant · online</p>
+                <div className="min-w-0">
+                  <p className="truncate text-sm font-semibold text-[#effffc]">Ask about Yeabsira</p>
+                  <p className="mt-0.5 truncate font-mono text-[8px] uppercase tracking-[.16em] text-[#7cebdd]/45">portfolio assistant · online</p>
                 </div>
               </div>
-              <button type="button" onClick={() => setOpen(false)} className="grid h-8 w-8 touch-manipulation place-items-center rounded-full text-[#cce6e2]/45 transition duration-300 hover:bg-[#7cebdd]/[.06] hover:text-white" aria-label="Minimize chat">
+              <button type="button" onClick={() => setOpen(false)} className="grid h-10 w-10 shrink-0 touch-manipulation place-items-center rounded-full text-[#cce6e2]/55 transition duration-300 hover:bg-[#7cebdd]/[.06] hover:text-white" aria-label="Minimize chat">
                 <FaTimes className="text-xs" />
               </button>
             </div>
 
-            <div className="min-h-0 flex-1 space-y-3 overflow-y-auto px-4 py-4 scroll-smooth">
+            <div className="min-h-0 flex-1 space-y-3 overflow-y-auto overscroll-contain px-4 py-4 scroll-smooth">
               {messages.map((message, index) => (
                 <motion.div
                   key={`${message.role}-${index}`}
-                  initial={reduceMotion ? false : { opacity: 0, y: 5 }}
+                  initial={reduceMotion ? false : { opacity: 0, y: 4 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.24, ease: [0.16, 1, 0.3, 1] }}
+                  transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
                   className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}
                 >
-                  <div className={`max-w-[88%] rounded-2xl px-3.5 py-2.5 text-[12px] leading-5 sm:text-[13px] ${message.role === "user" ? "rounded-br-md bg-[#dffffb] text-[#03131a]" : "rounded-bl-md border border-[#7cebdd]/10 bg-[#7cebdd]/[.035] text-[#d9eeeb]/78"}`}>
+                  <div className={`max-w-[88%] rounded-2xl px-3.5 py-2.5 text-[13px] leading-5 sm:text-[13px] ${message.role === "user" ? "rounded-br-md bg-[#dffffb] text-[#03131a]" : "rounded-bl-md border border-[#7cebdd]/10 bg-[#7cebdd]/[.035] text-[#d9eeeb]/78"}`}>
                     {message.text}
                   </div>
                 </motion.div>
@@ -181,22 +218,22 @@ const PortfolioAssistant = () => {
 
               <div className="flex flex-wrap gap-1.5 pt-1">
                 {visiblePrompts.map((prompt) => (
-                  <button key={prompt} type="button" onClick={() => ask(prompt)} className="touch-manipulation rounded-full border border-[#7cebdd]/10 bg-[#7cebdd]/[.025] px-2.5 py-1.5 text-[9px] font-medium text-[#cce8e4]/55 transition duration-300 hover:border-[#7cebdd]/25 hover:bg-[#7cebdd]/[.05] hover:text-[#effffc]">
+                  <button key={prompt} type="button" onClick={() => ask(prompt)} className="touch-manipulation rounded-full border border-[#7cebdd]/10 bg-[#7cebdd]/[.025] px-3 py-2 text-[11px] font-medium text-[#cce8e4]/58 transition duration-300 hover:border-[#7cebdd]/25 hover:bg-[#7cebdd]/[.05] hover:text-[#effffc] sm:px-2.5 sm:py-1.5 sm:text-[9px]">
                     {prompt}
                   </button>
                 ))}
               </div>
             </div>
 
-            <form onSubmit={handleSubmit} className="border-t border-[#7cebdd]/10 p-3">
-              <div className="flex items-center gap-2 rounded-2xl border border-[#7cebdd]/11 bg-[#020b12]/55 p-1.5 pl-3 transition-colors duration-300 focus-within:border-[#7cebdd]/28">
+            <form onSubmit={handleSubmit} className="shrink-0 border-t border-[#7cebdd]/10 bg-[#03131a]/98 p-3 pb-[max(12px,env(safe-area-inset-bottom))] sm:pb-3">
+              <div className="flex items-center gap-2 rounded-2xl border border-[#7cebdd]/14 bg-[#020b12]/70 p-1.5 pl-3 transition-colors duration-300 focus-within:border-[#7cebdd]/38">
                 <input
                   value={input}
                   onChange={(event) => setInput(event.target.value)}
                   placeholder="Ask about projects, skills, experience…"
-                  className="min-w-0 flex-1 border-0 bg-transparent py-2 text-[12px] text-[#ecfbf9] outline-none placeholder:text-[#9ab7b3]/30"
+                  className="min-w-0 flex-1 border-0 bg-transparent py-2.5 text-[16px] text-[#ecfbf9] outline-none placeholder:text-[#9ab7b3]/38 sm:py-2 sm:text-[13px]"
                 />
-                <button type="submit" className="grid h-9 w-9 shrink-0 touch-manipulation place-items-center rounded-xl bg-[#dffffb] text-[#03131a] transition duration-300 hover:bg-white" aria-label="Send message">
+                <button type="submit" className="grid h-10 w-10 shrink-0 touch-manipulation place-items-center rounded-xl bg-[#dffffb] text-[#03131a] transition duration-300 hover:bg-white" aria-label="Send message">
                   <FaArrowUp className="text-[10px]" />
                 </button>
               </div>
@@ -205,35 +242,36 @@ const PortfolioAssistant = () => {
         )}
       </AnimatePresence>
 
-      <div className="pointer-events-auto absolute bottom-3 right-3 z-[110] flex items-end gap-2 sm:bottom-5 sm:right-5">
-        <AnimatePresence>
-          {!open && (
-            <motion.div
-              initial={{ opacity: 0, x: 6, scale: 0.97 }}
-              animate={{ opacity: 1, x: 0, scale: 1 }}
-              exit={{ opacity: 0, x: 4, scale: 0.98 }}
-              transition={{ duration: reduceMotion ? 0.08 : 0.3, ease: [0.16, 1, 0.3, 1] }}
-              className="mb-3 hidden max-w-[178px] rounded-2xl border border-[#7cebdd]/14 bg-[#061720]/88 px-3 py-2.5 shadow-[0_14px_44px_rgba(0,5,11,.4)] backdrop-blur-xl min-[390px]:block"
-            >
-              <p className="text-[10px] font-semibold leading-4 text-[#effffc]">Touch me to chat</p>
-              <p className="mt-1 font-mono text-[7px] uppercase tracking-[.15em] text-[#70e8d8]/50">ask about my work</p>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
+      <div className="pointer-events-auto fixed bottom-[max(10px,env(safe-area-inset-bottom))] right-[max(8px,env(safe-area-inset-right))] z-[110] sm:bottom-5 sm:right-5">
         <motion.button
           type="button"
-          onClick={handleRobotClick}
-          onTouchEnd={handleRobotTouchEnd}
-          whileHover={reduceMotion ? undefined : { y: -2, scale: 1.02 }}
-          whileTap={reduceMotion ? undefined : { scale: 0.97 }}
-          className="relative z-[120] grid h-[74px] w-[68px] touch-manipulation select-none place-items-center rounded-[1.35rem] border border-[#7cebdd]/12 bg-[#071720]/72 p-1 shadow-[0_18px_48px_rgba(0,5,11,.46),0_0_26px_rgba(88,230,209,.06)] backdrop-blur-xl sm:h-[78px] sm:w-[72px]"
+          onClick={toggleChat}
+          whileHover={reduceMotion ? undefined : { y: -2, scale: 1.015 }}
+          whileTap={reduceMotion ? undefined : { scale: 0.975 }}
+          className={`${open ? "w-[82px]" : "w-[218px]"} relative z-[120] h-[96px] touch-manipulation select-none border-0 bg-transparent p-0 text-left transition-[width] duration-300`}
           style={{ WebkitTapHighlightColor: "transparent" }}
           aria-label={open ? "Minimize portfolio assistant" : "Open portfolio assistant"}
           aria-expanded={open}
         >
-          <RobotMark reduceMotion={reduceMotion} controls={controls} />
-          <span className="absolute right-1.5 top-1.5 h-2 w-2 rounded-full bg-[#58e6d1] shadow-[0_0_9px_rgba(88,230,209,.85)]" />
+          <AnimatePresence>
+            {!open && (
+              <motion.div
+                initial={{ opacity: 0, x: 5, scale: 0.98 }}
+                animate={{ opacity: 1, x: 0, scale: 1 }}
+                exit={{ opacity: 0, x: 4, scale: 0.98 }}
+                transition={{ duration: reduceMotion ? 0.08 : 0.28, ease: [0.16, 1, 0.3, 1] }}
+                className="pointer-events-none absolute bottom-3 left-0 w-[148px] rounded-2xl border border-[#7cebdd]/16 bg-[#061720]/94 px-3 py-2.5 shadow-[0_14px_44px_rgba(0,5,11,.45)] backdrop-blur-xl"
+              >
+                <p className="text-[11px] font-semibold leading-4 text-[#effffc]">Touch me to chat</p>
+                <span className="absolute -right-1.5 bottom-5 h-3 w-3 rotate-45 border-r border-t border-[#7cebdd]/16 bg-[#061720]" />
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          <div className="pointer-events-none absolute bottom-0 right-0 grid h-[82px] w-[76px] place-items-center rounded-[1.35rem] border border-[#7cebdd]/14 bg-[#071720]/82 p-1 shadow-[0_18px_48px_rgba(0,5,11,.5),0_0_26px_rgba(88,230,209,.07)] backdrop-blur-xl">
+            <RobotMark reduceMotion={reduceMotion} controls={controls} />
+            <span className="absolute right-1.5 top-1.5 h-2 w-2 rounded-full bg-[#58e6d1] shadow-[0_0_9px_rgba(88,230,209,.85)]" />
+          </div>
         </motion.button>
       </div>
     </div>
