@@ -3,7 +3,8 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 
 const isHomeSceneVisible = () => {
   const heading = document.querySelector("h1");
-  return Boolean(heading && heading.textContent?.replace(/\s+/g, " ").includes("Yeabsira Mesfin"));
+  const normalizedHeading = heading?.textContent?.replace(/\s+/g, "");
+  return Boolean(normalizedHeading?.includes("YeabsiraMesfin"));
 };
 
 const HomeExplorerRobot = () => {
