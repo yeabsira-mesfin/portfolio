@@ -1,8 +1,8 @@
 import './App.css';
-import ProductionSystem from './Components/ProductionSystem';
+import CinematicPortfolio from './Components/CinematicPortfolio';
 
 function App() {
-  return <ProductionSystem />;
+  return <CinematicPortfolio />;
 }
 
 export default App;
