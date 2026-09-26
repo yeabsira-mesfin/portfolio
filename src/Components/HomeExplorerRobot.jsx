@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 
 const getCurrentScene = () => {
@@ -55,11 +55,11 @@ const HomeExplorerRobot = () => {
   const idleTimerRef = useRef(null);
   const navigateTimerRef = useRef(null);
 
-  const resetIdleTimer = () => {
+  const resetIdleTimer = useCallback(() => {
     window.clearTimeout(idleTimerRef.current);
     setIdle(false);
     idleTimerRef.current = window.setTimeout(() => setIdle(true), 60000);
-  };
+  }, []);
 
   useEffect(() => {
     const syncScene = () => setScene(getCurrentScene());
@@ -87,7 +87,7 @@ const HomeExplorerRobot = () => {
   useEffect(() => {
     resetIdleTimer();
     return () => window.clearTimeout(idleTimerRef.current);
-  }, [scene]);
+  }, [scene, resetIdleTimer]);
 
   useEffect(
     () => () => {
