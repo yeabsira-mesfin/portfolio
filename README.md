@@ -6,7 +6,7 @@ Official portfolio for **Yeabsira Mesfin**, a software engineer with **5+ years 
 
 The site brings together my software engineering background with my growing focus on **cybersecurity, networking, infrastructure reliability, Linux, automation, and secure systems**.
 
-### [View the live portfolio: yeabsiramesfin.com](https://yeabsiramesfin.com/)
+### [View the live portfolio: yeabsira-mesfin.vercel.app](https://yeabsira-mesfin.vercel.app/)
 
 ## What the Portfolio Includes
 
@@ -52,7 +52,7 @@ The interface is designed for desktop, tablet, and mobile with:
 
 ### Search and Identity Metadata
 The site includes:
-- Canonical URL metadata for `yeabsiramesfin.com`
+- Canonical URL metadata for `yeabsira-mesfin.vercel.app`
 - Search friendly page title and description
 - `Person` structured data for Yeabsira Mesfin
 - Open Graph and X/Twitter metadata
@@ -85,7 +85,7 @@ The portfolio includes a working contact form powered by EmailJS, along with dir
 
 **Deployment**
 - Vercel
-- Custom domain: [yeabsiramesfin.com](https://yeabsiramesfin.com/)
+- Live site: [yeabsira-mesfin.vercel.app](https://yeabsira-mesfin.vercel.app/)
 
 ## Run Locally
 
@@ -141,7 +141,7 @@ I am currently completing an **M.S. in Cybersecurity in Computer Science at The 
 
 ## Connect
 
-- **Portfolio:** [yeabsiramesfin.com](https://yeabsiramesfin.com/)
+- **Portfolio:** [yeabsira-mesfin.vercel.app](https://yeabsira-mesfin.vercel.app/)
 - **GitHub:** [github.com/yeabsira-mesfin](https://github.com/yeabsira-mesfin)
 - **LinkedIn:** [Yeabsira Mesfin](https://www.linkedin.com/in/yeabsira-mesfin-abera-76379928a/)
 - **X:** [@YeabsiraMesfin9](https://x.com/YeabsiraMesfin9)
