@@ -53,10 +53,10 @@ const Hero = () => {
             Software engineering • infrastructure • cybersecurity
           </div>
 
-          <h1 className="max-w-4xl text-[clamp(3rem,7vw,6.4rem)] font-black leading-[0.92] tracking-[-0.055em]">
-            Software Engineer
-            <span className="mt-3 block bg-gradient-to-r from-emerald-300 via-cyan-200 to-sky-300 bg-clip-text text-transparent">
-              building reliable systems.
+          <h1 className="max-w-4xl font-black leading-[0.94] tracking-[-0.055em]">
+            <span className="block text-[clamp(3rem,7vw,6.4rem)]">Yeabsira Mesfin</span>
+            <span className="mt-4 block bg-gradient-to-r from-emerald-300 via-cyan-200 to-sky-300 bg-clip-text text-[clamp(1.8rem,4vw,3.8rem)] leading-[1.02] text-transparent">
+              Software Engineer building reliable systems.
             </span>
           </h1>
 
@@ -105,7 +105,7 @@ const Hero = () => {
               <FaGithub className="h-4 w-4" /> GitHub
             </a>
             <a
-              href="https://www.linkedin.com/in/yeabsira-mesfin-76379928a/"
+              href="https://www.linkedin.com/in/yeabsira-mesfin-abera-76379928a/"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3.5 py-2 text-xs font-bold text-white/80 transition hover:-translate-y-0.5 hover:bg-white/10 hover:text-white"
@@ -155,7 +155,7 @@ const Hero = () => {
             <div className="relative mt-4 overflow-hidden rounded-[1.45rem] bg-[#0a281f]">
               <img
                 src={myImage}
-                alt="Yeabsira Mesfin"
+                alt="Yeabsira Mesfin, software engineer and cybersecurity graduate student"
                 className="aspect-[4/4.35] w-full object-cover object-top"
               />
               <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#061b15] via-[#061b15]/75 to-transparent px-5 pb-5 pt-16">
