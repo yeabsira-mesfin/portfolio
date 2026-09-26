@@ -1,9 +1,28 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 
-const getCurrentScene = () => {
-  const bodyText = document.body?.innerText || "";
+const getActiveNavScene = () => {
+  const activeNav = Array.from(document.querySelectorAll("header nav button")).find((button) =>
+    String(button.className).includes("bg-[#7CEBDD]/10")
+  );
 
+  const label = activeNav?.textContent?.trim().toLowerCase();
+  if (label === "story" || label === "projects" || label === "contact") return label;
+  return null;
+};
+
+const getCurrentScene = () => {
+  // The highlighted navigation item is the source of truth. This prevents old
+  // transition content from making the robot think it is still on another page.
+  const navScene = getActiveNavScene();
+  if (navScene) return navScene;
+
+  const heading = document.querySelector("h1");
+  const normalizedHeading = heading?.textContent?.replace(/\s+/g, "");
+  if (normalizedHeading?.includes("YeabsiraMesfin")) return "intro";
+
+  // Fallbacks only for the short moment before the nav highlight updates.
+  const bodyText = document.body?.innerText || "";
   if (
     bodyText.includes("03 / Contact") ||
     bodyText.includes("Let’s build what comes next.") ||
@@ -16,7 +35,6 @@ const getCurrentScene = () => {
 
   if (
     bodyText.includes("02 / Project orbit") ||
-    bodyText.includes("Selected\nwork.") ||
     bodyText.includes("Choose a project. The mechanism responds")
   ) {
     return "projects";
@@ -30,22 +48,12 @@ const getCurrentScene = () => {
     return "story";
   }
 
-  const heading = document.querySelector("h1");
-  const normalizedHeading = heading?.textContent?.replace(/\s+/g, "");
-  if (normalizedHeading?.includes("YeabsiraMesfin")) return "intro";
-
-  const activeNav = Array.from(document.querySelectorAll("header nav button")).find((button) =>
-    String(button.className).includes("bg-[#7CEBDD]/10")
-  );
-  const label = activeNav?.textContent?.trim().toLowerCase();
-  if (label === "story" || label === "projects" || label === "contact") return label;
-
   return null;
 };
 
 const sceneCopy = {
   intro: {
-    title: "Click to explore more.",
+    title: "Click to explore more",
     idle: "Bzzz... your journey is waiting.",
     aria: "Explore more of Yeabsira Mesfin's journey",
   },
@@ -147,6 +155,17 @@ const HomeExplorerRobot = () => {
 
   useEffect(() => {
     const sync = () => setScene(getCurrentScene());
+
+    const handleNavIntent = (event) => {
+      const button = event.target instanceof Element ? event.target.closest("header nav button") : null;
+      if (!button) return;
+
+      const label = button.textContent?.trim().toLowerCase();
+      if (label === "story" || label === "projects" || label === "contact") {
+        setScene(label);
+      }
+    };
+
     sync();
 
     const observer = new MutationObserver(sync);
@@ -158,7 +177,12 @@ const HomeExplorerRobot = () => {
       attributeFilter: ["class", "aria-label"],
     });
 
-    return () => observer.disconnect();
+    document.addEventListener("click", handleNavIntent, true);
+
+    return () => {
+      observer.disconnect();
+      document.removeEventListener("click", handleNavIntent, true);
+    };
   }, []);
 
   useEffect(() => {
@@ -176,16 +200,26 @@ const HomeExplorerRobot = () => {
 
   const navigateNext = () => {
     let target;
+    let nextScene;
 
     if (scene === "intro") {
+      nextScene = "story";
       target = findButton((text) => text.startsWith("Enter my story"));
     } else if (scene === "story") {
+      nextScene = "projects";
       target = findButton((text) => text.toLowerCase() === "projects");
     } else if (scene === "projects") {
+      nextScene = "contact";
       target = findButton((text) => text.toLowerCase() === "contact");
     }
 
-    target?.click();
+    if (!target || !nextScene) return;
+
+    // Update immediately so Story always shows the robot, Projects always has
+    // a working Contact action, and Contact never displays both assistants.
+    setScene(nextScene);
+    target.click();
+
     if (document.activeElement instanceof HTMLElement) document.activeElement.blur();
   };
 
@@ -213,10 +247,6 @@ const HomeExplorerRobot = () => {
         [data-journey-robot="true"] {
           -webkit-tap-highlight-color: transparent;
           touch-action: manipulation;
-        }
-        body:has([aria-label="Open portfolio assistant"]) [data-journey-robot="true"],
-        body:has([aria-label="Minimize portfolio assistant"]) [data-journey-robot="true"] {
-          display: none !important;
         }
       `}</style>
 
