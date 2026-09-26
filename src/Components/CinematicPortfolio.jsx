@@ -14,6 +14,7 @@ import {
 } from "react-icons/fa";
 import myImage from "../images/MyPicture.png";
 import windowsConsole from "../images/windows-infrastructure-console.svg";
+import PortfolioAssistant from "./PortfolioAssistant";
 
 const scenes = [
   { id: "intro", label: "Start", number: "00" },
@@ -468,7 +469,7 @@ const CinematicPortfolio = () => {
                   <a href="mailto:yeabsira.mesfin29@gmail.com" className="group rounded-2xl border border-[#7CEBDD]/9 bg-[#7CEBDD]/[.025] p-4 transition-all duration-700 hover:border-[#58E6D1]/35 hover:bg-[#7CEBDD]/[.045]"><FaEnvelope className="text-[#58E6D1]" /><p className="mt-4 font-mono text-[8px] uppercase tracking-[.18em] text-[#B9D9D5]/28">Email</p><p className="mt-1 break-all text-sm font-semibold text-[#E0F7F3]/76">yeabsira.mesfin29@gmail.com</p></a>
                   <a href="https://www.linkedin.com/in/yeabsira-mesfin-76379928a" target="_blank" rel="noopener noreferrer" className="group rounded-2xl border border-[#7CEBDD]/9 bg-[#7CEBDD]/[.025] p-4 transition-all duration-700 hover:border-[#7CB7FF]/35 hover:bg-[#7CEBDD]/[.045]"><FaLinkedinIn className="text-[#7CB7FF]" /><p className="mt-4 font-mono text-[8px] uppercase tracking-[.18em] text-[#B9D9D5]/28">LinkedIn</p><p className="mt-1 text-sm font-semibold text-[#E0F7F3]/76">Yeabsira Mesfin</p></a>
                   <a href="https://github.com/yeabsira-mesfin" target="_blank" rel="noopener noreferrer" className="group rounded-2xl border border-[#7CEBDD]/9 bg-[#7CEBDD]/[.025] p-4 transition-all duration-700 hover:border-[#B39BFF]/35 hover:bg-[#7CEBDD]/[.045]"><FaGithub className="text-[#B39BFF]" /><p className="mt-4 font-mono text-[8px] uppercase tracking-[.18em] text-[#B9D9D5]/28">GitHub</p><p className="mt-1 break-all text-sm font-semibold text-[#E0F7F3]/76">github.com/yeabsira-mesfin</p></a>
-                  <div className="rounded-2xl border border-[#7CEBDD]/9 bg-[#7CEBDD]/[.025] p-4"><FaMapMarkerAlt className="text-[#E8BD73]" /><p className="mt-4 font-mono text-[8px] uppercase tracking-[.18em] text-[#B9D9D5]/28">Based in</p><p className="mt-1 text-sm font-semibold text-[#E0F7F3]/76">Bristow, Virginia</p></div>
+                  <div className="rounded-2xl border border-[#7CEBDD]/9 bg-[#7CEBDD]/[.025] p-4"><FaMapMarkerAlt className="text-[#E8BD73]" /><p className="mt-4 font-mono text-[8px] uppercase tracking-[.18em] text-[#B9D9D5]/28">Based in</p><p className="mt-1 text-sm font-semibold text-[#E0F7F3]/76">Bristow, Virginia · Open to relocation across the U.S.</p></div>
                 </div>
                 <div className="mt-7 flex flex-wrap gap-3"><button type="button" onClick={() => navigate(0)} className="inline-flex items-center gap-2 rounded-full border border-[#7CEBDD]/10 px-4 py-3 text-xs font-bold text-[#C8EAE6]/52 transition-colors duration-700 hover:text-white"><FaArrowLeft /> Back to start</button><button type="button" onClick={() => navigate(2)} className="inline-flex items-center gap-2 rounded-full bg-[#DFFFFB] px-4 py-3 text-xs font-bold text-[#03131A]">Review projects <FaArrowRight /></button></div>
               </div>
@@ -476,6 +477,8 @@ const CinematicPortfolio = () => {
           )}
         </motion.main>
       </AnimatePresence>
+
+      {scene === 3 && <PortfolioAssistant />}
 
       {transitioning && <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: .58 }} className="pointer-events-none fixed inset-0 z-40 bg-[radial-gradient(circle_at_center,rgba(86,230,211,.055),rgba(2,11,18,.1)_38%,rgba(2,11,18,.38))]" />}
     </div>
