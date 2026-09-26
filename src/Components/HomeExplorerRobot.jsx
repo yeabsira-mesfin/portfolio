@@ -1,11 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 
 const getCurrentScene = () => {
   const bodyText = document.body?.innerText || "";
 
-  // Contact is checked first so the journey robot disappears as soon as the
-  // contact scene is mounted. The chatbot is the only assistant on that page.
   if (
     bodyText.includes("03 / Contact") ||
     bodyText.includes("Let’s build what comes next.") ||
@@ -36,7 +34,6 @@ const getCurrentScene = () => {
   const normalizedHeading = heading?.textContent?.replace(/\s+/g, "");
   if (normalizedHeading?.includes("YeabsiraMesfin")) return "intro";
 
-  // Final fallback: read the highlighted nav item.
   const activeNav = Array.from(document.querySelectorAll("header nav button")).find((button) =>
     String(button.className).includes("bg-[#7CEBDD]/10")
   );
@@ -75,11 +72,7 @@ const JourneyRobot = ({ awake, reduceMotion }) => (
       className="absolute bottom-0 left-[14%] h-[9%] w-[72%] rounded-[50%] bg-black/55 blur-md"
     />
 
-    <svg
-      viewBox="0 0 160 205"
-      className="absolute inset-0 h-full w-full overflow-visible drop-shadow-[0_16px_24px_rgba(0,0,0,.5)]"
-      aria-hidden="true"
-    >
+    <svg viewBox="0 0 160 205" className="absolute inset-0 h-full w-full overflow-visible drop-shadow-[0_16px_24px_rgba(0,0,0,.5)]" aria-hidden="true">
       <defs>
         <linearGradient id="journeyRobotShell" x1="0" y1="0" x2="1" y2="1">
           <stop offset="0%" stopColor="#FFFFFF" />
@@ -94,10 +87,7 @@ const JourneyRobot = ({ awake, reduceMotion }) => (
         </radialGradient>
         <filter id="journeyEyeGlow" x="-120%" y="-120%" width="340%" height="340%">
           <feGaussianBlur stdDeviation="4" result="blur" />
-          <feMerge>
-            <feMergeNode in="blur" />
-            <feMergeNode in="SourceGraphic" />
-          </feMerge>
+          <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
         </filter>
       </defs>
 
@@ -149,11 +139,11 @@ const HomeExplorerRobot = () => {
   const idleTimer = useRef(null);
   const navigateTimer = useRef(null);
 
-  const armIdleMessage = () => {
+  const armIdleMessage = useCallback(() => {
     window.clearTimeout(idleTimer.current);
     setIdle(false);
     idleTimer.current = window.setTimeout(() => setIdle(true), 60000);
-  };
+  }, []);
 
   useEffect(() => {
     const sync = () => setScene(getCurrentScene());
@@ -174,7 +164,7 @@ const HomeExplorerRobot = () => {
   useEffect(() => {
     armIdleMessage();
     return () => window.clearTimeout(idleTimer.current);
-  }, [scene]);
+  }, [scene, armIdleMessage]);
 
   useEffect(
     () => () => {
@@ -236,11 +226,7 @@ const HomeExplorerRobot = () => {
         aria-label={copy.aria}
         onClick={activate}
         initial={reduceMotion ? false : { opacity: 0, y: 8, scale: 0.96 }}
-        animate={
-          reduceMotion
-            ? { opacity: 1 }
-            : { opacity: 1, y: [0, -5, 0, -1, 0], rotate: [0, -0.5, 0.5, -0.15, 0] }
-        }
+        animate={reduceMotion ? { opacity: 1 } : { opacity: 1, y: [0, -5, 0, -1, 0], rotate: [0, -0.5, 0.5, -0.15, 0] }}
         transition={
           reduceMotion
             ? { duration: 0.08 }
@@ -259,9 +245,7 @@ const HomeExplorerRobot = () => {
           animate={reduceMotion ? undefined : idle ? { y: [0, -3, 0], scale: [1, 1.015, 1] } : { y: [0, -1.5, 0] }}
           transition={{ duration: idle ? 1.8 : 4.2, repeat: Infinity, ease: "easeInOut" }}
         >
-          <p className="text-[11px] font-semibold leading-4 text-[#ECFFFC] sm:text-[12px]">
-            {idle ? copy.idle : copy.title}
-          </p>
+          <p className="text-[11px] font-semibold leading-4 text-[#ECFFFC] sm:text-[12px]">{idle ? copy.idle : copy.title}</p>
           <span className="absolute -bottom-1.5 right-7 h-3 w-3 rotate-45 border-b border-r border-[#7CEBDD]/22 bg-[#061720]" />
         </motion.div>
 
