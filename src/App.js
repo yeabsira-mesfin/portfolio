@@ -1,8 +1,8 @@
 import './App.css';
-import CareerQuest from './Components/CareerQuest';
+import ProductionSystem from './Components/ProductionSystem';
 
 function App() {
-  return <CareerQuest />;
+  return <ProductionSystem />;
 }
 
 export default App;
