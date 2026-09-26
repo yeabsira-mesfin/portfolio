@@ -11,7 +11,6 @@ import {
   FaLinkedinIn,
   FaMapMarkerAlt,
   FaServer,
-  FaShieldAlt,
 } from "react-icons/fa";
 import myImage from "../images/MyPicture.png";
 import windowsConsole from "../images/windows-infrastructure-console.svg";
@@ -150,12 +149,12 @@ const Gear = ({ scene, wheelTurn, reduceMotion, onNavigate }) => {
               key={item.id}
               type="button"
               onClick={() => onNavigate(index + 1)}
-              className={`absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center gap-2 rounded-full border px-3 py-2 font-mono text-[9px] font-bold uppercase tracking-[0.17em] backdrop-blur-xl transition sm:text-[10px] ${
+              className={`absolute left-1/2 top-1/2 flex items-center gap-2 rounded-full border px-3 py-2 font-mono text-[9px] font-bold uppercase tracking-[0.17em] backdrop-blur-xl transition sm:text-[10px] ${
                 active
                   ? "border-[#F0B93F]/50 bg-[#F0B93F] text-[#120c13] shadow-[0_0_32px_rgba(240,185,63,.22)]"
                   : "border-white/12 bg-[#0d0910]/80 text-white/45 hover:border-white/28 hover:text-white"
               }`}
-              style={{ transform: `translate(-50%, -50%) rotate(${angle}deg) translateY(-245px) rotate(${-angle}deg)` }}
+              style={{ transform: `translate(-50%, -50%) rotate(${angle}deg) translateY(calc(-1 * clamp(150px, 38vw, 245px))) rotate(${-angle}deg)` }}
             >
               <span>{item.number}</span>
               <span>{item.label}</span>
@@ -459,7 +458,6 @@ const CinematicPortfolio = () => {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
           className="pointer-events-none fixed inset-0 z-40 bg-[radial-gradient(circle_at_center,rgba(215,18,202,.08),rgba(8,6,9,.15)_40%,rgba(8,6,9,.55))]"
         />
       )}
