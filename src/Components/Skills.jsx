@@ -1,189 +1,158 @@
-import { useEffect, useMemo } from "react";
-import { motion, useAnimation, useReducedMotion } from "framer-motion";
-import { useInView } from "react-intersection-observer";
-
+import { motion, useReducedMotion } from "framer-motion";
 import {
-  FaHtml5,
-  FaCss3Alt,
-  FaJs,
-  FaReact,
-  FaNodeJs,
-  FaJava,
-  FaShieldAlt,
+  FaCode,
+  FaDatabase,
+  FaDocker,
+  FaGitAlt,
   FaLock,
-  FaBug,
-  FaTachometerAlt,
   FaNetworkWired,
-  FaTools,
-  FaWindows,
+  FaNodeJs,
+  FaPython,
+  FaReact,
   FaServer,
+  FaShieldAlt,
   FaTerminal,
-  FaCloud,
 } from "react-icons/fa";
 
-import {
-  SiTypescript,
-  SiPostman,
-  SiLinux,
-  SiGithub,
-  SiMongodb,
-  SiMysql,
-  SiPython,
-  SiTailwindcss,
-} from "react-icons/si";
-
-const levelMeta = (level) => {
-  if (level === "Advanced") return { value: 92, label: "Advanced" };
-  if (level === "Intermediate") return { value: 76, label: "Intermediate" };
-  return { value: 60, label: "Foundations" };
-};
-
-const devSkills = [
-  { name: "Python", level: "Advanced", icon: <SiPython /> },
-  { name: "JavaScript", level: "Advanced", icon: <FaJs /> },
-  { name: "React", level: "Advanced", icon: <FaReact /> },
-  { name: "HTML", level: "Advanced", icon: <FaHtml5 /> },
-  { name: "CSS", level: "Advanced", icon: <FaCss3Alt /> },
-  { name: "Tailwind CSS", level: "Advanced", icon: <SiTailwindcss /> },
-  { name: "TypeScript", level: "Intermediate", icon: <SiTypescript /> },
-  { name: "Node.js", level: "Intermediate", icon: <FaNodeJs /> },
-  { name: "Java", level: "Intermediate", icon: <FaJava /> },
-  { name: "MySQL", level: "Intermediate", icon: <SiMysql /> },
-  { name: "MongoDB", level: "Intermediate", icon: <SiMongodb /> },
-  { name: "Git & GitHub", level: "Advanced", icon: <SiGithub /> },
+const lanes = [
+  {
+    number: "01",
+    title: "Build",
+    subtitle: "Product and application engineering",
+    accent: "#d9ff43",
+    statement: "Turn ambiguous requirements into maintainable software that people can actually use.",
+    skills: [
+      ["JavaScript / TypeScript", FaCode],
+      ["React / Next.js", FaReact],
+      ["Node.js / Express", FaNodeJs],
+      ["Python / Java / C#", FaPython],
+      ["REST APIs", FaServer],
+      ["SQL / MySQL / MongoDB", FaDatabase],
+    ],
+  },
+  {
+    number: "02",
+    title: "Operate",
+    subtitle: "Infrastructure and reliability",
+    accent: "#76e4f7",
+    statement: "Look past deploy and design for visibility, automation, recovery, and boringly reliable operation.",
+    skills: [
+      ["Linux / Bash", FaTerminal],
+      ["Docker", FaDocker],
+      ["Networking / DNS", FaNetworkWired],
+      ["CI/CD", FaGitAlt],
+      ["Monitoring / Troubleshooting", FaServer],
+      ["Infrastructure as Code", FaCode],
+    ],
+  },
+  {
+    number: "03",
+    title: "Secure",
+    subtitle: "Security engineering foundations",
+    accent: "#ffb86b",
+    statement: "Treat identity, access, validation, and defensive visibility as part of the system design, not a final checklist.",
+    skills: [
+      ["JWT / RBAC", FaLock],
+      ["Secure API Design", FaShieldAlt],
+      ["Network Security", FaNetworkWired],
+      ["Authentication", FaLock],
+      ["Traffic Analysis", FaServer],
+      ["Secure Coding", FaCode],
+    ],
+  },
 ];
 
-const infrastructureSkills = [
-  { name: "Networking & DNS", level: "Intermediate", icon: <FaNetworkWired /> },
-  { name: "Linux CLI", level: "Intermediate", icon: <SiLinux /> },
-  { name: "Windows Infrastructure", level: "Foundations", icon: <FaWindows /> },
-  { name: "PowerShell Automation", level: "Foundations", icon: <FaTerminal /> },
-  { name: "Containers & Docker", level: "Foundations", icon: <FaServer /> },
-  { name: "Infrastructure as Code", level: "Foundations", icon: <FaCloud /> },
-  { name: "Monitoring & Reliability", level: "Foundations", icon: <FaTachometerAlt /> },
-  { name: "Troubleshooting & RCA", level: "Advanced", icon: <FaTools /> },
-  { name: "API Testing", level: "Intermediate", icon: <SiPostman /> },
-];
-
-const securitySkills = [
-  { name: "Network Security", level: "Foundations", icon: <FaShieldAlt /> },
-  { name: "Authentication & Access Control", level: "Foundations", icon: <FaLock /> },
-  { name: "OWASP Awareness", level: "Foundations", icon: <FaBug /> },
-  { name: "Security Monitoring", level: "Foundations", icon: <FaTachometerAlt /> },
-];
-
-const SkillCard = ({ skill, inView, reduceMotion }) => {
-  const meta = levelMeta(skill.level);
-
-  return (
-    <motion.article
-      whileHover={reduceMotion ? undefined : { y: -5 }}
-      className="rounded-2xl border border-white/10 bg-white/[0.065] p-5 text-left shadow-xl backdrop-blur"
-    >
-      <div className="flex items-start gap-4">
-        <div className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-emerald-300/10 text-2xl text-emerald-200">
-          {skill.icon}
-        </div>
-        <div className="min-w-0 flex-1">
-          <h4 className="font-extrabold text-white">{skill.name}</h4>
-          <span className="mt-2 inline-flex rounded-full border border-white/10 bg-black/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-emerald-100/65">
-            {meta.label}
-          </span>
-        </div>
-      </div>
-
-      <div className="mt-5 h-1.5 overflow-hidden rounded-full bg-black/20">
-        <motion.div
-          initial={{ width: 0 }}
-          animate={inView ? { width: meta.value + "%" } : { width: 0 }}
-          transition={{ duration: reduceMotion ? 0 : 0.85, ease: "easeOut" }}
-          className="h-full rounded-full bg-gradient-to-r from-emerald-300 to-cyan-300"
-        />
-      </div>
-    </motion.article>
-  );
-};
-
-const SkillGroup = ({ title, subtitle, skills, inView, reduceMotion }) => (
-  <div className="mt-14">
-    <div className="max-w-2xl">
-      <h3 className="text-2xl font-black text-white">{title}</h3>
-      <p className="mt-2 text-sm leading-6 text-emerald-50/55">{subtitle}</p>
-    </div>
-    <div className="mt-7 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-      {skills.map((skill) => (
-        <SkillCard
-          key={skill.name}
-          skill={skill}
-          inView={inView}
-          reduceMotion={reduceMotion}
-        />
-      ))}
-    </div>
-  </div>
-);
+const workflow = ["requirements", "architecture", "implementation", "tests", "deploy", "observe", "improve"];
 
 const Skills = () => {
-  const controls = useAnimation();
   const reduceMotion = useReducedMotion();
-  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.08 });
-
-  useEffect(() => {
-    if (inView) controls.start("visible");
-  }, [inView, controls]);
-
-  const variants = useMemo(
-    () => ({
-      hidden: { opacity: 0, y: 20 },
-      visible: { opacity: 1, y: 0, transition: { duration: 0.55 } },
-    }),
-    [],
-  );
 
   return (
-    <section id="skills" className="relative overflow-hidden bg-[#061b15] px-6 py-24 sm:px-8">
-      <div className="absolute left-1/2 top-0 h-80 w-80 -translate-x-1/2 rounded-full bg-emerald-400/8 blur-3xl" />
+    <section id="skills" className="relative overflow-hidden bg-[#f4f1e8] px-5 py-24 text-[#101113] sm:px-7 lg:px-10 lg:py-32">
+      <div className="absolute right-[5%] top-[8%] h-64 w-64 rounded-full bg-cyan-300/25 blur-[110px]" />
+      <div className="absolute bottom-[8%] left-[4%] h-72 w-72 rounded-full bg-[#d9ff43]/25 blur-[110px]" />
 
-      <motion.div
-        ref={ref}
-        variants={variants}
-        initial="hidden"
-        animate={controls}
-        className="relative mx-auto max-w-7xl"
-      >
-        <div className="mx-auto max-w-3xl text-center">
-          <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-emerald-300">
-            Technical toolkit
-          </p>
-          <h2 className="mt-3 text-4xl font-black tracking-[-0.04em] text-white sm:text-5xl">
-            Software depth with infrastructure and security breadth.
-          </h2>
+      <div className="relative mx-auto max-w-7xl">
+        <div className="grid gap-8 lg:grid-cols-[.55fr_1.45fr] lg:gap-16">
+          <div>
+            <p className="font-mono text-[11px] font-black uppercase tracking-[0.2em] text-[#51604f]">03 / Capability map</p>
+          </div>
+          <div>
+            <h2 className="max-w-5xl text-[clamp(2.8rem,6vw,5.8rem)] font-black leading-[0.92] tracking-[-0.06em]">
+              Three lanes. <span className="text-black/25">One engineering mindset.</span>
+            </h2>
+            <p className="mt-6 max-w-3xl text-base leading-7 text-black/48 sm:text-lg">
+              I do not use arbitrary percentage bars for skills. The useful question is where I can contribute, what I have shipped, and how the pieces connect across a real system.
+            </p>
+          </div>
         </div>
 
-        <SkillGroup
-          title="Software Development"
-          subtitle="The strongest and most established part of my technical background."
-          skills={devSkills}
-          inView={inView}
-          reduceMotion={reduceMotion}
-        />
+        <div className="mt-16 grid gap-4 lg:grid-cols-3">
+          {lanes.map((lane, laneIndex) => (
+            <motion.article
+              key={lane.title}
+              initial={reduceMotion ? false : { opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.55, delay: laneIndex * 0.08 }}
+              whileHover={reduceMotion ? undefined : { y: -8 }}
+              className="group overflow-hidden rounded-[1.8rem] border border-black/8 bg-white/65 shadow-[0_22px_70px_rgba(25,27,22,0.07)] backdrop-blur"
+            >
+              <div className="p-6 sm:p-7">
+                <div className="flex items-start justify-between gap-5">
+                  <div>
+                    <p className="font-mono text-[10px] font-black uppercase tracking-[0.18em] text-black/35">{lane.number} / {lane.subtitle}</p>
+                    <h3 className="mt-3 text-4xl font-black tracking-[-0.05em]">{lane.title}</h3>
+                  </div>
+                  <span className="mt-1 h-4 w-4 rounded-full shadow-[0_0_30px_currentColor]" style={{ backgroundColor: lane.accent, color: lane.accent }} />
+                </div>
+                <p className="mt-5 min-h-[84px] text-sm font-semibold leading-7 text-black/52">{lane.statement}</p>
+              </div>
 
-        <SkillGroup
-          title="Infrastructure & Cloud"
-          subtitle="Hands-on labs and project work focused on reliable systems, networking, automation, containers, and operations."
-          skills={infrastructureSkills}
-          inView={inView}
-          reduceMotion={reduceMotion}
-        />
+              <div className="border-t border-black/8 bg-[#101113] p-3 text-white sm:p-4">
+                <div className="grid gap-2">
+                  {lane.skills.map(([label, Icon], index) => (
+                    <motion.div
+                      key={label}
+                      whileHover={reduceMotion ? undefined : { x: 5 }}
+                      className="flex items-center justify-between rounded-xl border border-white/7 bg-white/[0.035] px-3.5 py-3 transition hover:bg-white/[0.065]"
+                    >
+                      <div className="flex items-center gap-3">
+                        <span className="grid h-8 w-8 place-items-center rounded-lg bg-white/[0.05] text-sm" style={{ color: lane.accent }}><Icon /></span>
+                        <span className="text-xs font-black text-white/66 sm:text-sm">{label}</span>
+                      </div>
+                      <span className="font-mono text-[9px] font-bold text-white/18">0{index + 1}</span>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            </motion.article>
+          ))}
+        </div>
 
-        <SkillGroup
-          title="Cybersecurity"
-          subtitle="Graduate study and practical projects centered on defensive security, secure systems, and monitoring."
-          skills={securitySkills}
-          inView={inView}
-          reduceMotion={reduceMotion}
-        />
-      </motion.div>
+        <motion.div
+          initial={reduceMotion ? false : { opacity: 0, y: 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.55 }}
+          className="mt-14 overflow-hidden rounded-[1.8rem] border border-black/8 bg-[#101113] p-6 text-white sm:p-8"
+        >
+          <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-center">
+            <div>
+              <p className="font-mono text-[10px] font-black uppercase tracking-[0.18em] text-[#d9ff43]">The loop I care about</p>
+              <h3 className="mt-2 text-2xl font-black tracking-[-0.035em] sm:text-3xl">Engineering does not stop at “done.”</h3>
+            </div>
+            <div className="flex flex-wrap items-center gap-2">
+              {workflow.map((item, index) => (
+                <div key={item} className="flex items-center gap-2">
+                  <span className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-2 font-mono text-[9px] font-black uppercase tracking-[0.13em] text-white/46">{item}</span>
+                  {index < workflow.length - 1 && <span className="text-white/18">→</span>}
+                </div>
+              ))}
+            </div>
+          </div>
+        </motion.div>
+      </div>
     </section>
   );
 };
