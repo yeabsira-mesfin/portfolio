@@ -1,15 +1,25 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 
 const getCurrentScene = () => {
-  const bodyText = document.body.textContent || "";
+  const navButtons = Array.from(document.querySelectorAll("header nav button"));
+  const activeButton = navButtons.find((button) =>
+    String(button.className).includes("bg-[#7CEBDD]/10")
+  );
+  const activeLabel = activeButton?.textContent?.trim().toLowerCase();
+
+  if (activeLabel === "story") return "story";
+  if (activeLabel === "projects") return "projects";
+  if (activeLabel === "contact") return "contact";
+
   const heading = document.querySelector("h1");
   const normalizedHeading = heading?.textContent?.replace(/\s+/g, "");
+  if (normalizedHeading?.includes("YeabsiraMesfin")) return "intro";
 
+  const bodyText = document.body.textContent || "";
   if (bodyText.includes("Let’s build what comes next.") || bodyText.includes("Let's build what comes next.")) return "contact";
   if (bodyText.includes("Software engineer with systems instincts.")) return "story";
   if (bodyText.includes("Windows Infrastructure Reliability Console")) return "projects";
-  if (normalizedHeading?.includes("YeabsiraMesfin")) return "intro";
 
   return null;
 };
@@ -17,17 +27,17 @@ const getCurrentScene = () => {
 const sceneCopy = {
   intro: {
     title: "Touch me to explore my journey",
-    subtitle: "start the journey",
+    idle: "Bzzz... ready to explore?",
     aria: "Start Yeabsira Mesfin's portfolio journey",
   },
   story: {
-    title: "Touch me to see what I build",
-    subtitle: "continue to projects",
+    title: "Wanna see my projects?",
+    idle: "Bzzz... my projects are waiting",
     aria: "Continue to Yeabsira Mesfin's projects",
   },
   projects: {
-    title: "Touch me to continue the journey",
-    subtitle: "continue to contact",
+    title: "Contact me",
+    idle: "Bzzz... want to build something together?",
     aria: "Continue to Yeabsira Mesfin's contact page",
   },
 };
@@ -40,6 +50,16 @@ const findHeaderButton = (label) =>
 const HomeExplorerRobot = () => {
   const reduceMotion = useReducedMotion();
   const [scene, setScene] = useState(null);
+  const [awake, setAwake] = useState(false);
+  const [idle, setIdle] = useState(false);
+  const idleTimerRef = useRef(null);
+  const navigateTimerRef = useRef(null);
+
+  const resetIdleTimer = () => {
+    window.clearTimeout(idleTimerRef.current);
+    setIdle(false);
+    idleTimerRef.current = window.setTimeout(() => setIdle(true), 60000);
+  };
 
   useEffect(() => {
     const syncScene = () => setScene(getCurrentScene());
@@ -49,7 +69,13 @@ const HomeExplorerRobot = () => {
     if (!root) return undefined;
 
     const observer = new MutationObserver(syncScene);
-    observer.observe(root, { childList: true, subtree: true, characterData: true });
+    observer.observe(root, {
+      childList: true,
+      subtree: true,
+      characterData: true,
+      attributes: true,
+      attributeFilter: ["class"],
+    });
     window.addEventListener("resize", syncScene);
 
     return () => {
@@ -58,7 +84,20 @@ const HomeExplorerRobot = () => {
     };
   }, []);
 
-  const goToNextScene = () => {
+  useEffect(() => {
+    resetIdleTimer();
+    return () => window.clearTimeout(idleTimerRef.current);
+  }, [scene]);
+
+  useEffect(
+    () => () => {
+      window.clearTimeout(idleTimerRef.current);
+      window.clearTimeout(navigateTimerRef.current);
+    },
+    []
+  );
+
+  const navigateToNextScene = () => {
     let nextButton;
 
     if (scene === "intro") {
@@ -75,6 +114,19 @@ const HomeExplorerRobot = () => {
     if (document.activeElement instanceof HTMLElement) document.activeElement.blur();
   };
 
+  const handleRobotActivate = () => {
+    resetIdleTimer();
+
+    if (!awake) {
+      setAwake(true);
+      window.clearTimeout(navigateTimerRef.current);
+      navigateTimerRef.current = window.setTimeout(navigateToNextScene, 360);
+      return;
+    }
+
+    navigateToNextScene();
+  };
+
   const visible = Boolean(scene && scene !== "contact");
   const copy = scene ? sceneCopy[scene] : null;
 
@@ -83,8 +135,12 @@ const HomeExplorerRobot = () => {
       <style>{`
         button[aria-label="Open Yeabsira's story"] { display: none !important; }
         html { scroll-behavior: smooth; }
-        [data-journey-robot="true"] { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+        [data-journey-robot="true"] {
+          -webkit-tap-highlight-color: transparent;
+          touch-action: manipulation;
+        }
       `}</style>
+
       <AnimatePresence mode="wait">
         {visible && copy && (
           <motion.button
@@ -92,48 +148,54 @@ const HomeExplorerRobot = () => {
             data-journey-robot="true"
             type="button"
             aria-label={copy.aria}
-            onClick={goToNextScene}
-            initial={reduceMotion ? { opacity: 1 } : { opacity: 0, y: 16, scale: 0.92, filter: "blur(4px)" }}
+            onClick={handleRobotActivate}
+            initial={reduceMotion ? { opacity: 1 } : { opacity: 0, y: 12, scale: 0.94 }}
             animate={
               reduceMotion
                 ? { opacity: 1 }
                 : {
                     opacity: 1,
-                    y: [0, -8, 0, -2, 0],
-                    rotate: [0, -1, 1, -0.35, 0],
-                    filter: "blur(0px)",
+                    y: [0, -5, 0, -1, 0],
+                    rotate: [0, -0.6, 0.6, -0.2, 0],
                   }
             }
-            exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 8, scale: 0.94, filter: "blur(3px)" }}
+            exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 7, scale: 0.95 }}
             transition={
               reduceMotion
                 ? { duration: 0.08 }
                 : {
                     opacity: { duration: 0.24 },
-                    scale: { duration: 0.34, ease: [0.16, 1, 0.3, 1] },
-                    filter: { duration: 0.28 },
-                    y: { duration: 5.2, repeat: Infinity, repeatDelay: 1.8, ease: "easeInOut" },
-                    rotate: { duration: 5.2, repeat: Infinity, repeatDelay: 1.8, ease: "easeInOut" },
+                    scale: { duration: 0.32, ease: [0.16, 1, 0.3, 1] },
+                    y: { duration: 5.6, repeat: Infinity, repeatDelay: 2.1, ease: "easeInOut" },
+                    rotate: { duration: 5.6, repeat: Infinity, repeatDelay: 2.1, ease: "easeInOut" },
                   }
             }
-            whileHover={reduceMotion ? undefined : { scale: 1.035, y: -5 }}
-            whileTap={reduceMotion ? undefined : { scale: 0.96 }}
-            className="fixed bottom-[max(18px,env(safe-area-inset-bottom))] right-[max(18px,env(safe-area-inset-right))] z-[10000] w-[72px] select-none border-0 bg-transparent p-0 text-left sm:bottom-7 sm:right-7 sm:w-[80px]"
+            whileHover={reduceMotion ? undefined : { scale: 1.025, y: -3 }}
+            whileTap={reduceMotion ? undefined : { scale: 0.97 }}
+            className="fixed bottom-[max(10px,env(safe-area-inset-bottom))] right-[max(8px,env(safe-area-inset-right))] z-[10000] h-[188px] w-[188px] select-none border-0 bg-transparent p-0 text-left sm:bottom-5 sm:right-5 sm:h-[205px] sm:w-[205px]"
+            style={{ WebkitTapHighlightColor: "transparent" }}
           >
             <motion.div
-              className="absolute bottom-[92%] right-0 w-[154px] rounded-2xl border border-[#7CEBDD]/20 bg-[#061720]/95 px-3 py-2.5 shadow-[0_18px_60px_rgba(0,8,15,.5)] backdrop-blur-2xl sm:w-[172px]"
-              animate={reduceMotion ? undefined : { y: [0, -1.5, 0], opacity: [0.94, 1, 0.94] }}
-              transition={{ duration: 4.2, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute right-0 top-0 w-[172px] rounded-2xl border border-[#7CEBDD]/22 bg-[#061720]/96 px-3.5 py-3 shadow-[0_18px_60px_rgba(0,8,15,.5)] backdrop-blur-2xl sm:w-[188px]"
+              animate={
+                reduceMotion
+                  ? undefined
+                  : idle
+                    ? { y: [0, -3, 0], scale: [1, 1.018, 1] }
+                    : { y: [0, -1.5, 0] }
+              }
+              transition={{ duration: idle ? 1.7 : 4.2, repeat: Infinity, ease: "easeInOut" }}
             >
-              <p className="text-[10px] font-semibold leading-4 text-[#ECFFFC] sm:text-[11px]">{copy.title}</p>
-              <p className="mt-1 font-mono text-[7px] uppercase tracking-[.15em] text-[#6EE8D7]/60">{copy.subtitle}</p>
-              <span className="absolute -bottom-1.5 right-5 h-3 w-3 rotate-45 border-b border-r border-[#7CEBDD]/20 bg-[#061720]" />
+              <p className="text-[11px] font-semibold leading-4 text-[#ECFFFC] sm:text-[12px]">
+                {idle ? copy.idle : copy.title}
+              </p>
+              <span className="absolute -bottom-1.5 right-7 h-3 w-3 rotate-45 border-b border-r border-[#7CEBDD]/22 bg-[#061720]" />
             </motion.div>
 
-            <div className="relative mx-auto aspect-[.78/1] w-full">
+            <div className="absolute bottom-0 right-0 h-[112px] w-[88px] sm:h-[124px] sm:w-[96px]">
               <motion.div
-                animate={reduceMotion ? undefined : { scaleX: [1, 0.78, 1], opacity: [0.28, 0.17, 0.28] }}
-                transition={{ duration: 5.2, repeat: Infinity, repeatDelay: 1.8, ease: "easeInOut" }}
+                animate={reduceMotion ? undefined : { scaleX: [1, 0.8, 1], opacity: [0.28, 0.17, 0.28] }}
+                transition={{ duration: 5.6, repeat: Infinity, repeatDelay: 2.1, ease: "easeInOut" }}
                 className="absolute bottom-0 left-[15%] h-[9%] w-[70%] rounded-[50%] bg-black/55 blur-md"
               />
 
@@ -157,16 +219,34 @@ const HomeExplorerRobot = () => {
                 </defs>
 
                 <motion.g
-                  animate={reduceMotion ? undefined : { rotate: [0, 1.8, -1.8, 0] }}
-                  transition={{ duration: 5.2, repeat: Infinity, repeatDelay: 1.8, ease: "easeInOut" }}
+                  animate={reduceMotion ? undefined : { rotate: [0, 1.4, -1.4, 0] }}
+                  transition={{ duration: 5.6, repeat: Infinity, repeatDelay: 2.1, ease: "easeInOut" }}
                   style={{ transformOrigin: "80px 62px" }}
                 >
                   <ellipse cx="80" cy="53" rx="50" ry="43" fill="url(#homeRobotShell)" stroke="#FFFFFF" strokeOpacity="0.75" strokeWidth="2" />
                   <rect x="42" y="27" width="76" height="50" rx="24" fill="url(#homeRobotFace)" stroke="#92EDE4" strokeOpacity="0.24" />
-                  <ellipse cx="61" cy="50" rx="11" ry="7" fill="#42E8E7" filter="url(#homeEyeGlow)" />
-                  <ellipse cx="99" cy="50" rx="11" ry="7" fill="#42E8E7" filter="url(#homeEyeGlow)" />
-                  <ellipse cx="57" cy="47" rx="3" ry="2" fill="#DFFFFF" opacity="0.85" />
-                  <ellipse cx="95" cy="47" rx="3" ry="2" fill="#DFFFFF" opacity="0.85" />
+
+                  <AnimatePresence initial={false}>
+                    {awake ? (
+                      <motion.g
+                        key="awake-eyes"
+                        initial={{ opacity: 0, scaleY: 0.12 }}
+                        animate={{ opacity: 1, scaleY: 1 }}
+                        transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+                        style={{ transformOrigin: "80px 50px" }}
+                      >
+                        <ellipse cx="61" cy="50" rx="11" ry="7" fill="#42E8E7" filter="url(#homeEyeGlow)" />
+                        <ellipse cx="99" cy="50" rx="11" ry="7" fill="#42E8E7" filter="url(#homeEyeGlow)" />
+                        <ellipse cx="57" cy="47" rx="3" ry="2" fill="#DFFFFF" opacity="0.85" />
+                        <ellipse cx="95" cy="47" rx="3" ry="2" fill="#DFFFFF" opacity="0.85" />
+                      </motion.g>
+                    ) : (
+                      <motion.g key="sleeping-eyes" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                        <path d="M50 51 Q61 58 72 51" fill="none" stroke="#59E4E1" strokeWidth="4" strokeLinecap="round" filter="url(#homeEyeGlow)" />
+                        <path d="M88 51 Q99 58 110 51" fill="none" stroke="#59E4E1" strokeWidth="4" strokeLinecap="round" filter="url(#homeEyeGlow)" />
+                      </motion.g>
+                    )}
+                  </AnimatePresence>
                 </motion.g>
 
                 <path d="M51 91 C54 78 106 78 109 91 L116 148 C117 165 103 178 80 178 C57 178 43 165 44 148 Z" fill="url(#homeRobotShell)" stroke="#FFFFFF" strokeOpacity="0.55" />
