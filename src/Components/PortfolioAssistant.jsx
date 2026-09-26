@@ -38,10 +38,7 @@ const getReply = (question) => {
 };
 
 const RobotMark = ({ reduceMotion, controls }) => (
-  <motion.div
-    animate={controls}
-    className="relative mx-auto h-[70px] w-[58px] transform-gpu"
-  >
+  <motion.div animate={controls} className="relative mx-auto h-[70px] w-[58px] transform-gpu">
     <motion.div
       animate={reduceMotion ? undefined : { y: [0, -1.5, 0] }}
       transition={{ duration: 4.6, repeat: Infinity, ease: "easeInOut" }}
@@ -91,9 +88,9 @@ const PortfolioAssistant = () => {
 
   const visiblePrompts = useMemo(() => quickPrompts.slice(0, 4), []);
 
-  const excitedJump = async () => {
+  const excitedJump = () => {
     if (reduceMotion) return;
-    await controls.start({
+    controls.start({
       y: [0, -14, 0, -7, 0],
       rotate: [0, -3, 3, -1, 0],
       transition: { duration: 0.72, ease: [0.22, 1, 0.36, 1] },
@@ -101,8 +98,11 @@ const PortfolioAssistant = () => {
   };
 
   const toggleChat = () => {
-    excitedJump();
-    setOpen((value) => !value);
+    setOpen((value) => {
+      const next = !value;
+      if (next) excitedJump();
+      return next;
+    });
   };
 
   const ask = (question) => {
@@ -131,7 +131,7 @@ const PortfolioAssistant = () => {
             animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
             exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 10, scale: 0.985, filter: "blur(4px)" }}
             transition={{ duration: reduceMotion ? 0.08 : 0.42, ease: [0.16, 1, 0.3, 1] }}
-            className="pointer-events-auto absolute bottom-[88px] right-3 flex max-h-[min(70vh,620px)] w-[min(380px,calc(100vw-24px))] flex-col overflow-hidden rounded-[1.6rem] border border-[#7cebdd]/16 bg-[#03131a]/95 shadow-[0_28px_90px_rgba(0,5,11,.62),0_0_40px_rgba(88,230,209,.06)] backdrop-blur-2xl sm:bottom-[96px] sm:right-5"
+            className="pointer-events-auto absolute bottom-[108px] right-3 z-[100] flex max-h-[min(70vh,620px)] w-[min(380px,calc(100vw-24px))] flex-col overflow-hidden rounded-[1.6rem] border border-[#7cebdd]/16 bg-[#03131a]/95 shadow-[0_28px_90px_rgba(0,5,11,.62),0_0_40px_rgba(88,230,209,.06)] backdrop-blur-2xl sm:bottom-[116px] sm:right-5"
             aria-label="Chat with Yeabsira's portfolio assistant"
           >
             <div className="flex items-center justify-between border-b border-[#7cebdd]/10 px-4 py-3.5">
@@ -147,7 +147,7 @@ const PortfolioAssistant = () => {
                   <p className="mt-0.5 font-mono text-[8px] uppercase tracking-[.16em] text-[#7cebdd]/45">portfolio assistant · online</p>
                 </div>
               </div>
-              <button type="button" onClick={() => setOpen(false)} className="grid h-8 w-8 place-items-center rounded-full text-[#cce6e2]/45 transition hover:bg-[#7cebdd]/[.06] hover:text-white" aria-label="Close chat">
+              <button type="button" onClick={() => setOpen(false)} className="grid h-8 w-8 place-items-center rounded-full text-[#cce6e2]/45 transition hover:bg-[#7cebdd]/[.06] hover:text-white" aria-label="Minimize chat">
                 <FaTimes className="text-xs" />
               </button>
             </div>
@@ -193,7 +193,7 @@ const PortfolioAssistant = () => {
         )}
       </AnimatePresence>
 
-      <div className="pointer-events-auto absolute bottom-3 right-3 flex items-end gap-2 sm:bottom-5 sm:right-5">
+      <div className="pointer-events-auto absolute bottom-3 right-3 z-[110] flex items-end gap-2 sm:bottom-5 sm:right-5">
         <AnimatePresence>
           {!open && (
             <motion.div
@@ -213,8 +213,9 @@ const PortfolioAssistant = () => {
           onClick={toggleChat}
           whileHover={reduceMotion ? undefined : { y: -2, scale: 1.025 }}
           whileTap={reduceMotion ? undefined : { scale: 0.98 }}
-          className="relative grid h-[74px] w-[68px] place-items-center rounded-[1.35rem] border border-[#7cebdd]/12 bg-[#071720]/72 p-1 shadow-[0_18px_48px_rgba(0,5,11,.46),0_0_26px_rgba(88,230,209,.06)] backdrop-blur-xl sm:h-[78px] sm:w-[72px]"
-          aria-label={open ? "Close portfolio assistant" : "Open portfolio assistant"}
+          className="relative z-[120] grid h-[74px] w-[68px] place-items-center rounded-[1.35rem] border border-[#7cebdd]/12 bg-[#071720]/72 p-1 shadow-[0_18px_48px_rgba(0,5,11,.46),0_0_26px_rgba(88,230,209,.06)] backdrop-blur-xl sm:h-[78px] sm:w-[72px]"
+          aria-label={open ? "Minimize portfolio assistant" : "Open portfolio assistant"}
+          aria-expanded={open}
         >
           <RobotMark reduceMotion={reduceMotion} controls={controls} />
           <span className="absolute right-1.5 top-1.5 h-2 w-2 rounded-full bg-[#58e6d1] shadow-[0_0_9px_rgba(88,230,209,.85)]" />
