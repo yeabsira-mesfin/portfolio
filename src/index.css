@@ -127,6 +127,20 @@ svg,
   background-size: auto, 26px 26px, 26px 26px;
 }
 
+/* Home-only explorer robot: keep it above the gear/layout on every viewport. */
+button[aria-label="Open Yeabsira's story"] {
+  position: fixed !important;
+  top: auto !important;
+  left: auto !important;
+  right: max(18px, env(safe-area-inset-right)) !important;
+  bottom: max(18px, env(safe-area-inset-bottom)) !important;
+  width: 76px !important;
+  z-index: 9999 !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  overflow: visible !important;
+}
+
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -150,6 +164,14 @@ svg,
   scrollbar-width: thin;
 }
 
+@media (min-width: 1024px) {
+  button[aria-label="Open Yeabsira's story"] {
+    right: 28px !important;
+    bottom: 28px !important;
+    width: 82px !important;
+  }
+}
+
 @media (max-width: 1023px) {
   body {
     overflow-y: auto;
@@ -164,6 +186,12 @@ svg,
 
   .circuit-halo {
     filter: drop-shadow(0 0 18px rgba(88, 230, 209, 0.04));
+  }
+
+  button[aria-label="Open Yeabsira's story"] {
+    right: max(14px, env(safe-area-inset-right)) !important;
+    bottom: max(16px, env(safe-area-inset-bottom)) !important;
+    width: 68px !important;
   }
 }
 
