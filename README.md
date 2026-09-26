@@ -1,12 +1,12 @@
-# Yeabsira Mesfin | Portfolio
+# Yeabsira Mesfin | Software Engineer & Cybersecurity Portfolio
 
 [![Portfolio Build](https://github.com/yeabsira-mesfin/portfolio/actions/workflows/build.yml/badge.svg)](https://github.com/yeabsira-mesfin/portfolio/actions/workflows/build.yml)
 
-Personal portfolio for **Yeabsira Mesfin**, a software engineer with **5+ years of software development experience** and an **M.S. Cybersecurity in Computer Science candidate at The George Washington University**.
+Official portfolio for **Yeabsira Mesfin**, a software engineer with **5+ years of software development experience** and an **M.S. Cybersecurity in Computer Science candidate at The George Washington University**.
 
 The site brings together my software engineering background with my growing focus on **cybersecurity, networking, infrastructure reliability, Linux, automation, and secure systems**.
 
-### [View the live portfolio](https://yeabsira-mesfin.vercel.app/)
+### [View the live portfolio: yeabsiramesfin.com](https://yeabsiramesfin.com/)
 
 ## What the Portfolio Includes
 
@@ -50,6 +50,15 @@ The interface is designed for desktop, tablet, and mobile with:
 - Mobile friendly navigation
 - Keyboard aware assistant behavior on mobile devices
 
+### Search and Identity Metadata
+The site includes:
+- Canonical URL metadata for `yeabsiramesfin.com`
+- Search friendly page title and description
+- `Person` structured data for Yeabsira Mesfin
+- Open Graph and X/Twitter metadata
+- Search crawler rules and sitemap
+- Consistent GitHub, LinkedIn, X, and portfolio identity links
+
 ### Contact
 The portfolio includes a working contact form powered by EmailJS, along with direct links to GitHub, LinkedIn, X, and email.
 
@@ -72,9 +81,11 @@ The portfolio includes a working contact form powered by EmailJS, along with dir
 - Responsive design
 - Accessibility considerations
 - Mobile browser compatibility
+- Technical SEO and structured data
 
 **Deployment**
 - Vercel
+- Custom domain: [yeabsiramesfin.com](https://yeabsiramesfin.com/)
 
 ## Run Locally
 
@@ -130,8 +141,8 @@ I am currently completing an **M.S. in Cybersecurity in Computer Science at The 
 
 ## Connect
 
-- **Portfolio:** [yeabsira-mesfin.vercel.app](https://yeabsira-mesfin.vercel.app/)
+- **Portfolio:** [yeabsiramesfin.com](https://yeabsiramesfin.com/)
 - **GitHub:** [github.com/yeabsira-mesfin](https://github.com/yeabsira-mesfin)
-- **LinkedIn:** [Yeabsira Mesfin](https://www.linkedin.com/in/yeabsira-mesfin-76379928a/)
+- **LinkedIn:** [Yeabsira Mesfin](https://www.linkedin.com/in/yeabsira-mesfin-abera-76379928a/)
 - **X:** [@YeabsiraMesfin9](https://x.com/YeabsiraMesfin9)
 - **Email:** [yeabsira.mesfin29@gmail.com](mailto:yeabsira.mesfin29@gmail.com)
