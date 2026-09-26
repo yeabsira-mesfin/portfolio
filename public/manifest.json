@@ -1,6 +1,7 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Yeabsira Mesfin",
+  "name": "Yeabsira Mesfin | Software Engineer & Cybersecurity",
+  "description": "Official portfolio of Yeabsira Mesfin, Full Stack Software Engineer and M.S. Cybersecurity in Computer Science student at The George Washington University.",
   "icons": [
     {
       "src": "favicon.ico",
@@ -18,8 +19,9 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": ".",
+  "start_url": "/",
+  "scope": "/",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#061b15",
+  "background_color": "#061b15"
 }
