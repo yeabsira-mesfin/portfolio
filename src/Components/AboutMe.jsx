@@ -1,201 +1,136 @@
 import { motion, useReducedMotion } from "framer-motion";
-import { FaLinkedin, FaGithub, FaEnvelope } from "react-icons/fa";
-import { FaXTwitter } from "react-icons/fa6";
+import { FaArrowRight, FaCheck } from "react-icons/fa";
 
-const metrics = [
-  { value: "5+", label: "Years Building" },
-  { value: "200+", label: "Client Deliveries" },
-  { value: "M.S.", label: "Cybersecurity @ GWU" },
-  { value: "3", label: "Engineering Lanes" },
+const chapters = [
+  {
+    index: "01",
+    label: "2019 / Build",
+    title: "I learned by shipping.",
+    text: "I started with freelance software work, turning requirements into working interfaces, APIs, and full-stack products. That gave me a product mindset before I ever had a formal title.",
+    accent: "#d9ff43",
+  },
+  {
+    index: "02",
+    label: "2022-2025 / Operate",
+    title: "Then production changed the questions.",
+    text: "At MMCY I moved from developer to client-facing leadership while delivering and supporting enterprise event technology for teams including BCD Travel, YPO, Abbott, and CDW. Reliability, debugging, integrations, and calm incident response became part of the craft.",
+    accent: "#76e4f7",
+  },
+  {
+    index: "03",
+    label: "Now / Secure",
+    title: "Now I am going deeper into systems and security.",
+    text: "My M.S. Cybersecurity in Computer Science work at GWU is pushing me further into network security, infrastructure, authentication, defensive engineering, and the systems thinking behind dependable software.",
+    accent: "#ffb86b",
+  },
 ];
 
-const focusAreas = [
-  {
-    title: "Software Engineering",
-    text: "Full-stack applications, APIs, debugging, product-minded development, and maintainable code.",
-  },
-  {
-    title: "Infrastructure Reliability",
-    text: "Linux and Windows fundamentals, networking, containers, automation, monitoring, failover, and backup thinking.",
-  },
-  {
-    title: "Cybersecurity",
-    text: "Authentication, network security, secure coding, incident thinking, and security-focused graduate coursework.",
-  },
+const principles = [
+  "Make the system understandable before making it clever.",
+  "Design for failure paths, not only happy paths.",
+  "Security and reliability are product features.",
+  "Measure what changed after the code shipped.",
 ];
 
 const AboutMe = () => {
   const reduceMotion = useReducedMotion();
 
   return (
-    <section
-      id="about"
-      className="relative overflow-hidden bg-[#f4f8f6] px-6 py-24 text-[#0d2c22] sm:px-8"
-    >
-      <div className="absolute -right-24 -top-24 h-80 w-80 rounded-full bg-emerald-300/20 blur-3xl" />
-      <div className="absolute -bottom-28 -left-24 h-80 w-80 rounded-full bg-cyan-300/10 blur-3xl" />
+    <section id="about" className="relative overflow-hidden bg-[#f4f1e8] px-5 py-24 text-[#101113] sm:px-7 lg:px-10 lg:py-32">
+      <div className="absolute right-[-8rem] top-12 h-72 w-72 rounded-full bg-[#d9ff43]/35 blur-[100px]" />
+      <div className="absolute left-[-10rem] top-[46%] h-80 w-80 rounded-full bg-cyan-300/20 blur-[120px]" />
 
       <div className="relative mx-auto max-w-7xl">
         <motion.div
-          initial={reduceMotion ? false : { opacity: 0, y: 18 }}
+          initial={reduceMotion ? false : { opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.35 }}
-          transition={{ duration: 0.55 }}
-          className="mx-auto max-w-3xl text-center"
+          transition={{ duration: 0.6 }}
+          className="grid gap-8 lg:grid-cols-[.62fr_1.38fr] lg:gap-16"
         >
-          <p className="text-xs font-extrabold uppercase tracking-[0.2em] text-emerald-700">
-            About me
-          </p>
-          <h2 className="mt-3 text-4xl font-black tracking-[-0.04em] sm:text-5xl">
-            Software engineer expanding deeper into infrastructure and security.
-          </h2>
-          <p className="mt-6 text-base leading-8 text-[#315447] sm:text-lg">
-            I am Yeabsira Mesfin, a software engineer and M.S. Cybersecurity in
-            Computer Science candidate at The George Washington University. I
-            started building professionally through freelance work in 2019 and
-            now bring 5+ years of software development experience across
-            full-stack development, client-facing technical delivery,
-            troubleshooting, and team leadership. I am applying that foundation
-            to reliable systems, infrastructure automation, networking, cloud,
-            and secure operations.
-          </p>
+          <div>
+            <p className="font-mono text-[11px] font-black uppercase tracking-[0.2em] text-[#51604f]">01 / The story</p>
+            <p className="mt-5 max-w-xs text-sm leading-6 text-black/48">
+              The shortest version of how software development turned into a broader obsession with systems, operations, and security.
+            </p>
+          </div>
+
+          <div>
+            <h2 className="max-w-5xl text-[clamp(2.8rem,6vw,6rem)] font-black leading-[0.93] tracking-[-0.065em]">
+              I started by asking, <span className="text-black/28">“does it work?”</span>
+              <br />
+              Now I ask, <span className="underline decoration-[#d9ff43] decoration-[0.18em] underline-offset-[0.12em]">“will it hold up?”</span>
+            </h2>
+          </div>
         </motion.div>
 
-        <motion.div
-          initial={reduceMotion ? false : { opacity: 0, y: 18 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.55, delay: 0.08 }}
-          className="mt-12 grid grid-cols-2 gap-3 sm:grid-cols-4"
-        >
-          {metrics.map((metric) => (
-            <div
-              key={metric.label}
-              className="rounded-2xl border border-emerald-900/8 bg-white px-4 py-5 text-center shadow-[0_12px_35px_rgba(20,65,49,0.06)]"
+        <div className="mt-20 grid gap-4 lg:grid-cols-3">
+          {chapters.map((chapter, index) => (
+            <motion.article
+              key={chapter.index}
+              initial={reduceMotion ? false : { opacity: 0, y: 28 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.25 }}
+              transition={{ duration: 0.55, delay: index * 0.08 }}
+              whileHover={reduceMotion ? undefined : { y: -8 }}
+              className="group relative overflow-hidden rounded-[1.7rem] border border-black/8 bg-white/65 p-6 shadow-[0_20px_60px_rgba(28,30,26,0.07)] backdrop-blur sm:p-7"
             >
-              <div className="text-2xl font-black tracking-tight text-[#0d2c22]">
-                {metric.value}
+              <div className="absolute inset-x-0 top-0 h-1.5" style={{ backgroundColor: chapter.accent }} />
+              <div className="flex items-center justify-between">
+                <span className="font-mono text-[10px] font-black uppercase tracking-[0.18em] text-black/40">{chapter.label}</span>
+                <span className="text-4xl font-black tracking-[-0.06em] text-black/8 transition group-hover:text-black/14">{chapter.index}</span>
               </div>
-              <div className="mt-1 text-[11px] font-bold uppercase tracking-wide text-[#527064]">
-                {metric.label}
-              </div>
-            </div>
+              <h3 className="mt-8 text-2xl font-black tracking-[-0.035em]">{chapter.title}</h3>
+              <p className="mt-4 text-sm leading-7 text-black/56">{chapter.text}</p>
+            </motion.article>
           ))}
-        </motion.div>
+        </div>
 
-        <div className="mt-10 grid gap-6 lg:grid-cols-[.9fr_1.1fr]">
-          <motion.article
-            initial={reduceMotion ? false : { opacity: 0, x: -22 }}
+        <div className="mt-20 grid gap-10 border-t border-black/10 pt-12 lg:grid-cols-[1.2fr_.8fr] lg:gap-16">
+          <motion.div
+            initial={reduceMotion ? false : { opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.25 }}
+            viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.6 }}
-            className="rounded-[1.7rem] border border-emerald-900/8 bg-[#0b2a20] p-7 text-white shadow-2xl"
           >
-            <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-emerald-300">
-              Quick profile
-            </p>
-            <h3 className="mt-3 text-2xl font-black">Engineering foundation</h3>
-
-            <div className="mt-6 space-y-5 text-sm leading-7 text-emerald-50/70">
-              <p>
-                <span className="font-bold text-white">Experience:</span>{" "}
-                5+ years building software, beginning with freelance work in
-                2019 and continuing into enterprise technical delivery.
-              </p>
-              <p>
-                <span className="font-bold text-white">Education:</span> M.S.
-                Cybersecurity in Computer Science at GWU, expected 2027, with a
-                B.S. in Computer Science.
-              </p>
-              <p>
-                <span className="font-bold text-white">Development:</span>{" "}
-                Python, JavaScript, React, Node.js, REST APIs, databases,
-                debugging, and full-stack application delivery.
-              </p>
-              <p>
-                <span className="font-bold text-white">Systems direction:</span>{" "}
-                infrastructure reliability, Linux, Windows, networking,
-                containers, Infrastructure as Code, monitoring, backup
-                verification, and automation.
-              </p>
-              <p>
-                <span className="font-bold text-white">Career focus:</span>{" "}
-                software engineering, infrastructure engineering, security
-                engineering, and adjacent technical roles where coding and
-                systems thinking meet.
-              </p>
-            </div>
-
-            <div className="mt-7 flex flex-wrap gap-3">
-              <a
-                href="#projects"
-                className="rounded-xl bg-emerald-300 px-5 py-3 text-sm font-extrabold text-[#061b15] transition hover:bg-emerald-200"
-              >
-                View Projects
-              </a>
-              <a
-                href="#contact"
-                className="rounded-xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-bold text-white transition hover:bg-white/10"
-              >
-                Contact Me
-              </a>
-            </div>
-          </motion.article>
-
-          <motion.article
-            initial={reduceMotion ? false : { opacity: 0, x: 22 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.25 }}
-            transition={{ duration: 0.6, delay: 0.06 }}
-            className="rounded-[1.7rem] border border-emerald-900/8 bg-white p-7 shadow-[0_18px_55px_rgba(20,65,49,0.08)]"
-          >
-            <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-emerald-700">
-              How I am growing
-            </p>
-            <h3 className="mt-3 text-2xl font-black">Three connected engineering lanes</h3>
-            <p className="mt-4 max-w-2xl text-sm leading-7 text-[#4a695d]">
-              I do not see software, infrastructure, and security as separate
-              identities. The most useful systems work often sits at the
-              intersection of all three.
-            </p>
-
-            <div className="mt-7 grid gap-4 sm:grid-cols-3">
-              {focusAreas.map((area, index) => (
-                <motion.div
-                  key={area.title}
-                  whileHover={reduceMotion ? undefined : { y: -5 }}
-                  className="rounded-2xl border border-emerald-900/8 bg-[#f7faf8] p-5"
-                >
-                  <div className="mb-4 grid h-9 w-9 place-items-center rounded-xl bg-emerald-700 text-sm font-black text-white">
-                    {index + 1}
-                  </div>
-                  <h4 className="font-extrabold">{area.title}</h4>
-                  <p className="mt-2 text-sm leading-6 text-[#587267]">{area.text}</p>
-                </motion.div>
+            <p className="font-mono text-[10px] font-black uppercase tracking-[0.2em] text-black/38">Proof, not adjectives</p>
+            <div className="mt-6 grid grid-cols-2 gap-x-8 gap-y-8 sm:grid-cols-4">
+              {[
+                ["200+", "enterprise deliveries"],
+                ["5,000+", "attendee records / zero data loss"],
+                ["40%", "database performance improvement"],
+                ["30%", "release cycle reduction"],
+              ].map(([value, label]) => (
+                <div key={label}>
+                  <div className="text-3xl font-black tracking-[-0.05em] sm:text-4xl">{value}</div>
+                  <p className="mt-2 text-xs font-bold leading-5 text-black/43">{label}</p>
+                </div>
               ))}
             </div>
+          </motion.div>
 
-            <div className="mt-8 flex items-center justify-between border-t border-emerald-900/8 pt-6">
-              <p className="max-w-lg text-sm leading-6 text-[#587267]">
-                I value practical work, clear communication, measurable
-                reliability, and systems that can be understood and maintained.
-              </p>
-              <div className="ml-5 flex flex-wrap items-center gap-4">
-                <a href="https://www.linkedin.com/in/yeabsira-mesfin-abera-76379928a/" target="_blank" rel="noopener noreferrer" className="text-[#174b39] transition hover:-translate-y-0.5 hover:text-emerald-600" aria-label="LinkedIn">
-                  <FaLinkedin className="h-6 w-6" />
-                </a>
-                <a href="https://github.com/yeabsira-mesfin" target="_blank" rel="noopener noreferrer" className="text-[#174b39] transition hover:-translate-y-0.5 hover:text-emerald-600" aria-label="GitHub">
-                  <FaGithub className="h-6 w-6" />
-                </a>
-                <a href="https://x.com/YeabsiraMesfin9" target="_blank" rel="noopener noreferrer" className="text-[#174b39] transition hover:-translate-y-0.5 hover:text-emerald-600" aria-label="X">
-                  <FaXTwitter className="h-6 w-6" />
-                </a>
-                <a href="mailto:yeabsira.mesfin29@gmail.com" className="text-[#174b39] transition hover:-translate-y-0.5 hover:text-emerald-600" aria-label="Email">
-                  <FaEnvelope className="h-6 w-6" />
-                </a>
-              </div>
+          <motion.div
+            initial={reduceMotion ? false : { opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.6 }}
+            className="rounded-[1.7rem] bg-[#101113] p-6 text-white sm:p-7"
+          >
+            <p className="font-mono text-[10px] font-black uppercase tracking-[0.2em] text-[#d9ff43]">How I work</p>
+            <div className="mt-5 space-y-4">
+              {principles.map((principle) => (
+                <div key={principle} className="flex gap-3">
+                  <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[#d9ff43] text-[9px] text-[#101113]">
+                    <FaCheck />
+                  </span>
+                  <p className="text-sm font-semibold leading-6 text-white/68">{principle}</p>
+                </div>
+              ))}
             </div>
-          </motion.article>
+            <a href="#projects" className="mt-7 inline-flex items-center gap-2 text-sm font-black text-[#d9ff43] transition hover:gap-3">
+              See how that shows up in the work <FaArrowRight className="text-xs" />
+            </a>
+          </motion.div>
         </div>
       </div>
     </section>
