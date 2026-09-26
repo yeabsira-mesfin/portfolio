@@ -3,10 +3,12 @@
 @tailwind utilities;
 
 :root {
-  --ink: #0b0c0e;
-  --paper: #f4f1e8;
-  --signal: #d9ff43;
-  --cyan: #76e4f7;
+  --ink: #0f1515;
+  --panel: #121a19;
+  --paper: #edf0eb;
+  --sage: #9fc2b6;
+  --blue: #91acc2;
+  --amber: #d9b177;
 }
 
 * {
@@ -57,26 +59,55 @@ canvas {
 }
 
 ::selection {
-  background: var(--signal);
-  color: var(--ink);
+  background: #9fc2b6;
+  color: #101716;
 }
 
 :focus-visible {
-  outline: 2px solid var(--signal);
+  outline: 2px solid #9fc2b6;
   outline-offset: 3px;
 }
 
-.signal-grid {
+.ops-grid {
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
-  background-size: 34px 34px;
-  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.2));
+    linear-gradient(rgba(237, 240, 235, 0.028) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(237, 240, 235, 0.028) 1px, transparent 1px);
+  background-size: 38px 38px;
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.18));
 }
 
-.portfolio-shell {
+.production-shell {
   isolation: isolate;
   overflow: clip;
+}
+
+.system-scroll {
+  scroll-snap-type: y proximity;
+}
+
+.system-section {
+  scroll-snap-align: start;
+  scroll-margin-top: 88px;
+}
+
+.service-visual::after {
+  content: "";
+  position: absolute;
+  inset: 18% 24%;
+  border: 1px solid rgba(159, 194, 182, 0.08);
+  border-radius: 999px;
+  animation: system-breathe 6s ease-in-out infinite;
+}
+
+@keyframes system-breathe {
+  0%, 100% {
+    transform: scale(0.92);
+    opacity: 0.28;
+  }
+  50% {
+    transform: scale(1.08);
+    opacity: 0.6;
+  }
 }
 
 ::-webkit-scrollbar {
@@ -84,22 +115,28 @@ canvas {
 }
 
 ::-webkit-scrollbar-track {
-  background: #0b0c0e;
+  background: #0f1515;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #30343a;
-  border: 2px solid #0b0c0e;
+  background: #2b3835;
+  border: 2px solid #0f1515;
   border-radius: 999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #d9ff43;
+  background: #587369;
 }
 
 * {
-  scrollbar-color: #30343a #0b0c0e;
+  scrollbar-color: #2b3835 #0f1515;
   scrollbar-width: thin;
+}
+
+@media (max-width: 768px) {
+  .system-scroll {
+    scroll-snap-type: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
