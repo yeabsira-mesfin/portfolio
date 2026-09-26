@@ -3,14 +3,14 @@
 @tailwind utilities;
 
 :root {
-  --ink: #080609;
-  --panel: #100b12;
-  --paper: #f4deea;
-  --plum: #46143b;
-  --magenta: #d712ca;
-  --violet: #4e07e7;
-  --rose: #df2c41;
-  --gold: #f0b93f;
+  --ink: #020b12;
+  --panel: #03131a;
+  --paper: #e8f7f5;
+  --teal: #58e6d1;
+  --cyan: #7cebdd;
+  --blue: #7cb7ff;
+  --violet: #b39bff;
+  --amber: #e8bd73;
 }
 
 * {
@@ -60,28 +60,54 @@ canvas {
 }
 
 ::selection {
-  background: #f0b93f;
-  color: #140d16;
+  background: var(--teal);
+  color: #021018;
 }
 
 :focus-visible {
-  outline: 2px solid rgba(240, 185, 63, 0.9);
+  outline: 2px solid rgba(88, 230, 209, 0.92);
   outline-offset: 3px;
 }
 
-.film-grid {
+.circuit-field {
   background-image:
-    linear-gradient(rgba(244, 222, 234, 0.024) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(244, 222, 234, 0.024) 1px, transparent 1px);
-  background-size: 42px 42px;
-  mask-image: radial-gradient(circle at center, black 0%, rgba(0, 0, 0, 0.76) 56%, transparent 100%);
+    radial-gradient(circle at 15% 20%, rgba(88, 230, 209, 0.07) 0 2px, transparent 3px),
+    radial-gradient(circle at 84% 34%, rgba(124, 183, 255, 0.05) 0 2px, transparent 3px),
+    linear-gradient(rgba(88, 230, 209, 0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(88, 230, 209, 0.018) 1px, transparent 1px);
+  background-size: 190px 190px, 230px 230px, 42px 42px, 42px 42px;
+  mask-image: radial-gradient(circle at center, black 0%, rgba(0, 0, 0, 0.82) 58%, transparent 100%);
+}
+
+.circuit-halo {
+  border-radius: 999px;
+  background:
+    linear-gradient(90deg, transparent 49.75%, rgba(88, 230, 209, 0.06) 50%, transparent 50.25%),
+    linear-gradient(0deg, transparent 49.75%, rgba(88, 230, 209, 0.05) 50%, transparent 50.25%),
+    radial-gradient(circle at center, transparent 0 42%, rgba(88, 230, 209, 0.055) 42.3% 42.8%, transparent 43.1% 100%);
+  filter: drop-shadow(0 0 28px rgba(88, 230, 209, 0.045));
+}
+
+.circuit-halo::before,
+.circuit-halo::after {
+  content: "";
+  position: absolute;
+  inset: 11%;
+  border: 1px solid rgba(88, 230, 209, 0.05);
+  border-radius: 999px;
+}
+
+.circuit-halo::after {
+  inset: 20%;
+  border-style: dashed;
+  opacity: 0.7;
 }
 
 .project-mesh {
   background-image:
-    radial-gradient(circle at 50% 50%, rgba(215, 18, 202, 0.09), transparent 34%),
-    linear-gradient(rgba(244, 222, 234, 0.026) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(244, 222, 234, 0.026) 1px, transparent 1px);
+    radial-gradient(circle at 50% 50%, rgba(88, 230, 209, 0.08), transparent 34%),
+    linear-gradient(rgba(88, 230, 209, 0.024) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(88, 230, 209, 0.024) 1px, transparent 1px);
   background-size: auto, 26px 26px, 26px 26px;
 }
 
@@ -90,21 +116,21 @@ canvas {
 }
 
 ::-webkit-scrollbar-track {
-  background: #080609;
+  background: #020b12;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #2d1b2b;
-  border: 2px solid #080609;
+  background: #12343a;
+  border: 2px solid #020b12;
   border-radius: 999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #6f285f;
+  background: #287b77;
 }
 
 * {
-  scrollbar-color: #2d1b2b #080609;
+  scrollbar-color: #12343a #020b12;
   scrollbar-width: thin;
 }
 
