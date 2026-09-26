@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://yeabsiramesfin.com/sitemap.xml
+Sitemap: https://yeabsira-mesfin.vercel.app/sitemap.xml
