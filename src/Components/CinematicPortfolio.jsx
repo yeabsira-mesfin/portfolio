@@ -154,14 +154,14 @@ const RobotAssistant = ({ reduceMotion, onOpen }) => (
     type="button"
     onClick={onOpen}
     aria-label="Open Yeabsira's story"
-    className="group absolute bottom-[2%] right-[2%] z-30 w-[clamp(58px,13vw,82px)] cursor-pointer border-0 bg-transparent p-0 text-left sm:bottom-[3%] sm:right-[3%]"
+    className="group absolute bottom-[8%] right-[6%] z-[35] w-[clamp(64px,15vw,86px)] cursor-pointer border-0 bg-transparent p-0 text-left sm:bottom-[5%] sm:right-[4%] lg:bottom-[3%] lg:right-[3%]"
     animate={reduceMotion ? undefined : { y: [0, -9, 0, -2, 0], rotate: [0, -1.2, 1.2, -0.5, 0] }}
     transition={{ duration: 4.8, repeat: Infinity, repeatDelay: 1.4, ease: [0.22, 1, 0.36, 1] }}
     whileHover={reduceMotion ? undefined : { y: -7, scale: 1.035 }}
     whileTap={reduceMotion ? undefined : { scale: 0.97 }}
   >
     <motion.div
-      className="absolute bottom-[84%] right-[38%] w-[128px] rounded-2xl border border-[#7CEBDD]/16 bg-[#071821]/88 px-3 py-2.5 shadow-[0_16px_50px_rgba(0,8,15,.38)] backdrop-blur-xl sm:w-[145px] sm:px-3.5 sm:py-3"
+      className="absolute bottom-[88%] right-0 w-[122px] rounded-2xl border border-[#7CEBDD]/16 bg-[#071821]/88 px-3 py-2.5 shadow-[0_16px_50px_rgba(0,8,15,.38)] backdrop-blur-xl sm:w-[145px] sm:px-3.5 sm:py-3"
       animate={reduceMotion ? undefined : { y: [0, -2, 0], opacity: [0.86, 1, 0.9] }}
       transition={{ duration: 3.8, repeat: Infinity, ease: "easeInOut" }}
     >
