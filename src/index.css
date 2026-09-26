@@ -3,12 +3,14 @@
 @tailwind utilities;
 
 :root {
-  --ink: #0f1515;
-  --panel: #121a19;
-  --paper: #edf0eb;
-  --sage: #9fc2b6;
-  --blue: #91acc2;
-  --amber: #d9b177;
+  --ink: #080609;
+  --panel: #100b12;
+  --paper: #f4deea;
+  --plum: #46143b;
+  --magenta: #d712ca;
+  --violet: #4e07e7;
+  --rose: #df2c41;
+  --gold: #f0b93f;
 }
 
 * {
@@ -16,7 +18,6 @@
 }
 
 html {
-  scroll-behavior: smooth;
   background: var(--ink);
 }
 
@@ -59,84 +60,52 @@ canvas {
 }
 
 ::selection {
-  background: #9fc2b6;
-  color: #101716;
+  background: #f0b93f;
+  color: #140d16;
 }
 
 :focus-visible {
-  outline: 2px solid #9fc2b6;
+  outline: 2px solid rgba(240, 185, 63, 0.9);
   outline-offset: 3px;
 }
 
-.ops-grid {
+.film-grid {
   background-image:
-    linear-gradient(rgba(237, 240, 235, 0.028) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(237, 240, 235, 0.028) 1px, transparent 1px);
-  background-size: 38px 38px;
-  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.18));
+    linear-gradient(rgba(244, 222, 234, 0.024) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(244, 222, 234, 0.024) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: radial-gradient(circle at center, black 0%, rgba(0, 0, 0, 0.76) 56%, transparent 100%);
 }
 
-.production-shell {
-  isolation: isolate;
-  overflow: clip;
-}
-
-.system-scroll {
-  scroll-snap-type: y proximity;
-}
-
-.system-section {
-  scroll-snap-align: start;
-  scroll-margin-top: 88px;
-}
-
-.service-visual::after {
-  content: "";
-  position: absolute;
-  inset: 18% 24%;
-  border: 1px solid rgba(159, 194, 182, 0.08);
-  border-radius: 999px;
-  animation: system-breathe 6s ease-in-out infinite;
-}
-
-@keyframes system-breathe {
-  0%, 100% {
-    transform: scale(0.92);
-    opacity: 0.28;
-  }
-  50% {
-    transform: scale(1.08);
-    opacity: 0.6;
-  }
+.project-mesh {
+  background-image:
+    radial-gradient(circle at 50% 50%, rgba(215, 18, 202, 0.09), transparent 34%),
+    linear-gradient(rgba(244, 222, 234, 0.026) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(244, 222, 234, 0.026) 1px, transparent 1px);
+  background-size: auto, 26px 26px, 26px 26px;
 }
 
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #0f1515;
+  background: #080609;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #2b3835;
-  border: 2px solid #0f1515;
+  background: #2d1b2b;
+  border: 2px solid #080609;
   border-radius: 999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #587369;
+  background: #6f285f;
 }
 
 * {
-  scrollbar-color: #2b3835 #0f1515;
+  scrollbar-color: #2d1b2b #080609;
   scrollbar-width: thin;
-}
-
-@media (max-width: 768px) {
-  .system-scroll {
-    scroll-snap-type: none;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
