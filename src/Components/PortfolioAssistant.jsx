@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion, useAnimationControls, useReducedMotion } from "framer-motion";
 import { FaArrowUp, FaTimes } from "react-icons/fa";
 
@@ -41,7 +41,7 @@ const RobotMark = ({ reduceMotion, controls }) => (
   <motion.div animate={controls} className="relative mx-auto h-[70px] w-[58px] transform-gpu">
     <motion.div
       animate={reduceMotion ? undefined : { y: [0, -1.5, 0] }}
-      transition={{ duration: 4.6, repeat: Infinity, ease: "easeInOut" }}
+      transition={{ duration: 4.8, repeat: Infinity, ease: "easeInOut" }}
       className="absolute left-1/2 top-0 h-[31px] w-[48px] -translate-x-1/2 rounded-[46%] border border-white/80 bg-[linear-gradient(145deg,#ffffff_0%,#dce8eb_52%,#aebcc3_100%)] shadow-[0_8px_18px_rgba(0,0,0,.24)]"
     >
       <div className="absolute inset-x-[7px] top-[7px] h-[17px] rounded-full border border-[#73e9df]/15 bg-[radial-gradient(circle_at_50%_30%,#12303a,#061219_68%,#02080c)]">
@@ -62,6 +62,7 @@ const RobotMark = ({ reduceMotion, controls }) => (
 const PortfolioAssistant = () => {
   const reduceMotion = useReducedMotion();
   const controls = useAnimationControls();
+  const lastTouchRef = useRef(0);
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState([
@@ -91,9 +92,9 @@ const PortfolioAssistant = () => {
   const excitedJump = () => {
     if (reduceMotion) return;
     controls.start({
-      y: [0, -14, 0, -7, 0],
-      rotate: [0, -3, 3, -1, 0],
-      transition: { duration: 0.72, ease: [0.22, 1, 0.36, 1] },
+      y: [0, -11, 0, -5, 0],
+      rotate: [0, -2, 2, -0.75, 0],
+      transition: { duration: 0.68, ease: [0.16, 1, 0.3, 1] },
     });
   };
 
@@ -103,6 +104,17 @@ const PortfolioAssistant = () => {
       if (next) excitedJump();
       return next;
     });
+  };
+
+  const handleRobotTouchEnd = (event) => {
+    lastTouchRef.current = Date.now();
+    event.preventDefault();
+    toggleChat();
+  };
+
+  const handleRobotClick = () => {
+    if (Date.now() - lastTouchRef.current < 700) return;
+    toggleChat();
   };
 
   const ask = (question) => {
@@ -127,10 +139,10 @@ const PortfolioAssistant = () => {
       <AnimatePresence>
         {open && (
           <motion.section
-            initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 16, scale: 0.97, filter: "blur(5px)" }}
+            initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 12, scale: 0.985, filter: "blur(3px)" }}
             animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
-            exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 10, scale: 0.985, filter: "blur(4px)" }}
-            transition={{ duration: reduceMotion ? 0.08 : 0.42, ease: [0.16, 1, 0.3, 1] }}
+            exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 8, scale: 0.99, filter: "blur(2px)" }}
+            transition={{ duration: reduceMotion ? 0.08 : 0.34, ease: [0.16, 1, 0.3, 1] }}
             className="pointer-events-auto absolute bottom-[108px] right-3 z-[100] flex max-h-[min(70vh,620px)] w-[min(380px,calc(100vw-24px))] flex-col overflow-hidden rounded-[1.6rem] border border-[#7cebdd]/16 bg-[#03131a]/95 shadow-[0_28px_90px_rgba(0,5,11,.62),0_0_40px_rgba(88,230,209,.06)] backdrop-blur-2xl sm:bottom-[116px] sm:right-5"
             aria-label="Chat with Yeabsira's portfolio assistant"
           >
@@ -147,18 +159,18 @@ const PortfolioAssistant = () => {
                   <p className="mt-0.5 font-mono text-[8px] uppercase tracking-[.16em] text-[#7cebdd]/45">portfolio assistant · online</p>
                 </div>
               </div>
-              <button type="button" onClick={() => setOpen(false)} className="grid h-8 w-8 place-items-center rounded-full text-[#cce6e2]/45 transition hover:bg-[#7cebdd]/[.06] hover:text-white" aria-label="Minimize chat">
+              <button type="button" onClick={() => setOpen(false)} className="grid h-8 w-8 touch-manipulation place-items-center rounded-full text-[#cce6e2]/45 transition duration-300 hover:bg-[#7cebdd]/[.06] hover:text-white" aria-label="Minimize chat">
                 <FaTimes className="text-xs" />
               </button>
             </div>
 
-            <div className="min-h-0 flex-1 space-y-3 overflow-y-auto px-4 py-4">
+            <div className="min-h-0 flex-1 space-y-3 overflow-y-auto px-4 py-4 scroll-smooth">
               {messages.map((message, index) => (
                 <motion.div
                   key={`${message.role}-${index}`}
-                  initial={reduceMotion ? false : { opacity: 0, y: 6 }}
+                  initial={reduceMotion ? false : { opacity: 0, y: 5 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.28 }}
+                  transition={{ duration: 0.24, ease: [0.16, 1, 0.3, 1] }}
                   className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}
                 >
                   <div className={`max-w-[88%] rounded-2xl px-3.5 py-2.5 text-[12px] leading-5 sm:text-[13px] ${message.role === "user" ? "rounded-br-md bg-[#dffffb] text-[#03131a]" : "rounded-bl-md border border-[#7cebdd]/10 bg-[#7cebdd]/[.035] text-[#d9eeeb]/78"}`}>
@@ -169,7 +181,7 @@ const PortfolioAssistant = () => {
 
               <div className="flex flex-wrap gap-1.5 pt-1">
                 {visiblePrompts.map((prompt) => (
-                  <button key={prompt} type="button" onClick={() => ask(prompt)} className="rounded-full border border-[#7cebdd]/10 bg-[#7cebdd]/[.025] px-2.5 py-1.5 text-[9px] font-medium text-[#cce8e4]/55 transition hover:border-[#7cebdd]/25 hover:bg-[#7cebdd]/[.05] hover:text-[#effffc]">
+                  <button key={prompt} type="button" onClick={() => ask(prompt)} className="touch-manipulation rounded-full border border-[#7cebdd]/10 bg-[#7cebdd]/[.025] px-2.5 py-1.5 text-[9px] font-medium text-[#cce8e4]/55 transition duration-300 hover:border-[#7cebdd]/25 hover:bg-[#7cebdd]/[.05] hover:text-[#effffc]">
                     {prompt}
                   </button>
                 ))}
@@ -177,14 +189,14 @@ const PortfolioAssistant = () => {
             </div>
 
             <form onSubmit={handleSubmit} className="border-t border-[#7cebdd]/10 p-3">
-              <div className="flex items-center gap-2 rounded-2xl border border-[#7cebdd]/11 bg-[#020b12]/55 p-1.5 pl-3 focus-within:border-[#7cebdd]/28">
+              <div className="flex items-center gap-2 rounded-2xl border border-[#7cebdd]/11 bg-[#020b12]/55 p-1.5 pl-3 transition-colors duration-300 focus-within:border-[#7cebdd]/28">
                 <input
                   value={input}
                   onChange={(event) => setInput(event.target.value)}
                   placeholder="Ask about projects, skills, experience…"
                   className="min-w-0 flex-1 border-0 bg-transparent py-2 text-[12px] text-[#ecfbf9] outline-none placeholder:text-[#9ab7b3]/30"
                 />
-                <button type="submit" className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-[#dffffb] text-[#03131a] transition hover:bg-white" aria-label="Send message">
+                <button type="submit" className="grid h-9 w-9 shrink-0 touch-manipulation place-items-center rounded-xl bg-[#dffffb] text-[#03131a] transition duration-300 hover:bg-white" aria-label="Send message">
                   <FaArrowUp className="text-[10px]" />
                 </button>
               </div>
@@ -197,23 +209,26 @@ const PortfolioAssistant = () => {
         <AnimatePresence>
           {!open && (
             <motion.div
-              initial={{ opacity: 0, x: 6, scale: 0.96 }}
+              initial={{ opacity: 0, x: 6, scale: 0.97 }}
               animate={{ opacity: 1, x: 0, scale: 1 }}
-              exit={{ opacity: 0, x: 5, scale: 0.97 }}
+              exit={{ opacity: 0, x: 4, scale: 0.98 }}
+              transition={{ duration: reduceMotion ? 0.08 : 0.3, ease: [0.16, 1, 0.3, 1] }}
               className="mb-3 hidden max-w-[178px] rounded-2xl border border-[#7cebdd]/14 bg-[#061720]/88 px-3 py-2.5 shadow-[0_14px_44px_rgba(0,5,11,.4)] backdrop-blur-xl min-[390px]:block"
             >
-              <p className="text-[10px] font-semibold leading-4 text-[#effffc]">Want to know more about me?</p>
-              <p className="mt-1 font-mono text-[7px] uppercase tracking-[.15em] text-[#70e8d8]/50">tap the little assistant</p>
+              <p className="text-[10px] font-semibold leading-4 text-[#effffc]">Touch me to chat</p>
+              <p className="mt-1 font-mono text-[7px] uppercase tracking-[.15em] text-[#70e8d8]/50">ask about my work</p>
             </motion.div>
           )}
         </AnimatePresence>
 
         <motion.button
           type="button"
-          onClick={toggleChat}
-          whileHover={reduceMotion ? undefined : { y: -2, scale: 1.025 }}
-          whileTap={reduceMotion ? undefined : { scale: 0.98 }}
-          className="relative z-[120] grid h-[74px] w-[68px] place-items-center rounded-[1.35rem] border border-[#7cebdd]/12 bg-[#071720]/72 p-1 shadow-[0_18px_48px_rgba(0,5,11,.46),0_0_26px_rgba(88,230,209,.06)] backdrop-blur-xl sm:h-[78px] sm:w-[72px]"
+          onClick={handleRobotClick}
+          onTouchEnd={handleRobotTouchEnd}
+          whileHover={reduceMotion ? undefined : { y: -2, scale: 1.02 }}
+          whileTap={reduceMotion ? undefined : { scale: 0.97 }}
+          className="relative z-[120] grid h-[74px] w-[68px] touch-manipulation select-none place-items-center rounded-[1.35rem] border border-[#7cebdd]/12 bg-[#071720]/72 p-1 shadow-[0_18px_48px_rgba(0,5,11,.46),0_0_26px_rgba(88,230,209,.06)] backdrop-blur-xl sm:h-[78px] sm:w-[72px]"
+          style={{ WebkitTapHighlightColor: "transparent" }}
           aria-label={open ? "Minimize portfolio assistant" : "Open portfolio assistant"}
           aria-expanded={open}
         >
