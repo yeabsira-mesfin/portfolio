@@ -2,39 +2,81 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --ink: #0b0c0e;
+  --paper: #f4f1e8;
+  --signal: #d9ff43;
+  --cyan: #76e4f7;
+}
+
+* {
+  box-sizing: border-box;
+}
+
 html {
   scroll-behavior: smooth;
-  background: #061b15;
+  background: var(--ink);
 }
 
 body {
   margin: 0;
   min-width: 320px;
   overflow-x: hidden;
-  background: #061b15;
-  color: #102a20;
-  font-family: Inter, "Segoe UI", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: "Space Grotesk", Inter, "Segoe UI", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-a,
+.font-mono {
+  font-family: "IBM Plex Mono", "SFMono-Regular", Consolas, "Liberation Mono", monospace !important;
+}
+
 button,
+a,
 input,
 textarea {
-  font-family: inherit;
+  font: inherit;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  cursor: pointer;
+}
+
+img,
+svg,
+video,
+canvas {
+  max-width: 100%;
 }
 
 ::selection {
-  background: rgba(110, 231, 183, 0.28);
-  color: #06261c;
+  background: var(--signal);
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--signal);
+  outline-offset: 3px;
+}
+
+.signal-grid {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 34px 34px;
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.2));
+}
+
+.portfolio-shell {
+  isolation: isolate;
+  overflow: clip;
 }
 
 ::-webkit-scrollbar {
@@ -42,22 +84,34 @@ textarea {
 }
 
 ::-webkit-scrollbar-track {
-  background: #061b15;
+  background: #0b0c0e;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #285f4d;
-  border: 2px solid #061b15;
+  background: #30343a;
+  border: 2px solid #0b0c0e;
   border-radius: 999px;
 }
 
+::-webkit-scrollbar-thumb:hover {
+  background: #d9ff43;
+}
+
 * {
-  scrollbar-color: #285f4d #061b15;
+  scrollbar-color: #30343a #0b0c0e;
   scrollbar-width: thin;
 }
 
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }
