@@ -2,11 +2,28 @@ import { useMemo, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { FaArrowRight, FaExternalLinkAlt, FaGithub } from "react-icons/fa";
 import windowsConsole from "../images/windows-infrastructure-console.svg";
+import appsecPreview from "../images/appsec-vulnerability-manager.jpg";
 
 const projects = [
   {
-    id: "windows-console",
+    id: "appsec-vulnerability-manager",
     number: "01",
+    title: "AppSec Vulnerability Manager",
+    category: "Security",
+    secondary: "Software",
+    summary: "A production-deployed AppSec operations console that normalizes Semgrep, Trivy, and OWASP ZAP findings into one persistent remediation queue.",
+    challenge: "Unify noisy scanner output, deduplicate findings, score risk, and preserve remediation state across serverless deployments.",
+    build: "FastAPI service with scanner normalizers, deterministic fingerprints, Neon PostgreSQL persistence, Vercel deployment, interactive API testing, health observability, filtering, and risk summaries.",
+    proves: "I can build and ship a security platform end to end across API design, AppSec logic, persistence, cloud deployment, and operational UX.",
+    tags: ["Python", "FastAPI", "PostgreSQL", "Neon", "Vercel", "AppSec"],
+    repo: "https://github.com/yeabsira-mesfin/appsec-vulnerability-manager",
+    demo: "https://appsec-vulnerability-manager.vercel.app/",
+    image: appsecPreview,
+    accent: "#52f0b6",
+  },
+  {
+    id: "windows-console",
+    number: "02",
     title: "Windows Infrastructure Reliability Console",
     category: "Infrastructure",
     secondary: "Security",
@@ -21,7 +38,7 @@ const projects = [
   },
   {
     id: "cloud-iac",
-    number: "02",
+    number: "03",
     title: "Secure Cloud Infrastructure as Code",
     category: "Infrastructure",
     secondary: "Security",
@@ -36,7 +53,7 @@ const projects = [
   },
   {
     id: "ha-hosting",
-    number: "03",
+    number: "04",
     title: "High Availability Hosting Lab",
     category: "Infrastructure",
     secondary: "Software",
@@ -51,7 +68,7 @@ const projects = [
   },
   {
     id: "ops-toolkit",
-    number: "04",
+    number: "05",
     title: "Infrastructure Operations Toolkit",
     category: "Infrastructure",
     secondary: "Software",
@@ -66,7 +83,7 @@ const projects = [
   },
   {
     id: "login-analyzer",
-    number: "05",
+    number: "06",
     title: "Secure Login Analyzer",
     category: "Security",
     secondary: "Software",
@@ -81,7 +98,7 @@ const projects = [
   },
   {
     id: "techboard",
-    number: "06",
+    number: "07",
     title: "TechBoard",
     category: "Software",
     secondary: "Security",
@@ -96,7 +113,7 @@ const projects = [
   },
   {
     id: "tourist-trail",
-    number: "07",
+    number: "08",
     title: "Tourist Trail",
     category: "Software",
     secondary: "Product",
@@ -290,8 +307,8 @@ const Projects = () => {
                   </div>
 
                   {(selected.repo || selected.demo) && (
-                    <a href={selected.repo || selected.demo} target="_blank" rel="noopener noreferrer" className="mt-7 inline-flex items-center gap-2 text-sm font-black transition hover:gap-3" style={{ color: selected.accent }}>
-                      {selected.repo ? "Inspect the repository" : "Open the live product"} <FaArrowRight className="text-xs" />
+                    <a href={selected.demo || selected.repo} target="_blank" rel="noopener noreferrer" className="mt-7 inline-flex items-center gap-2 text-sm font-black transition hover:gap-3" style={{ color: selected.accent }}>
+                      {selected.demo ? "Open the live product" : "Inspect the repository"} <FaArrowRight className="text-xs" />
                     </a>
                   )}
                 </div>
