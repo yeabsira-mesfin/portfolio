@@ -63,9 +63,13 @@ const PortfolioAssistant = () => {
   const reduceMotion = useReducedMotion();
   const controls = useAnimationControls();
   const lastTouchActivation = useRef(0);
+  const hintVisibleRef = useRef(true);
+  const hintCollapseTimer = useRef(null);
+  const hintRevealTimer = useRef(null);
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
   const [hintVisible, setHintVisible] = useState(true);
+  const [hintSpace, setHintSpace] = useState(true);
   const [mobileViewport, setMobileViewport] = useState({ active: false, height: 0, keyboardInset: 0 });
   const [messages, setMessages] = useState([
     {
@@ -102,23 +106,48 @@ const PortfolioAssistant = () => {
   }, []);
 
   useEffect(() => {
+    window.clearTimeout(hintCollapseTimer.current);
+    window.clearTimeout(hintRevealTimer.current);
+
     if (!mobileViewport.active) {
+      hintVisibleRef.current = true;
+      setHintSpace(true);
       setHintVisible(true);
       return undefined;
     }
 
-    let swallowed = false;
+    const hideHint = () => {
+      if (!hintVisibleRef.current) return;
+      hintVisibleRef.current = false;
+      setHintVisible(false);
+      window.clearTimeout(hintCollapseTimer.current);
+      hintCollapseTimer.current = window.setTimeout(() => setHintSpace(false), reduceMotion ? 90 : 900);
+    };
+
+    const showHint = () => {
+      if (hintVisibleRef.current) return;
+      hintVisibleRef.current = true;
+      window.clearTimeout(hintCollapseTimer.current);
+      window.clearTimeout(hintRevealTimer.current);
+      setHintSpace(true);
+      hintRevealTimer.current = window.setTimeout(() => setHintVisible(true), reduceMotion ? 0 : 60);
+    };
+
     const handleScroll = () => {
-      if (!swallowed && window.scrollY > 80) {
-        swallowed = true;
-        setHintVisible(false);
-      }
+      const y = window.scrollY;
+      if (y > 140) hideHint();
+      else if (y < 48) showHint();
     };
 
     handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [mobileViewport.active]);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.clearTimeout(hintCollapseTimer.current);
+      window.clearTimeout(hintRevealTimer.current);
+    };
+  }, [mobileViewport.active, reduceMotion]);
 
   useEffect(() => {
     if (!open || !mobileViewport.active) return undefined;
@@ -283,22 +312,27 @@ const PortfolioAssistant = () => {
           onPointerUp={handlePointerUp}
           onClick={handleClick}
           whileTap={reduceMotion ? undefined : { scale: 0.975 }}
-          className={`${open ? "h-[112px]" : hintVisible ? "h-[168px]" : "h-[96px]"} relative w-[92px] touch-manipulation select-none border-0 bg-transparent p-0 text-left transition-[height] duration-300`}
+          className={`${open ? "h-[112px]" : hintSpace ? "h-[168px]" : "h-[96px]"} relative w-[92px] touch-manipulation select-none border-0 bg-transparent p-0 text-left transition-[height] duration-[850ms] ease-[cubic-bezier(.16,1,.3,1)]`}
           style={{ WebkitTapHighlightColor: "transparent" }}
           aria-label={open ? "Minimize portfolio assistant" : "Open portfolio assistant"}
           aria-expanded={open}
         >
-          <AnimatePresence>
+          <AnimatePresence mode="sync">
             {!open && hintVisible && (
               <motion.div
-                initial={{ opacity: 0, y: 4, scale: 0.96 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
+                initial={
+                  reduceMotion
+                    ? { opacity: 0 }
+                    : { opacity: 0, y: 70, x: 10, scale: 0.16, filter: "blur(2px)" }
+                }
+                animate={{ opacity: 1, y: 0, x: 0, scale: 1, filter: "blur(0px)" }}
                 exit={
                   reduceMotion
                     ? { opacity: 0 }
-                    : { opacity: 0, y: 74, x: 12, scale: 0.12, filter: "blur(2px)" }
+                    : { opacity: [1, 0.92, 0.5, 0], y: [0, 18, 48, 78], x: [0, 3, 8, 12], scale: [1, 0.82, 0.42, 0.1], filter: ["blur(0px)", "blur(0px)", "blur(1px)", "blur(3px)"] }
                 }
-                transition={{ duration: reduceMotion ? 0.08 : 0.42, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: reduceMotion ? 0.08 : 0.82, ease: [0.16, 1, 0.3, 1] }}
+                style={{ transformOrigin: "bottom right" }}
                 className="pointer-events-none absolute right-0 top-0 w-[136px] rounded-2xl border border-[#7cebdd]/16 bg-[#061720]/94 px-3 py-2.5 shadow-[0_14px_44px_rgba(0,5,11,.45)] backdrop-blur-xl"
               >
                 <p className="text-[11px] font-semibold leading-4 text-[#effffc]">Curious? Ask me anything.</p>
