@@ -65,6 +65,7 @@ const PortfolioAssistant = () => {
   const lastTouchActivation = useRef(0);
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
+  const [hintVisible, setHintVisible] = useState(true);
   const [mobileViewport, setMobileViewport] = useState({ active: false, height: 0, keyboardInset: 0 });
   const [messages, setMessages] = useState([
     {
@@ -99,6 +100,25 @@ const PortfolioAssistant = () => {
       viewport?.removeEventListener("scroll", syncViewport);
     };
   }, []);
+
+  useEffect(() => {
+    if (!mobileViewport.active) {
+      setHintVisible(true);
+      return undefined;
+    }
+
+    let swallowed = false;
+    const handleScroll = () => {
+      if (!swallowed && window.scrollY > 80) {
+        swallowed = true;
+        setHintVisible(false);
+      }
+    };
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [mobileViewport.active]);
 
   useEffect(() => {
     if (!open || !mobileViewport.active) return undefined;
@@ -263,21 +283,25 @@ const PortfolioAssistant = () => {
           onPointerUp={handlePointerUp}
           onClick={handleClick}
           whileTap={reduceMotion ? undefined : { scale: 0.975 }}
-          className={`${open ? "h-[112px]" : "h-[176px]"} relative w-[92px] touch-manipulation select-none border-0 bg-transparent p-0 text-left transition-[height] duration-300`}
+          className={`${open ? "h-[112px]" : hintVisible ? "h-[168px]" : "h-[96px]"} relative w-[92px] touch-manipulation select-none border-0 bg-transparent p-0 text-left transition-[height] duration-300`}
           style={{ WebkitTapHighlightColor: "transparent" }}
           aria-label={open ? "Minimize portfolio assistant" : "Open portfolio assistant"}
           aria-expanded={open}
         >
           <AnimatePresence>
-            {!open && (
+            {!open && hintVisible && (
               <motion.div
-                initial={{ opacity: 0, y: 5, scale: 0.98 }}
+                initial={{ opacity: 0, y: 4, scale: 0.96 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: 4, scale: 0.98 }}
-                transition={{ duration: reduceMotion ? 0.08 : 0.25, ease: [0.16, 1, 0.3, 1] }}
-                className="pointer-events-none absolute right-0 top-0 w-[154px] rounded-2xl border border-[#7cebdd]/16 bg-[#061720]/94 px-3 py-2.5 shadow-[0_14px_44px_rgba(0,5,11,.45)] backdrop-blur-xl"
+                exit={
+                  reduceMotion
+                    ? { opacity: 0 }
+                    : { opacity: 0, y: 74, x: 12, scale: 0.12, filter: "blur(2px)" }
+                }
+                transition={{ duration: reduceMotion ? 0.08 : 0.42, ease: [0.16, 1, 0.3, 1] }}
+                className="pointer-events-none absolute right-0 top-0 w-[136px] rounded-2xl border border-[#7cebdd]/16 bg-[#061720]/94 px-3 py-2.5 shadow-[0_14px_44px_rgba(0,5,11,.45)] backdrop-blur-xl"
               >
-                <p className="text-[11px] font-semibold leading-4 text-[#effffc]">Touch anywhere to chat</p>
+                <p className="text-[11px] font-semibold leading-4 text-[#effffc]">Curious? Ask me anything.</p>
                 <span className="absolute -bottom-1.5 right-7 h-3 w-3 rotate-45 border-b border-r border-[#7cebdd]/16 bg-[#061720]" />
               </motion.div>
             )}
