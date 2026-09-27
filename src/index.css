@@ -170,11 +170,82 @@ button[aria-label="Open Yeabsira's story"] {
     bottom: 28px !important;
     width: 82px !important;
   }
+
+  /* Project page: prioritize project work while keeping the rotating mechanism. */
+  main > div[class*="max-w-7xl"][class*="pt-28"] > div[class*="lg:grid-cols-[.42fr_1.58fr]"] {
+    grid-template-columns: 270px minmax(0, 1fr) !important;
+    column-gap: 24px !important;
+  }
+
+  main > div[class*="max-w-7xl"][class*="pt-28"] > div[class*="lg:grid-cols-[.42fr_1.58fr]"] > div:nth-child(2)[class*="lg:grid-cols-[.72fr_1.28fr]"] {
+    grid-template-columns: 220px minmax(0, 1fr) !important;
+    column-gap: 20px !important;
+  }
+
+  main > div[class*="max-w-7xl"][class*="pt-28"] > div[class*="lg:grid-cols-[.42fr_1.58fr]"] > div:nth-child(2) > div:first-child > div[class*="max-w-[590px]"] {
+    max-width: 220px !important;
+  }
+
+  /* Keep project screenshots crisp and uncropped. */
+  main article > img[alt$=" preview"] {
+    display: block;
+    width: 100% !important;
+    height: auto !important;
+    max-height: 330px !important;
+    aspect-ratio: auto !important;
+    object-fit: contain !important;
+    object-position: center !important;
+    background: #01080d;
+    image-rendering: auto;
+  }
+
+  /* Dock the journey robot under the smaller mechanism instead of over the project card. */
+  button[data-journey-robot="true"][aria-label*="contact page"] {
+    left: calc(50vw - 300px) !important;
+    right: auto !important;
+    bottom: 18px !important;
+    scale: 0.7;
+    transform-origin: bottom left;
+  }
+}
+
+@media (min-width: 1024px) and (max-height: 760px) {
+  main > div[class*="max-w-7xl"][class*="pt-28"] > div[class*="lg:grid-cols-[.42fr_1.58fr]"] > div:nth-child(2)[class*="lg:grid-cols-[.72fr_1.28fr]"] {
+    grid-template-columns: 190px minmax(0, 1fr) !important;
+  }
+
+  main > div[class*="max-w-7xl"][class*="pt-28"] > div[class*="lg:grid-cols-[.42fr_1.58fr]"] > div:nth-child(2) > div:first-child > div[class*="max-w-[590px]"] {
+    max-width: 190px !important;
+  }
+
+  main article > img[alt$=" preview"] {
+    max-height: 270px !important;
+  }
+
+  button[data-journey-robot="true"][aria-label*="contact page"] {
+    bottom: 8px !important;
+    scale: 0.62;
+  }
 }
 
 @media (max-width: 1023px) {
   body {
     overflow-y: auto;
+  }
+
+  button[data-journey-robot="true"][aria-label*="contact page"] {
+    right: 8px !important;
+    bottom: 8px !important;
+    scale: 0.62;
+    transform-origin: bottom right;
+  }
+
+  main article > img[alt$=" preview"] {
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: auto !important;
+    object-fit: contain !important;
+    background: #01080d;
   }
 }
 
