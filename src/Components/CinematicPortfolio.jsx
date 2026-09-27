@@ -14,7 +14,6 @@ import {
 } from "react-icons/fa";
 import myImage from "../images/MyPicture.png";
 import windowsConsole from "../images/windows-infrastructure-console.svg";
-import appsecPreview from "../images/appsec-vulnerability-manager.jpg";
 import PortfolioAssistant from "./PortfolioAssistant";
 
 const scenes = [
@@ -33,7 +32,6 @@ const projects = [
     proof: "Python · FastAPI · Semgrep · Trivy · OWASP ZAP · Neon PostgreSQL · Vercel",
     repo: "https://github.com/yeabsira-mesfin/appsec-vulnerability-manager",
     demo: "https://appsec-vulnerability-manager.vercel.app/",
-    image: appsecPreview,
     code: "APP",
     accent: "#52F0B6",
   },
@@ -299,11 +297,11 @@ const MetallicGear = ({ rotation, reduceMotion }) => (
   </motion.div>
 );
 
-const Gear = ({ scene, wheelTurn, reduceMotion, onNavigate, showSceneNav = true }) => {
+const Gear = ({ scene, wheelTurn, reduceMotion, onNavigate, compact = false, showSceneNav = true }) => {
   const rotation = reduceMotion ? scene * 35 : wheelTurn * 118 + scene * 44;
 
   return (
-    <div className="relative mx-auto aspect-square w-full max-w-[590px] select-none">
+    <div className={`relative mx-auto aspect-square w-full select-none ${compact ? "max-w-[220px]" : "max-w-[590px]"}`}>
       <div className="absolute inset-[1%] rounded-full bg-[radial-gradient(circle,rgba(86,230,211,.18),rgba(22,121,126,.08)_34%,transparent_69%)] blur-3xl" />
       <div className="circuit-halo pointer-events-none absolute -inset-[8%] opacity-70" />
       <motion.div animate={reduceMotion ? undefined : { rotate: -360 }} transition={{ duration: 110, repeat: Infinity, ease: "linear" }} className="absolute inset-[8%] rounded-full border border-dashed border-[#56E6D3]/10 transform-gpu" />
@@ -348,25 +346,23 @@ const Gear = ({ scene, wheelTurn, reduceMotion, onNavigate, showSceneNav = true 
 
 const ProjectFallback = ({ project, reduceMotion }) => (
   <div
-    className="relative isolate aspect-[16/10] overflow-hidden rounded-[1.25rem] border border-[#7CEBDD]/10 bg-[#01080D]"
+    className="relative isolate aspect-[16/9] overflow-hidden rounded-[1.25rem] border border-[#7CEBDD]/10 bg-[#01080D]"
     style={{ backgroundImage: `radial-gradient(circle at 50% 42%, ${project.accent}18, transparent 38%), linear-gradient(145deg, #020C12 0%, #031820 52%, #01070B 100%)` }}
   >
     <div className="absolute inset-0 opacity-40" style={{ backgroundImage: "linear-gradient(rgba(124,235,221,.035) 1px, transparent 1px), linear-gradient(90deg, rgba(124,235,221,.035) 1px, transparent 1px)", backgroundSize: "28px 28px" }} />
     <motion.div
       animate={reduceMotion ? undefined : { rotate: 360 }}
       transition={{ duration: 44, repeat: Infinity, ease: "linear" }}
-      className="absolute left-1/2 top-1/2 h-[68%] w-[68%] -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed border-[#7CEBDD]/12"
+      className="absolute left-1/2 top-1/2 h-[62%] w-[62%] -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed border-[#7CEBDD]/12"
     />
     <div className="absolute left-[12%] top-[22%] h-2 w-2 rounded-full" style={{ backgroundColor: project.accent, boxShadow: `0 0 18px ${project.accent}` }} />
     <div className="absolute right-[15%] top-[34%] h-1.5 w-1.5 rounded-full bg-[#7CB7FF] shadow-[0_0_16px_rgba(124,183,255,.85)]" />
     <div className="absolute bottom-[24%] left-[20%] h-1.5 w-1.5 rounded-full bg-[#58E6D1] shadow-[0_0_16px_rgba(88,230,209,.8)]" />
-    <div className="absolute left-[13%] right-[16%] top-[23%] h-px origin-left rotate-[7deg] bg-gradient-to-r from-transparent via-[#7CEBDD]/20 to-transparent" />
-    <div className="absolute bottom-[26%] left-[21%] right-[18%] h-px origin-left -rotate-[9deg] bg-gradient-to-r from-transparent via-[#7CB7FF]/16 to-transparent" />
     <div className="relative z-10 flex h-full flex-col items-center justify-center text-center">
       <motion.div
         animate={reduceMotion ? undefined : { y: [0, -4, 0] }}
         transition={{ duration: 5.2, repeat: Infinity, ease: "easeInOut" }}
-        className="grid h-28 w-28 place-items-center rounded-[2rem] border border-[#7CEBDD]/14 bg-[#03151D]/88 shadow-[0_18px_70px_rgba(0,0,0,.46)] backdrop-blur-xl"
+        className="grid h-24 w-24 place-items-center rounded-[1.75rem] border border-[#7CEBDD]/14 bg-[#03151D]/88 shadow-[0_18px_70px_rgba(0,0,0,.46)] backdrop-blur-xl"
       >
         <span className="text-3xl font-semibold tracking-[-.06em]" style={{ color: project.accent }}>{project.code}</span>
       </motion.div>
@@ -374,6 +370,35 @@ const ProjectFallback = ({ project, reduceMotion }) => (
     </div>
   </div>
 );
+
+const ProjectVisual = ({ project, reduceMotion }) => {
+  if (project.id === "appsec" && project.demo) {
+    return (
+      <div className="relative aspect-[21/9] overflow-hidden rounded-[1.25rem] border border-[#52F0B6]/15 bg-[#01080D]">
+        <iframe
+          src={project.demo}
+          title="AppSec Vulnerability Manager live preview"
+          loading="lazy"
+          tabIndex="-1"
+          aria-hidden="true"
+          className="pointer-events-none absolute left-0 top-0 h-[200%] w-[200%] origin-top-left scale-50 border-0 bg-[#01080D]"
+        />
+        <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/[.035]" />
+        <div className="pointer-events-none absolute left-3 top-3 rounded-full border border-[#52F0B6]/20 bg-[#02120F]/90 px-2.5 py-1 font-mono text-[7px] font-bold uppercase tracking-[.18em] text-[#78F7C8] backdrop-blur-md">Live product preview</div>
+      </div>
+    );
+  }
+
+  if (project.image) {
+    return (
+      <div className="relative overflow-hidden rounded-[1.25rem] border border-[#7CEBDD]/10 bg-[#01080D]">
+        <img src={project.image} alt={`${project.title} preview`} className="block max-h-[330px] w-full object-contain" />
+      </div>
+    );
+  }
+
+  return <ProjectFallback project={project} reduceMotion={reduceMotion} />;
+};
 
 const HeroVisual = ({ scene, wheelTurn, reduceMotion, onNavigate }) => (
   <div className="relative mx-auto w-full max-w-[640px] px-1 sm:px-3">
@@ -472,41 +497,52 @@ const CinematicPortfolio = () => {
           )}
 
           {scene === 2 && (
-            <div className="mx-auto min-h-[100dvh] w-full max-w-7xl px-5 pb-10 pt-28 sm:px-7 lg:px-10 lg:pt-24">
-              <div className="grid min-h-[calc(100dvh-8rem)] gap-7 lg:grid-cols-[.42fr_1.58fr] lg:items-center lg:gap-9">
+            <div data-project-scene="true" className="mx-auto min-h-[100dvh] w-full max-w-[1480px] px-5 pb-10 pt-28 sm:px-7 lg:px-8 lg:pt-24">
+              <div className="grid min-h-[calc(100dvh-8rem)] gap-6 lg:grid-cols-[260px_minmax(0,1fr)] lg:items-center xl:grid-cols-[260px_220px_minmax(0,1fr)] xl:gap-6">
                 <div className="min-w-0">
                   <div className="flex items-center gap-3"><span className="font-mono text-[9px] font-bold uppercase tracking-[.2em] text-[#7CB7FF]">02 / Project orbit</span><span className="h-px flex-1 bg-[#7CEBDD]/8" /></div>
-                  <h2 className="mt-5 text-[clamp(2.7rem,5vw,4.8rem)] font-semibold leading-[.9] tracking-[-.06em] text-[#E8F7F5]">Selected<br /><span className="text-[#C6E1DE]/24">work.</span></h2>
-                  <p className="mt-5 text-sm leading-6 text-[#C5DFDC]/40">Choose a project. The mechanism responds while the work comes into focus.</p>
-                  <div className="mt-7 max-h-[48vh] space-y-2 overflow-y-auto pr-1 lg:max-h-[52vh]">
+                  <h2 className="mt-4 text-[clamp(2.45rem,4vw,4rem)] font-semibold leading-[.9] tracking-[-.06em] text-[#E8F7F5]">Selected<br /><span className="text-[#C6E1DE]/24">work.</span></h2>
+                  <p className="mt-4 text-sm leading-6 text-[#C5DFDC]/40">Choose a project. The mechanism follows while the work gets the space it deserves.</p>
+                  <div className="mt-6 max-h-[56vh] space-y-2 overflow-y-auto pr-1 lg:max-h-[58vh]">
                     {projects.map((project) => {
                       const active = selectedProject.id === project.id;
                       return (
-                        <button key={project.id} type="button" onClick={() => { setSelectedProject(project); setWheelTurn((value) => value + 1); }} className={`w-full rounded-2xl border p-3.5 text-left transition-all duration-700 ${active ? "border-[#7CEBDD]/18 bg-[#7CEBDD]/[.055]" : "border-[#7CEBDD]/6 bg-[#7CEBDD]/[.012] hover:border-[#7CEBDD]/15 hover:bg-[#7CEBDD]/[.03]"}`}>
-                          <div className="flex items-center gap-3"><span className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-[#7CEBDD]/10 font-mono text-[9px] font-bold" style={{ color: project.accent }}>{project.code}</span><div className="min-w-0"><p className={`truncate text-sm font-semibold ${active ? "text-[#EFFFFC]" : "text-[#C8E2DF]/58"}`}>{project.title}</p><p className="mt-0.5 font-mono text-[8px] uppercase tracking-[.14em] text-[#B8D6D2]/25">{project.lane}</p></div></div>
+                        <button key={project.id} type="button" onClick={() => { setSelectedProject(project); setWheelTurn((value) => value + 1); }} className={`w-full rounded-2xl border p-3.5 text-left transition-all duration-700 ${active ? "border-[#7CEBDD]/30 bg-[#7CEBDD]/[.07] shadow-[0_0_32px_rgba(88,230,209,.04)]" : "border-[#7CEBDD]/7 bg-[#7CEBDD]/[.012] hover:border-[#7CEBDD]/18 hover:bg-[#7CEBDD]/[.03]"}`}>
+                          <div className="flex items-center gap-3"><span className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-[#7CEBDD]/10 font-mono text-[9px] font-bold" style={{ color: project.accent }}>{project.code}</span><div className="min-w-0"><p className={`truncate text-sm font-semibold ${active ? "text-[#EFFFFC]" : "text-[#C8E2DF]/62"}`}>{project.title}</p><p className="mt-0.5 font-mono text-[8px] uppercase tracking-[.14em] text-[#B8D6D2]/28">{project.lane}</p></div></div>
                         </button>
                       );
                     })}
                   </div>
                 </div>
-                <div className="grid min-w-0 gap-5 lg:grid-cols-[.72fr_1.28fr] lg:items-center">
-                  <div className="hidden lg:block"><Gear scene={scene} wheelTurn={wheelTurn} reduceMotion={reduceMotion} onNavigate={navigate} showSceneNav={false} /></div>
-                  <AnimatePresence mode="wait">
-                    <motion.article key={selectedProject.id} initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 12, scale: .99 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -8, scale: .994 }} transition={{ duration: 0.76, ease: [0.16, 1, 0.3, 1] }} className="overflow-hidden rounded-[1.8rem] border border-[#7CEBDD]/10 bg-[#03131A]/82 p-3 shadow-[0_30px_90px_rgba(0,5,11,.5)] backdrop-blur-xl sm:p-4">
-                      {selectedProject.image ? <img src={selectedProject.image} alt={`${selectedProject.title} preview`} className="aspect-[16/10] w-full rounded-[1.25rem] object-cover" /> : <ProjectFallback project={selectedProject} reduceMotion={reduceMotion} />}
-                      <div className="p-3 pb-4 pt-5 sm:p-4 sm:pb-4">
-                        <p className="font-mono text-[8px] font-bold uppercase tracking-[.18em]" style={{ color: selectedProject.accent }}>{selectedProject.lane}</p>
-                        <h3 className="mt-2 text-2xl font-semibold leading-tight tracking-[-.04em] text-[#E8F7F5]/92 sm:text-3xl">{selectedProject.title}</h3>
-                        <p className="mt-3 text-sm leading-6 text-[#C5DFDC]/44">{selectedProject.summary}</p>
-                        <div className="mt-4 rounded-xl border border-[#7CEBDD]/7 bg-[#7CEBDD]/[.02] px-3.5 py-3 font-mono text-[9px] leading-5 text-[#BDDCD8]/38">{selectedProject.proof}</div>
-                        <div className="mt-4 flex flex-wrap gap-3">
-                          {selectedProject.demo && <a href={selectedProject.demo} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full bg-[#DFFFFB] px-4 py-2.5 text-xs font-bold text-[#03131A] transition hover:bg-white">Open live product <FaExternalLinkAlt className="text-[9px]" /></a>}
-                          <a href={selectedProject.repo} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full border border-[#7CEBDD]/10 px-4 py-2.5 text-xs font-bold text-[#D3EFEB]/66 transition-colors duration-700 hover:border-[#7CEBDD]/25 hover:text-white">Repository <FaGithub className="text-[10px]" /></a>
-                        </div>
-                      </div>
-                    </motion.article>
-                  </AnimatePresence>
+
+                <div data-project-gear="true" className="hidden xl:flex xl:flex-col xl:items-center xl:justify-center xl:self-center">
+                  <Gear scene={scene} wheelTurn={wheelTurn} reduceMotion={reduceMotion} onNavigate={navigate} compact showSceneNav={false} />
+                  <p className="mt-4 max-w-[190px] text-center font-mono text-[7px] uppercase tracking-[.2em] text-[#A8D8D2]/24">rotating project mechanism</p>
                 </div>
+
+                <AnimatePresence mode="wait">
+                  <motion.article
+                    data-project-card="true"
+                    key={selectedProject.id}
+                    initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 12, scale: .99 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -8, scale: .994 }}
+                    transition={{ duration: 0.76, ease: [0.16, 1, 0.3, 1] }}
+                    className="min-w-0 overflow-hidden rounded-[1.8rem] border border-[#7CEBDD]/11 bg-[#03131A]/84 p-3 shadow-[0_30px_90px_rgba(0,5,11,.5)] backdrop-blur-xl sm:p-4"
+                  >
+                    <ProjectVisual project={selectedProject} reduceMotion={reduceMotion} />
+                    <div className="p-3 pb-4 pt-5 sm:p-4 sm:pb-4">
+                      <p className="font-mono text-[8px] font-bold uppercase tracking-[.18em]" style={{ color: selectedProject.accent }}>{selectedProject.lane}</p>
+                      <h3 className="mt-2 text-2xl font-semibold leading-tight tracking-[-.04em] text-[#E8F7F5]/92 sm:text-3xl">{selectedProject.title}</h3>
+                      <p className="mt-3 max-w-3xl text-sm leading-6 text-[#C5DFDC]/48">{selectedProject.summary}</p>
+                      <div className="mt-4 rounded-xl border border-[#7CEBDD]/7 bg-[#7CEBDD]/[.02] px-3.5 py-3 font-mono text-[9px] leading-5 text-[#BDDCD8]/42">{selectedProject.proof}</div>
+                      <div className="mt-4 flex flex-wrap gap-3">
+                        {selectedProject.demo && <a href={selectedProject.demo} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full bg-[#DFFFFB] px-4 py-2.5 text-xs font-bold text-[#03131A] transition hover:bg-white">Open live product <FaExternalLinkAlt className="text-[9px]" /></a>}
+                        <a href={selectedProject.repo} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full border border-[#7CEBDD]/10 px-4 py-2.5 text-xs font-bold text-[#D3EFEB]/66 transition-colors duration-700 hover:border-[#7CEBDD]/25 hover:text-white">Repository <FaGithub className="text-[10px]" /></a>
+                      </div>
+                    </div>
+                  </motion.article>
+                </AnimatePresence>
               </div>
             </div>
           )}
