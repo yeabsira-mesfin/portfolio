@@ -14,6 +14,7 @@ import {
 } from "react-icons/fa";
 import myImage from "../images/MyPicture.png";
 import windowsConsole from "../images/windows-infrastructure-console.svg";
+import appsecPreview from "../images/appsec-vulnerability-manager.jpg";
 import PortfolioAssistant from "./PortfolioAssistant";
 
 const scenes = [
@@ -24,6 +25,18 @@ const scenes = [
 ];
 
 const projects = [
+  {
+    id: "appsec",
+    title: "AppSec Vulnerability Manager",
+    lane: "AppSec + Software",
+    summary: "A production-deployed AppSec operations console that normalizes Semgrep, Trivy, and OWASP ZAP findings into one persistent remediation queue.",
+    proof: "Python · FastAPI · Semgrep · Trivy · OWASP ZAP · Neon PostgreSQL · Vercel",
+    repo: "https://github.com/yeabsira-mesfin/appsec-vulnerability-manager",
+    demo: "https://appsec-vulnerability-manager.vercel.app/",
+    image: appsecPreview,
+    code: "APP",
+    accent: "#52F0B6",
+  },
   {
     id: "windows",
     title: "Windows Infrastructure Reliability Console",
@@ -286,7 +299,7 @@ const MetallicGear = ({ rotation, reduceMotion }) => (
   </motion.div>
 );
 
-const Gear = ({ scene, wheelTurn, reduceMotion, onNavigate }) => {
+const Gear = ({ scene, wheelTurn, reduceMotion, onNavigate, showSceneNav = true }) => {
   const rotation = reduceMotion ? scene * 35 : wheelTurn * 118 + scene * 44;
 
   return (
@@ -310,26 +323,57 @@ const Gear = ({ scene, wheelTurn, reduceMotion, onNavigate }) => {
         </div>
       </motion.div>
 
-      <div className="absolute inset-0 z-20">
-        {scenes.slice(1).map((item, index) => {
-          const angle = [-42, 90, 222][index];
-          const active = scene === index + 1;
-          return (
-            <button
-              key={item.id}
-              type="button"
-              onClick={() => onNavigate(index + 1)}
-              className={`absolute left-1/2 top-1/2 flex items-center gap-2 rounded-full border px-3 py-2 font-mono text-[9px] font-bold uppercase tracking-[0.17em] backdrop-blur-xl transition-all duration-700 sm:text-[10px] ${active ? "border-[#89F5E8]/55 bg-[#7CEBDD] text-[#03131A] shadow-[0_0_35px_rgba(86,230,211,.2)]" : "border-[#72CFC6]/15 bg-[#03131A]/82 text-[#C6F8F3]/46 hover:border-[#72CFC6]/35 hover:text-[#DFFFFB]"}`}
-              style={{ transform: `translate(-50%, -50%) rotate(${angle}deg) translateY(calc(-1 * clamp(155px, 39vw, 255px))) rotate(${-angle}deg)` }}
-            >
-              <span>{item.number}</span><span>{item.label}</span>
-            </button>
-          );
-        })}
-      </div>
+      {showSceneNav && (
+        <div className="absolute inset-0 z-20">
+          {scenes.slice(1).map((item, index) => {
+            const angle = [-42, 90, 222][index];
+            const active = scene === index + 1;
+            return (
+              <button
+                key={item.id}
+                type="button"
+                onClick={() => onNavigate(index + 1)}
+                className={`absolute left-1/2 top-1/2 flex items-center gap-2 rounded-full border px-3 py-2 font-mono text-[9px] font-bold uppercase tracking-[0.17em] backdrop-blur-xl transition-all duration-700 sm:text-[10px] ${active ? "border-[#89F5E8]/55 bg-[#7CEBDD] text-[#03131A] shadow-[0_0_35px_rgba(86,230,211,.2)]" : "border-[#72CFC6]/15 bg-[#03131A]/82 text-[#C6F8F3]/46 hover:border-[#72CFC6]/35 hover:text-[#DFFFFB]"}`}
+                style={{ transform: `translate(-50%, -50%) rotate(${angle}deg) translateY(calc(-1 * clamp(155px, 39vw, 255px))) rotate(${-angle}deg)` }}
+              >
+                <span>{item.number}</span><span>{item.label}</span>
+              </button>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 };
+
+const ProjectFallback = ({ project, reduceMotion }) => (
+  <div
+    className="relative isolate aspect-[16/10] overflow-hidden rounded-[1.25rem] border border-[#7CEBDD]/10 bg-[#01080D]"
+    style={{ backgroundImage: `radial-gradient(circle at 50% 42%, ${project.accent}18, transparent 38%), linear-gradient(145deg, #020C12 0%, #031820 52%, #01070B 100%)` }}
+  >
+    <div className="absolute inset-0 opacity-40" style={{ backgroundImage: "linear-gradient(rgba(124,235,221,.035) 1px, transparent 1px), linear-gradient(90deg, rgba(124,235,221,.035) 1px, transparent 1px)", backgroundSize: "28px 28px" }} />
+    <motion.div
+      animate={reduceMotion ? undefined : { rotate: 360 }}
+      transition={{ duration: 44, repeat: Infinity, ease: "linear" }}
+      className="absolute left-1/2 top-1/2 h-[68%] w-[68%] -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed border-[#7CEBDD]/12"
+    />
+    <div className="absolute left-[12%] top-[22%] h-2 w-2 rounded-full" style={{ backgroundColor: project.accent, boxShadow: `0 0 18px ${project.accent}` }} />
+    <div className="absolute right-[15%] top-[34%] h-1.5 w-1.5 rounded-full bg-[#7CB7FF] shadow-[0_0_16px_rgba(124,183,255,.85)]" />
+    <div className="absolute bottom-[24%] left-[20%] h-1.5 w-1.5 rounded-full bg-[#58E6D1] shadow-[0_0_16px_rgba(88,230,209,.8)]" />
+    <div className="absolute left-[13%] right-[16%] top-[23%] h-px origin-left rotate-[7deg] bg-gradient-to-r from-transparent via-[#7CEBDD]/20 to-transparent" />
+    <div className="absolute bottom-[26%] left-[21%] right-[18%] h-px origin-left -rotate-[9deg] bg-gradient-to-r from-transparent via-[#7CB7FF]/16 to-transparent" />
+    <div className="relative z-10 flex h-full flex-col items-center justify-center text-center">
+      <motion.div
+        animate={reduceMotion ? undefined : { y: [0, -4, 0] }}
+        transition={{ duration: 5.2, repeat: Infinity, ease: "easeInOut" }}
+        className="grid h-28 w-28 place-items-center rounded-[2rem] border border-[#7CEBDD]/14 bg-[#03151D]/88 shadow-[0_18px_70px_rgba(0,0,0,.46)] backdrop-blur-xl"
+      >
+        <span className="text-3xl font-semibold tracking-[-.06em]" style={{ color: project.accent }}>{project.code}</span>
+      </motion.div>
+      <p className="mt-4 font-mono text-[8px] font-bold uppercase tracking-[.24em] text-[#C9E8E4]/32">system architecture preview</p>
+    </div>
+  </div>
+);
 
 const HeroVisual = ({ scene, wheelTurn, reduceMotion, onNavigate }) => (
   <div className="relative mx-auto w-full max-w-[640px] px-1 sm:px-3">
@@ -430,11 +474,11 @@ const CinematicPortfolio = () => {
           {scene === 2 && (
             <div className="mx-auto min-h-[100dvh] w-full max-w-7xl px-5 pb-10 pt-28 sm:px-7 lg:px-10 lg:pt-24">
               <div className="grid min-h-[calc(100dvh-8rem)] gap-7 lg:grid-cols-[.42fr_1.58fr] lg:items-center lg:gap-9">
-                <div>
+                <div className="min-w-0">
                   <div className="flex items-center gap-3"><span className="font-mono text-[9px] font-bold uppercase tracking-[.2em] text-[#7CB7FF]">02 / Project orbit</span><span className="h-px flex-1 bg-[#7CEBDD]/8" /></div>
                   <h2 className="mt-5 text-[clamp(2.7rem,5vw,4.8rem)] font-semibold leading-[.9] tracking-[-.06em] text-[#E8F7F5]">Selected<br /><span className="text-[#C6E1DE]/24">work.</span></h2>
                   <p className="mt-5 text-sm leading-6 text-[#C5DFDC]/40">Choose a project. The mechanism responds while the work comes into focus.</p>
-                  <div className="mt-7 space-y-2">
+                  <div className="mt-7 max-h-[48vh] space-y-2 overflow-y-auto pr-1 lg:max-h-[52vh]">
                     {projects.map((project) => {
                       const active = selectedProject.id === project.id;
                       return (
@@ -445,12 +489,21 @@ const CinematicPortfolio = () => {
                     })}
                   </div>
                 </div>
-                <div className="grid gap-5 lg:grid-cols-[.82fr_1.18fr] lg:items-center">
-                  <div className="hidden lg:block"><Gear scene={scene} wheelTurn={wheelTurn} reduceMotion={reduceMotion} onNavigate={navigate} /></div>
+                <div className="grid min-w-0 gap-5 lg:grid-cols-[.72fr_1.28fr] lg:items-center">
+                  <div className="hidden lg:block"><Gear scene={scene} wheelTurn={wheelTurn} reduceMotion={reduceMotion} onNavigate={navigate} showSceneNav={false} /></div>
                   <AnimatePresence mode="wait">
                     <motion.article key={selectedProject.id} initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 12, scale: .99 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -8, scale: .994 }} transition={{ duration: 0.76, ease: [0.16, 1, 0.3, 1] }} className="overflow-hidden rounded-[1.8rem] border border-[#7CEBDD]/10 bg-[#03131A]/82 p-3 shadow-[0_30px_90px_rgba(0,5,11,.5)] backdrop-blur-xl sm:p-4">
-                      {selectedProject.image ? <img src={selectedProject.image} alt={`${selectedProject.title} preview`} className="aspect-[16/10] w-full rounded-[1.25rem] object-cover" /> : <div className="project-mesh relative grid aspect-[16/10] place-items-center overflow-hidden rounded-[1.25rem] border border-[#7CEBDD]/7 bg-[#020A10]"><motion.div animate={reduceMotion ? undefined : { rotate: 360 }} transition={{ duration: 38, repeat: Infinity, ease: "linear" }} className="absolute h-[68%] w-[68%] rounded-full border border-dashed border-[#7CEBDD]/12" /><div className="relative grid h-28 w-28 place-items-center rounded-full border border-[#7CEBDD]/12 bg-[#7CEBDD]/[.035] text-3xl font-semibold" style={{ color: selectedProject.accent }}>{selectedProject.code}</div></div>}
-                      <div className="p-3 pb-4 pt-5 sm:p-4 sm:pb-4"><p className="font-mono text-[8px] font-bold uppercase tracking-[.18em]" style={{ color: selectedProject.accent }}>{selectedProject.lane}</p><h3 className="mt-2 text-2xl font-semibold leading-tight tracking-[-.04em] text-[#E8F7F5]/92 sm:text-3xl">{selectedProject.title}</h3><p className="mt-3 text-sm leading-6 text-[#C5DFDC]/44">{selectedProject.summary}</p><div className="mt-4 rounded-xl border border-[#7CEBDD]/7 bg-[#7CEBDD]/[.02] px-3.5 py-3 font-mono text-[9px] leading-5 text-[#BDDCD8]/38">{selectedProject.proof}</div><a href={selectedProject.repo} target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex items-center gap-2 text-xs font-bold text-[#D3EFEB]/66 transition-colors duration-700 hover:text-white">Open repository <FaExternalLinkAlt className="text-[9px]" /></a></div>
+                      {selectedProject.image ? <img src={selectedProject.image} alt={`${selectedProject.title} preview`} className="aspect-[16/10] w-full rounded-[1.25rem] object-cover" /> : <ProjectFallback project={selectedProject} reduceMotion={reduceMotion} />}
+                      <div className="p-3 pb-4 pt-5 sm:p-4 sm:pb-4">
+                        <p className="font-mono text-[8px] font-bold uppercase tracking-[.18em]" style={{ color: selectedProject.accent }}>{selectedProject.lane}</p>
+                        <h3 className="mt-2 text-2xl font-semibold leading-tight tracking-[-.04em] text-[#E8F7F5]/92 sm:text-3xl">{selectedProject.title}</h3>
+                        <p className="mt-3 text-sm leading-6 text-[#C5DFDC]/44">{selectedProject.summary}</p>
+                        <div className="mt-4 rounded-xl border border-[#7CEBDD]/7 bg-[#7CEBDD]/[.02] px-3.5 py-3 font-mono text-[9px] leading-5 text-[#BDDCD8]/38">{selectedProject.proof}</div>
+                        <div className="mt-4 flex flex-wrap gap-3">
+                          {selectedProject.demo && <a href={selectedProject.demo} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full bg-[#DFFFFB] px-4 py-2.5 text-xs font-bold text-[#03131A] transition hover:bg-white">Open live product <FaExternalLinkAlt className="text-[9px]" /></a>}
+                          <a href={selectedProject.repo} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full border border-[#7CEBDD]/10 px-4 py-2.5 text-xs font-bold text-[#D3EFEB]/66 transition-colors duration-700 hover:border-[#7CEBDD]/25 hover:text-white">Repository <FaGithub className="text-[10px]" /></a>
+                        </div>
+                      </div>
                     </motion.article>
                   </AnimatePresence>
                 </div>
