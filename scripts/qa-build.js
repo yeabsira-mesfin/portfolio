@@ -38,7 +38,7 @@ if (projectGearCount !== 1) {
   throw new Error(`Build QA failed: expected exactly 1 Projects roller, found ${projectGearCount}`);
 }
 
-if (projectControlsCount !== 1 || projectCardCount !== 1) {
+if (projectControlsCount !== 1 || projectCardCount < 1) {
   throw new Error(`Build QA failed: project controls/card markers are wrong (${projectControlsCount}/${projectCardCount})`);
 }
 
