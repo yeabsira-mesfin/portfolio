@@ -7,14 +7,17 @@ const staticJsDir = path.join(buildDir, "static", "js");
 const staticCssDir = path.join(buildDir, "static", "css");
 const cinematicPath = path.join(root, "src", "Components", "CinematicPortfolio.jsx");
 const robotPath = path.join(root, "src", "Components", "HomeExplorerRobot.jsx");
+const experiencePath = path.join(root, "src", "Components", "StoryExperienceTimeline.jsx");
 
 if (!fs.existsSync(staticJsDir)) throw new Error("Build QA failed: build/static/js does not exist");
 if (!fs.existsSync(staticCssDir)) throw new Error("Build QA failed: build/static/css does not exist");
 if (!fs.existsSync(cinematicPath)) throw new Error("Build QA failed: CinematicPortfolio source is missing");
 if (!fs.existsSync(robotPath)) throw new Error("Build QA failed: HomeExplorerRobot source is missing");
+if (!fs.existsSync(experiencePath)) throw new Error("Build QA failed: Story experience source is missing");
 
 const source = fs.readFileSync(cinematicPath, "utf8");
 const robotSource = fs.readFileSync(robotPath, "utf8");
+const experienceSource = fs.readFileSync(experiencePath, "utf8");
 const bundle = fs
   .readdirSync(staticJsDir)
   .filter((name) => name.endsWith(".js"))
@@ -66,8 +69,8 @@ if (source.includes("rotating project mechanism") || bundle.includes("rotating p
 if (!source.includes("scrollIntoView") || !bundle.includes("scrollIntoView")) {
   throw new Error("Build QA failed: selecting a project no longer auto-reveals the project card");
 }
-if (!source.includes("wheelTurn * 18") || !source.includes("duration: 5.8")) {
-  throw new Error("Build QA failed: shared roller motion is not using the slower smooth setting");
+if (!source.includes("wheelTurn * 28") || !source.includes("duration: 2.9")) {
+  throw new Error("Build QA failed: page-turn roller motion is not using the gentle quicker setting");
 }
 if (!source.includes("duration: 180") || !source.includes("duration: 120")) {
   throw new Error("Build QA failed: ambient project roller rings are still rotating too quickly");
@@ -77,6 +80,21 @@ if (!robotSource.includes("setIdle(true), 10000")) {
 }
 if (robotSource.includes("setIdle(true), 60000")) {
   throw new Error("Build QA failed: legacy 60 second Bzzz timer remains");
+}
+if (!robotSource.includes('setScene("intro")')) {
+  throw new Error("Build QA failed: home click does not reset the journey robot scene");
+}
+if (!experienceSource.includes("Experience / trajectory") || !bundle.includes("Experience / trajectory")) {
+  throw new Error("Build QA failed: detailed Story experience timeline is missing");
+}
+if (!experienceSource.includes("200+ enterprise event builds") || !experienceSource.includes("account managers")) {
+  throw new Error("Build QA failed: Story experience detail is incomplete");
+}
+if (!css.includes("ym-ambient-gear-turn") || !css.includes("ym-tooth-signal")) {
+  throw new Error("Build QA failed: ambient gear motion or travelling tooth light is missing");
+}
+if (!css.includes('aria-label^="Explore more"')) {
+  throw new Error("Build QA failed: explicit Home robot right-dock safeguard is missing");
 }
 if (bundle.includes("AppSec Vulnerability Manager live preview")) {
   throw new Error("Build QA failed: AppSec iframe preview returned; use the local dashboard artwork only");
@@ -123,4 +141,4 @@ if (!css.includes("max-height:none") && !css.includes("max-height: none")) {
   throw new Error("Build QA failed: desktop selected-project card can still be height-clipped");
 }
 
-console.log("Production bundle QA passed: matched roller and robot sizing hooks, slower roller motion, 10-second Bzzz timer, uncropped previews, two new security projects, and responsive layout rules are present");
+console.log("Production bundle QA passed: Home robot reset, detailed Story experience, slow ambient gear, gentle scene-turn motion, travelling tooth light, ten-second Bzzz timing, uncropped previews, and responsive layout rules are present");
