@@ -1,0 +1,167 @@
+/* Final cross-scene polish: keep the journey controls visually consistent. */
+
+/* The explorer robot is intentionally the same size on Intro, Story, and Projects. */
+button[data-journey-robot="true"][aria-label] {
+  left: auto !important;
+  right: max(14px, env(safe-area-inset-right)) !important;
+  bottom: max(14px, env(safe-area-inset-bottom)) !important;
+  width: 196px !important;
+  height: 182px !important;
+  scale: 1 !important;
+  transform-origin: bottom right !important;
+}
+
+button[data-journey-robot="true"][aria-label] > div:first-child {
+  width: 172px !important;
+}
+
+button[data-journey-robot="true"][aria-label] > div:last-child {
+  width: 92px !important;
+  height: 112px !important;
+}
+
+/* Projects uses the same portrait mechanism scale as Intro, Story, and Contact. */
+[data-project-gear-mobile-top="true"] > div {
+  width: 100% !important;
+  max-width: 590px !important;
+}
+
+[data-project-gear-mobile-top="true"] > div > div,
+[data-project-gear="true"] > div {
+  width: 100% !important;
+  max-width: 590px !important;
+}
+
+@media (min-width: 1280px) {
+  [data-project-scene="true"] > div.grid {
+    grid-template-columns: 230px minmax(500px, 590px) minmax(0, 1fr) !important;
+    gap: 1.25rem !important;
+  }
+
+  [data-project-gear="true"] {
+    width: 100% !important;
+    align-self: center !important;
+  }
+}
+
+/* Windows Reliability Console: animated systems visual instead of a static preview. */
+div:has(> img[alt="Windows Infrastructure Reliability Console preview"]) {
+  position: relative;
+  isolation: isolate;
+  aspect-ratio: 16 / 9;
+  min-height: 220px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 14% 24%, rgba(88, 230, 209, 0.7) 0 3px, transparent 4px),
+    radial-gradient(circle at 83% 31%, rgba(124, 183, 255, 0.72) 0 3px, transparent 4px),
+    radial-gradient(circle at 73% 77%, rgba(88, 230, 209, 0.62) 0 2px, transparent 3px),
+    radial-gradient(circle at 27% 75%, rgba(124, 183, 255, 0.52) 0 2px, transparent 3px),
+    radial-gradient(circle at 50% 47%, rgba(88, 230, 209, 0.16), transparent 34%),
+    linear-gradient(rgba(124, 235, 221, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(124, 235, 221, 0.035) 1px, transparent 1px),
+    linear-gradient(145deg, #020c12 0%, #031820 52%, #01070b 100%) !important;
+  background-size: auto, auto, auto, auto, auto, 28px 28px, 28px 28px, auto !important;
+  animation: windowsSignalField 8s ease-in-out infinite;
+}
+
+div:has(> img[alt="Windows Infrastructure Reliability Console preview"]) > img {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+div:has(> img[alt="Windows Infrastructure Reliability Console preview"])::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 62%;
+  aspect-ratio: 1;
+  border-radius: 999px;
+  border: 1px dashed rgba(124, 235, 221, 0.2);
+  box-shadow:
+    0 0 42px rgba(88, 230, 209, 0.08),
+    inset 0 0 32px rgba(124, 183, 255, 0.04);
+  transform: translate(-50%, -50%);
+  animation: windowsOrbitSpin 30s linear infinite;
+}
+
+div:has(> img[alt="Windows Infrastructure Reliability Console preview"])::after {
+  content: "WIN";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 2;
+  display: grid;
+  width: 96px;
+  height: 96px;
+  place-items: center;
+  border: 1px solid rgba(88, 230, 209, 0.18);
+  border-radius: 28px;
+  background: linear-gradient(145deg, rgba(7, 31, 41, 0.94), rgba(2, 15, 22, 0.98));
+  box-shadow:
+    0 22px 70px rgba(0, 0, 0, 0.5),
+    0 0 42px rgba(88, 230, 209, 0.08);
+  color: #58e6d1;
+  font-family: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: -0.06em;
+  transform: translate(-50%, -50%);
+  animation: windowsConsoleFloat 5.2s ease-in-out infinite;
+}
+
+@keyframes windowsOrbitSpin {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes windowsConsoleFloat {
+  0%, 100% { transform: translate(-50%, -50%) translateY(0) scale(1); }
+  50% { transform: translate(-50%, -50%) translateY(-6px) scale(1.015); }
+}
+
+@keyframes windowsSignalField {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.08); }
+}
+
+@media (max-width: 640px) {
+  button[data-journey-robot="true"][aria-label] {
+    right: max(10px, env(safe-area-inset-right)) !important;
+    bottom: max(10px, env(safe-area-inset-bottom)) !important;
+    width: 184px !important;
+    height: 170px !important;
+  }
+
+  button[data-journey-robot="true"][aria-label] > div:first-child {
+    width: 160px !important;
+  }
+
+  button[data-journey-robot="true"][aria-label] > div:last-child {
+    width: 86px !important;
+    height: 105px !important;
+  }
+
+  div:has(> img[alt="Windows Infrastructure Reliability Console preview"]) {
+    min-height: 185px;
+  }
+
+  div:has(> img[alt="Windows Infrastructure Reliability Console preview"])::after {
+    width: 82px;
+    height: 82px;
+    border-radius: 24px;
+    font-size: 26px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  div:has(> img[alt="Windows Infrastructure Reliability Console preview"]),
+  div:has(> img[alt="Windows Infrastructure Reliability Console preview"])::before,
+  div:has(> img[alt="Windows Infrastructure Reliability Console preview"])::after {
+    animation: none !important;
+  }
+}
