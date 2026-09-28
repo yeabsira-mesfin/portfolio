@@ -42,8 +42,14 @@ def rect(driver, selector):
 
 
 def click_nav(driver, label):
+    normalized = label.lower()
+    xpath = (
+        "//header//button[translate(normalize-space(.), "
+        "'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')="
+        f"'{normalized}']"
+    )
     button = WebDriverWait(driver, 10).until(
-        EC.element_to_be_clickable((By.XPATH, f"//header//button[normalize-space()='{label}']"))
+        EC.element_to_be_clickable((By.XPATH, xpath))
     )
     driver.execute_script("arguments[0].click();", button)
     time.sleep(1.8)
@@ -105,11 +111,11 @@ def run_viewport(width, height, name):
         no_horizontal_overflow(driver, f"{name}/intro")
         driver.save_screenshot(str(OUT / f"{name}-00-intro.png"))
 
-        click_nav(driver, "STORY")
+        click_nav(driver, "story")
         no_horizontal_overflow(driver, f"{name}/story")
         driver.save_screenshot(str(OUT / f"{name}-01-story.png"))
 
-        click_nav(driver, "PROJECTS")
+        click_nav(driver, "projects")
         no_horizontal_overflow(driver, f"{name}/projects")
 
         gear_count = driver.execute_script(
@@ -122,9 +128,8 @@ def run_viewport(width, height, name):
         if not gear or gear["bottom"] <= 80 or gear["top"] >= height:
             raise AssertionError(f"{name}/projects: roller is not visible in the first viewport: {gear}")
 
-        # Select Windows, then verify the selected project card becomes visible automatically.
         windows_button = WebDriverWait(driver, 10).until(
-            EC.element_to_be_clickable((By.XPATH, "//button[.//*[contains(text(),'Windows Infrastructure')]]"))
+            EC.presence_of_element_located((By.XPATH, "//button[.//*[contains(text(),'Windows Infrastructure')]]"))
         )
         driver.execute_script("arguments[0].click();", windows_button)
         time.sleep(1.0)
@@ -135,7 +140,7 @@ def run_viewport(width, height, name):
             )
         driver.save_screenshot(str(OUT / f"{name}-02-projects.png"))
 
-        click_nav(driver, "CONTACT")
+        click_nav(driver, "contact")
         no_horizontal_overflow(driver, f"{name}/contact")
         time.sleep(0.8)
 
