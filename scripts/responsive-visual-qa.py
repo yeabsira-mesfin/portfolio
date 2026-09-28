@@ -149,12 +149,17 @@ def require_scene(driver, expected, name):
 def journey_robot_overlaps_content(driver, content_selector):
     return driver.execute_script(
         """
-        const robot = document.querySelector('button[data-journey-robot="true"]');
+        const button = document.querySelector('button[data-journey-robot="true"]');
+        const robot = button?.querySelector(':scope > div:last-child');
         const root = document.querySelector(arguments[0]);
         if (!robot || !root) return false;
         const rr = robot.getBoundingClientRect();
         const meaningful = [...root.querySelectorAll('h1, h2, h3, p, a, button')]
-          .filter(el => el.offsetParent !== null);
+          .filter(el => el.offsetParent !== null)
+          .filter(el => {
+            const r = el.getBoundingClientRect();
+            return r.bottom > 0 && r.top < window.innerHeight && r.right > 0 && r.left < window.innerWidth;
+          });
         return meaningful.some(el => {
           const r = el.getBoundingClientRect();
           return !(rr.right <= r.left || rr.left >= r.right || rr.bottom <= r.top || rr.top >= r.bottom);
@@ -167,12 +172,17 @@ def journey_robot_overlaps_content(driver, content_selector):
 def project_robot_overlaps_content(driver):
     return driver.execute_script(
         """
-        const robot = document.querySelector('button[data-journey-robot="true"][aria-label*="contact page"]');
+        const button = document.querySelector('button[data-journey-robot="true"][aria-label*="contact page"]');
+        const robot = button?.querySelector(':scope > div:last-child');
         const card = document.querySelector('[data-project-card]');
         if (!robot || !card) return false;
         const rr = robot.getBoundingClientRect();
         const meaningful = [...card.querySelectorAll('h3, p, a, div[class*="font-mono"]')]
-          .filter(el => el.offsetParent !== null);
+          .filter(el => el.offsetParent !== null)
+          .filter(el => {
+            const r = el.getBoundingClientRect();
+            return r.bottom > 0 && r.top < window.innerHeight && r.right > 0 && r.left < window.innerWidth;
+          });
         return meaningful.some(el => {
           const r = el.getBoundingClientRect();
           return !(rr.right <= r.left || rr.left >= r.right || rr.bottom <= r.top || rr.top >= r.bottom);
