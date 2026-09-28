@@ -55,8 +55,25 @@ def click_nav(driver, label):
     )
     if not result:
         raise AssertionError(f"navigation button not found: {label}")
-    # Scene transitions intentionally take 1.25s so allow the animation to settle.
-    time.sleep(1.7)
+
+
+def wait_for_scene(driver, scene):
+    selectors = {
+        "story": "h2",
+        "projects": "[data-project-scene]",
+        "contact": "[data-contact-content]",
+    }
+    selector = selectors[scene]
+
+    def rendered(d):
+        if scene == "story":
+            return d.execute_script(
+                "return [...document.querySelectorAll('h2')].some(el => el.textContent.includes('The person'));"
+            )
+        return d.execute_script("return !!document.querySelector(arguments[0]);", selector)
+
+    WebDriverWait(driver, 7).until(rendered)
+    time.sleep(0.3)
 
 
 def no_horizontal_overflow(driver, label):
@@ -117,10 +134,27 @@ def scene_state(driver):
 
 def require_scene(driver, expected, name):
     state = scene_state(driver)
-    if (state["active"] is None or state["active"].lower() != expected.lower()):
+    if state["active"] is None or state["active"].lower() != expected.lower():
         driver.save_screenshot(str(OUT / f"{name}-scene-error-{expected}.png"))
         raise AssertionError(f"{name}: expected active scene {expected}, state={state}")
     return state
+
+
+def project_robot_overlaps_content(driver):
+    return driver.execute_script(
+        """
+        const robot = document.querySelector('button[data-journey-robot="true"][aria-label*="contact page"]');
+        const card = document.querySelector('[data-project-card]');
+        if (!robot || !card) return false;
+        const rr = robot.getBoundingClientRect();
+        const meaningful = [...card.querySelectorAll('h3, p, a, div[class*="font-mono"]')]
+          .filter(el => el.offsetParent !== null);
+        return meaningful.some(el => {
+          const r = el.getBoundingClientRect();
+          return !(rr.right <= r.left || rr.left >= r.right || rr.bottom <= r.top || rr.top >= r.bottom);
+        });
+        """
+    )
 
 
 def run_viewport(width, height, name):
@@ -142,11 +176,13 @@ def run_viewport(width, height, name):
         driver.save_screenshot(str(OUT / f"{name}-00-intro.png"))
 
         click_nav(driver, "story")
+        wait_for_scene(driver, "story")
         require_scene(driver, "Story", name)
         no_horizontal_overflow(driver, f"{name}/story")
         driver.save_screenshot(str(OUT / f"{name}-01-story.png"))
 
         click_nav(driver, "projects")
+        wait_for_scene(driver, "projects")
         state = require_scene(driver, "Projects", name)
         no_horizontal_overflow(driver, f"{name}/projects")
         if not state["projectScene"] or state["gears"] != 1 or state["controls"] != 1 or state["cards"] < 1:
@@ -161,7 +197,7 @@ def run_viewport(width, height, name):
             EC.presence_of_element_located((By.XPATH, "//button[.//*[contains(text(),'Windows Infrastructure')]]"))
         )
         driver.execute_script("arguments[0].click();", windows_button)
-        time.sleep(1.1)
+        time.sleep(1.15)
         card = rect(driver, '[data-project-card]')
         card_text = driver.execute_script(
             "const el=document.querySelector('[data-project-card]'); return el ? el.innerText : '';"
@@ -170,9 +206,13 @@ def run_viewport(width, height, name):
             raise AssertionError(f"{name}/projects: selected card did not update to Windows")
         if not card or card["top"] >= height - 24 or card["bottom"] <= 90:
             raise AssertionError(f"{name}/projects: selected project is not visible after click: {card}")
+        if project_robot_overlaps_content(driver):
+            driver.save_screenshot(str(OUT / f"{name}-02-projects-overlap.png"))
+            raise AssertionError(f"{name}/projects: journey robot overlaps selected-project content")
         driver.save_screenshot(str(OUT / f"{name}-02-projects.png"))
 
         click_nav(driver, "contact")
+        wait_for_scene(driver, "contact")
         state = require_scene(driver, "Contact", name)
         if not state["contact"]:
             raise AssertionError(f"{name}/contact: contact marker missing: {state}")
