@@ -42,24 +42,21 @@ def rect(driver, selector):
 
 
 def click_nav(driver, label):
-    normalized = label.lower()
-    xpath = (
-        "//header//button[translate(normalize-space(.), "
-        "'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')="
-        f"'{normalized}']"
+    result = driver.execute_script(
+        """
+        const wanted = arguments[0].toLowerCase();
+        const button = [...document.querySelectorAll('header nav button')]
+          .find(el => el.textContent.trim().toLowerCase() === wanted);
+        if (!button) return false;
+        button.click();
+        return true;
+        """,
+        label,
     )
-    button = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.XPATH, xpath))
-    )
-    driver.execute_script("arguments[0].click();", button)
-    time.sleep(0.15)
-
-
-def wait_scene(driver, selector, timeout=8):
-    WebDriverWait(driver, timeout).until(
-        EC.presence_of_element_located((By.CSS_SELECTOR, selector))
-    )
-    time.sleep(0.35)
+    if not result:
+        raise AssertionError(f"navigation button not found: {label}")
+    # Scene transitions intentionally take 1.25s so allow the animation to settle.
+    time.sleep(1.7)
 
 
 def no_horizontal_overflow(driver, label):
@@ -100,18 +97,30 @@ def hint_rect(driver):
     )
 
 
-def project_debug(driver):
+def scene_state(driver):
     return driver.execute_script(
         """
+        const active = [...document.querySelectorAll('header nav button')]
+          .find(el => String(el.className).includes('bg-[#7CEBDD]/10'));
         return {
-          scene: !!document.querySelector('[data-project-scene]'),
+          active: active ? active.textContent.trim() : null,
+          projectScene: !!document.querySelector('[data-project-scene]'),
           gears: document.querySelectorAll('[data-project-gear]').length,
           controls: document.querySelectorAll('[data-project-controls]').length,
           cards: document.querySelectorAll('[data-project-card]').length,
-          body: document.body.innerText.slice(0, 1000)
+          contact: !!document.querySelector('[data-contact-content]'),
+          body: document.body.innerText.slice(0, 1200)
         };
         """
     )
+
+
+def require_scene(driver, expected, name):
+    state = scene_state(driver)
+    if (state["active"] is None or state["active"].lower() != expected.lower()):
+        driver.save_screenshot(str(OUT / f"{name}-scene-error-{expected}.png"))
+        raise AssertionError(f"{name}: expected active scene {expected}, state={state}")
+    return state
 
 
 def run_viewport(width, height, name):
@@ -133,64 +142,51 @@ def run_viewport(width, height, name):
         driver.save_screenshot(str(OUT / f"{name}-00-intro.png"))
 
         click_nav(driver, "story")
-        WebDriverWait(driver, 8).until(
-            EC.text_to_be_present_in_element((By.TAG_NAME, "body"), "01 / My story")
-        )
-        time.sleep(0.35)
+        require_scene(driver, "Story", name)
         no_horizontal_overflow(driver, f"{name}/story")
         driver.save_screenshot(str(OUT / f"{name}-01-story.png"))
 
         click_nav(driver, "projects")
-        wait_scene(driver, '[data-project-scene]')
+        state = require_scene(driver, "Projects", name)
         no_horizontal_overflow(driver, f"{name}/projects")
-
-        debug = project_debug(driver)
-        if debug["gears"] != 1:
+        if not state["projectScene"] or state["gears"] != 1 or state["controls"] != 1 or state["cards"] < 1:
             driver.save_screenshot(str(OUT / f"{name}-02-projects-debug.png"))
-            raise AssertionError(
-                f"{name}/projects: expected one roller, found {debug['gears']}; debug={debug}"
-            )
+            raise AssertionError(f"{name}/projects: invalid structure: {state}")
 
         gear = rect(driver, '[data-project-gear]')
         if not gear or gear["bottom"] <= 80 or gear["top"] >= height:
-            raise AssertionError(f"{name}/projects: roller is not visible in the first viewport: {gear}")
+            raise AssertionError(f"{name}/projects: roller is not visible in first viewport: {gear}")
 
         windows_button = WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.XPATH, "//button[.//*[contains(text(),'Windows Infrastructure')]]"))
         )
         driver.execute_script("arguments[0].click();", windows_button)
-        WebDriverWait(driver, 8).until(
-            EC.text_to_be_present_in_element((By.CSS_SELECTOR, '[data-project-card]'), "Windows Infrastructure")
-        )
-        time.sleep(0.8)
+        time.sleep(1.1)
         card = rect(driver, '[data-project-card]')
+        card_text = driver.execute_script(
+            "const el=document.querySelector('[data-project-card]'); return el ? el.innerText : '';"
+        )
+        if "Windows Infrastructure" not in card_text:
+            raise AssertionError(f"{name}/projects: selected card did not update to Windows")
         if not card or card["top"] >= height - 24 or card["bottom"] <= 90:
-            raise AssertionError(
-                f"{name}/projects: selected project card is not visible after selection: {card}"
-            )
+            raise AssertionError(f"{name}/projects: selected project is not visible after click: {card}")
         driver.save_screenshot(str(OUT / f"{name}-02-projects.png"))
 
         click_nav(driver, "contact")
-        WebDriverWait(driver, 8).until(
-            EC.text_to_be_present_in_element((By.TAG_NAME, "body"), "03 / Contact")
-        )
-        time.sleep(0.5)
+        state = require_scene(driver, "Contact", name)
+        if not state["contact"]:
+            raise AssertionError(f"{name}/contact: contact marker missing: {state}")
         no_horizontal_overflow(driver, f"{name}/contact")
 
         assistant = rect(driver, 'button[aria-label="Open portfolio assistant"]')
         based_in = contact_card_rect(driver, "Based in")
         hint = hint_rect(driver)
-
         if assistant and based_in and overlap(assistant, based_in):
             driver.save_screenshot(str(OUT / f"{name}-03-contact-overlap.png"))
-            raise AssertionError(
-                f"{name}/contact: assistant robot overlaps the Based in card: assistant={assistant}, card={based_in}"
-            )
+            raise AssertionError(f"{name}/contact: assistant overlaps Based in card: assistant={assistant}, card={based_in}")
         if hint and based_in and overlap(hint, based_in):
             driver.save_screenshot(str(OUT / f"{name}-03-contact-overlap.png"))
-            raise AssertionError(
-                f"{name}/contact: assistant hint overlaps the Based in card: hint={hint}, card={based_in}"
-            )
+            raise AssertionError(f"{name}/contact: hint overlaps Based in card: hint={hint}, card={based_in}")
 
         driver.save_screenshot(str(OUT / f"{name}-03-contact.png"))
         print(f"PASS {name} {width}x{height}")
@@ -203,7 +199,7 @@ for width, height, name in VIEWPORTS:
     try:
         run_viewport(width, height, name)
     except Exception as exc:
-        failures.append(f"{name} {width}x{height}: {exc}")
+        failures.append(f"{name} {width}x{height}: {type(exc).__name__}: {exc}")
 
 if failures:
     raise SystemExit("Responsive visual QA failed:\n" + "\n".join(failures))
