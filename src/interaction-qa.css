@@ -19,8 +19,8 @@ body:has([data-contact-content]) button[aria-label="Open portfolio assistant"] {
   }
 
   button[data-journey-robot="true"] {
-    width: 104px !important;
-    height: 122px !important;
+    width: 86px !important;
+    height: 105px !important;
     right: max(8px, env(safe-area-inset-right)) !important;
     bottom: max(8px, env(safe-area-inset-bottom)) !important;
     left: auto !important;
