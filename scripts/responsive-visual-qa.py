@@ -49,10 +49,17 @@ def click_nav(driver, label):
         f"'{normalized}']"
     )
     button = WebDriverWait(driver, 10).until(
-        EC.element_to_be_clickable((By.XPATH, xpath))
+        EC.presence_of_element_located((By.XPATH, xpath))
     )
     driver.execute_script("arguments[0].click();", button)
-    time.sleep(1.8)
+    time.sleep(0.15)
+
+
+def wait_scene(driver, selector, timeout=8):
+    WebDriverWait(driver, timeout).until(
+        EC.presence_of_element_located((By.CSS_SELECTOR, selector))
+    )
+    time.sleep(0.35)
 
 
 def no_horizontal_overflow(driver, label):
@@ -68,7 +75,7 @@ def no_horizontal_overflow(driver, label):
 def contact_card_rect(driver, label_text):
     return driver.execute_script(
         """
-        const target = [...document.querySelectorAll('[data-contact-content="true"] *')]
+        const target = [...document.querySelectorAll('[data-contact-content] *')]
           .find(el => el.textContent && el.textContent.trim() === arguments[0]);
         if (!target) return null;
         const card = target.closest('a, div[class*="rounded-2xl"]');
@@ -93,6 +100,20 @@ def hint_rect(driver):
     )
 
 
+def project_debug(driver):
+    return driver.execute_script(
+        """
+        return {
+          scene: !!document.querySelector('[data-project-scene]'),
+          gears: document.querySelectorAll('[data-project-gear]').length,
+          controls: document.querySelectorAll('[data-project-controls]').length,
+          cards: document.querySelectorAll('[data-project-card]').length,
+          body: document.body.innerText.slice(0, 1000)
+        };
+        """
+    )
+
+
 def run_viewport(width, height, name):
     options = Options()
     options.add_argument("--headless=new")
@@ -106,25 +127,31 @@ def run_viewport(width, height, name):
         driver.set_window_size(width, height)
         driver.get(BASE_URL)
         WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.TAG_NAME, "header")))
-        time.sleep(1.2)
+        time.sleep(0.5)
 
         no_horizontal_overflow(driver, f"{name}/intro")
         driver.save_screenshot(str(OUT / f"{name}-00-intro.png"))
 
         click_nav(driver, "story")
+        WebDriverWait(driver, 8).until(
+            EC.text_to_be_present_in_element((By.TAG_NAME, "body"), "01 / My story")
+        )
+        time.sleep(0.35)
         no_horizontal_overflow(driver, f"{name}/story")
         driver.save_screenshot(str(OUT / f"{name}-01-story.png"))
 
         click_nav(driver, "projects")
+        wait_scene(driver, '[data-project-scene]')
         no_horizontal_overflow(driver, f"{name}/projects")
 
-        gear_count = driver.execute_script(
-            'return document.querySelectorAll(\'[data-project-gear="true"]\').length;'
-        )
-        if gear_count != 1:
-            raise AssertionError(f"{name}/projects: expected one roller, found {gear_count}")
+        debug = project_debug(driver)
+        if debug["gears"] != 1:
+            driver.save_screenshot(str(OUT / f"{name}-02-projects-debug.png"))
+            raise AssertionError(
+                f"{name}/projects: expected one roller, found {debug['gears']}; debug={debug}"
+            )
 
-        gear = rect(driver, '[data-project-gear="true"]')
+        gear = rect(driver, '[data-project-gear]')
         if not gear or gear["bottom"] <= 80 or gear["top"] >= height:
             raise AssertionError(f"{name}/projects: roller is not visible in the first viewport: {gear}")
 
@@ -132,8 +159,11 @@ def run_viewport(width, height, name):
             EC.presence_of_element_located((By.XPATH, "//button[.//*[contains(text(),'Windows Infrastructure')]]"))
         )
         driver.execute_script("arguments[0].click();", windows_button)
-        time.sleep(1.0)
-        card = rect(driver, '[data-project-card="true"]')
+        WebDriverWait(driver, 8).until(
+            EC.text_to_be_present_in_element((By.CSS_SELECTOR, '[data-project-card]'), "Windows Infrastructure")
+        )
+        time.sleep(0.8)
+        card = rect(driver, '[data-project-card]')
         if not card or card["top"] >= height - 24 or card["bottom"] <= 90:
             raise AssertionError(
                 f"{name}/projects: selected project card is not visible after selection: {card}"
@@ -141,18 +171,23 @@ def run_viewport(width, height, name):
         driver.save_screenshot(str(OUT / f"{name}-02-projects.png"))
 
         click_nav(driver, "contact")
+        WebDriverWait(driver, 8).until(
+            EC.text_to_be_present_in_element((By.TAG_NAME, "body"), "03 / Contact")
+        )
+        time.sleep(0.5)
         no_horizontal_overflow(driver, f"{name}/contact")
-        time.sleep(0.8)
 
         assistant = rect(driver, 'button[aria-label="Open portfolio assistant"]')
         based_in = contact_card_rect(driver, "Based in")
         hint = hint_rect(driver)
 
         if assistant and based_in and overlap(assistant, based_in):
+            driver.save_screenshot(str(OUT / f"{name}-03-contact-overlap.png"))
             raise AssertionError(
                 f"{name}/contact: assistant robot overlaps the Based in card: assistant={assistant}, card={based_in}"
             )
         if hint and based_in and overlap(hint, based_in):
+            driver.save_screenshot(str(OUT / f"{name}-03-contact-overlap.png"))
             raise AssertionError(
                 f"{name}/contact: assistant hint overlaps the Based in card: hint={hint}, card={based_in}"
             )
