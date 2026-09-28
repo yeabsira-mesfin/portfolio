@@ -74,7 +74,7 @@ def generic_gear_rect(driver):
 
 
 def project_gear_rect(driver):
-    return js_rect(driver, "return document.querySelector('[data-project-gear] > div');")
+    return js_rect(driver, "return document.querySelector('[data-project-gear]');")
 
 
 def journey_robot_rect(driver):
