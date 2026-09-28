@@ -127,6 +127,26 @@ svg,
   background-size: auto, 26px 26px, 26px 26px;
 }
 
+/* AppSec preview is vector artwork so it stays sharp at every viewport size. */
+div:has(> iframe[title="AppSec Vulnerability Manager live preview"]),
+div:has(> img[alt="AppSec Vulnerability Manager project preview"]) {
+  background-color: #01080d !important;
+  background-image: url("./images/appsec-vulnerability-manager.svg") !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  background-size: contain !important;
+}
+
+iframe[title="AppSec Vulnerability Manager live preview"],
+img[alt="AppSec Vulnerability Manager project preview"] {
+  opacity: 0 !important;
+}
+
+/* Hide the old live-preview label because the vector already represents the product cleanly. */
+div:has(> iframe[title="AppSec Vulnerability Manager live preview"]) > div[class*="Live product preview"] {
+  display: none !important;
+}
+
 /* Home-only explorer robot: keep it above the gear/layout on every viewport. */
 button[aria-label="Open Yeabsira's story"] {
   position: fixed !important;
