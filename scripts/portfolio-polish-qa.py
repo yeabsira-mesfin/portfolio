@@ -59,7 +59,8 @@ def wait_active(driver, label):
         )
 
     WebDriverWait(driver, 8).until(active)
-    time.sleep(0.35)
+    # Scene exit/enter animation finishes after the nav highlight changes.
+    time.sleep(1.15)
 
 
 def generic_gear_rect(driver):
