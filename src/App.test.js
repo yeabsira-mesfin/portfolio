@@ -1,11 +1,13 @@
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import { render, screen, within } from '@testing-library/react';
+import CinematicPortfolio from './Components/CinematicPortfolio';
 
 test('renders the portfolio hero and primary navigation', () => {
-  render(<App />);
+  render(<CinematicPortfolio />);
 
   expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(/Yeabsira/i);
-  expect(screen.getByRole('button', { name: /story/i })).toBeInTheDocument();
-  expect(screen.getByRole('button', { name: /projects/i })).toBeInTheDocument();
-  expect(screen.getByRole('button', { name: /contact/i })).toBeInTheDocument();
+
+  const nav = screen.getByRole('navigation', { name: /portfolio sections/i });
+  expect(within(nav).getByRole('button', { name: /^story$/i })).toBeInTheDocument();
+  expect(within(nav).getByRole('button', { name: /^projects$/i })).toBeInTheDocument();
+  expect(within(nav).getByRole('button', { name: /^contact$/i })).toBeInTheDocument();
 });
