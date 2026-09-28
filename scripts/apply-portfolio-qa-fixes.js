@@ -18,8 +18,7 @@ if (!source.includes('id:"ai-security"') && !source.includes('id: "ai-security"'
 
   source = source.replace(
     projectEnd,
-    `,
-{id:"ai-security",title:"AI Security Testing Lab",lane:"AI Security + AppSec",summary:"A defensive gateway for LLM-enabled applications with input validation, sensitive-data redaction, tool allowlisting, output filtering, and automated security regression tests.",proof:"Python · FastAPI · LLM Security · PII Redaction · Tool Allowlisting · Pytest",repo:"https://github.com/yeabsira-mesfin/ai-security-testing-lab",code:"AI",accent:"#6EE8D7"},
+    `{id:"ai-security",title:"AI Security Testing Lab",lane:"AI Security + AppSec",summary:"A defensive gateway for LLM-enabled applications with input validation, sensitive-data redaction, tool allowlisting, output filtering, and automated security regression tests.",proof:"Python · FastAPI · LLM Security · PII Redaction · Tool Allowlisting · Pytest",repo:"https://github.com/yeabsira-mesfin/ai-security-testing-lab",code:"AI",accent:"#6EE8D7"},
 {id:"endpoint-posture",title:"SignalDesk Endpoint Posture Advisor",lane:"Endpoint Security + Operations",summary:"A local security-operations lab that turns synthetic multi-customer endpoint data into posture assessments, prioritized cases, SLA tracking, audit events, and scoped reports.",proof:"Python · Endpoint Security · MITRE ATT&CK · Multi-customer Isolation · SLA Tracking · Audit Logging",repo:"https://github.com/yeabsira-mesfin/endpoint-posture-advisor",code:"EDR",accent:"#8AB8FF"}
 ];
 const storyCards=[`
