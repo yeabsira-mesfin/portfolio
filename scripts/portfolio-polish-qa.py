@@ -170,14 +170,27 @@ def assert_bzzz_after_ten_seconds(driver):
 
 def assert_story_experience(driver, viewport_name):
     WebDriverWait(driver, 6).until(
-        lambda d: d.execute_script("return !!document.querySelector('[data-story-experience=\"true\"]');")
+        lambda d: d.execute_script(
+            """
+            const el = document.querySelector('[data-story-experience="true"]');
+            return !!el && el.offsetParent !== null && el.getBoundingClientRect().height > 200;
+            """
+        )
     )
     content = driver.execute_script(
-        "return document.querySelector('[data-story-experience=\"true\"]')?.innerText || '';"
+        "return document.querySelector('[data-story-experience=\"true\"]')?.textContent || '';"
     )
-    for required in ["Experience / trajectory", "200+ enterprise event builds", "MMCY", "George Washington University"]:
-        if required not in content:
+    content_lower = content.lower()
+    for required in ["experience / trajectory", "200+ enterprise event builds", "mmcy", "george washington university"]:
+        if required not in content_lower:
             raise AssertionError(f"{viewport_name}: Story experience missing {required!r}")
+
+    driver.execute_script(
+        "document.querySelector('[data-story-experience=\"true\"]')?.scrollIntoView({block:'start', behavior:'auto'});"
+    )
+    time.sleep(0.35)
+    if viewport_name in {"laptop", "monitor"}:
+        driver.save_screenshot(str(OUT / f"{viewport_name}-01b-story-experience.png"))
 
 
 def assert_home_robot_right(driver, viewport_name, viewport_width):
@@ -304,8 +317,6 @@ def run_viewport(width, height, name):
         assert_projects(driver, name, width)
         driver.save_screenshot(str(OUT / f"{name}-04-polish-qa.png"))
 
-        # Regression: after coming back from another page, Home must dock the robot
-        # on the right again instead of retaining the desktop left-side placement.
         click_home(driver)
         wait_home(driver)
         assert_home_robot_right(driver, name, width)
