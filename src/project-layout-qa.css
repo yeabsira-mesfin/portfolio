@@ -17,14 +17,14 @@
   opacity: 1 !important;
 }
 
-/* One project roller only. On phones/tablets it sits above the content. */
+/* One project roller only. */
 [data-project-gear="true"] {
   display: flex !important;
   width: 100% !important;
   max-width: 590px !important;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   justify-self: center;
 }
 
@@ -33,11 +33,14 @@
   max-width: 590px !important;
 }
 
+/* Phones/tablets: the same roller starts at the top, before project controls. */
 @media (max-width: 1023px) {
   [data-project-scene="true"] > div.grid {
     display: flex !important;
     min-height: 0 !important;
     flex-direction: column !important;
+    align-items: stretch !important;
+    justify-content: flex-start !important;
     gap: 1.5rem !important;
   }
 
@@ -45,6 +48,7 @@
     order: -3;
     max-width: min(590px, 92vw) !important;
     margin-inline: auto;
+    align-self: flex-start !important;
   }
 
   [data-project-scene="true"] > div.grid > div:first-child {
@@ -58,6 +62,7 @@
   }
 }
 
+/* Desktop: match Story. Roller begins at the top-left; project UI begins at the top-right. */
 @media (min-width: 1024px) {
   [data-project-scene="true"] {
     max-width: 1280px !important;
@@ -65,23 +70,28 @@
 
   [data-project-scene="true"] > div.grid {
     display: grid !important;
+    min-height: calc(100dvh - 8rem) !important;
     grid-template-columns: minmax(430px, 590px) minmax(0, 1fr) !important;
-    grid-template-rows: auto auto !important;
-    align-items: center !important;
+    grid-template-rows: auto auto 1fr !important;
+    align-items: start !important;
+    align-content: start !important;
+    justify-content: center !important;
     column-gap: clamp(2rem, 4vw, 4.5rem) !important;
     row-gap: 1.25rem !important;
   }
 
   [data-project-gear="true"] {
     grid-column: 1 !important;
-    grid-row: 1 / span 2 !important;
-    align-self: center !important;
+    grid-row: 1 / span 3 !important;
+    align-self: start !important;
+    justify-self: center !important;
+    margin-top: 0 !important;
   }
 
   [data-project-scene="true"] > div.grid > div:first-child {
     grid-column: 2 !important;
     grid-row: 1 !important;
-    align-self: end !important;
+    align-self: start !important;
   }
 
   [data-project-card="true"] {
