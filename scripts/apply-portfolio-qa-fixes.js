@@ -43,19 +43,18 @@ if (!source.includes('id: "ai-security"')) {
   );
 }
 
-// Slow the shared portrait mechanism noticeably. The Projects scene uses the exact
-// same Gear component as Story and Contact, so one motion setting stays consistent.
+// Keep the scene-triggered gear turn restrained but quicker than the ambient drift.
 source = source.replace(
   /const rotation = reduceMotion \? scene \* \d+ : wheelTurn \* \d+ \+ scene \* \d+;/,
   'const rotation = reduceMotion ? scene * 8 : wheelTurn * 18 + scene * 12;',
 );
 source = source.replace(
   /transition=\{reduceMotion \? \{ duration: 0\.1 \} : \{ type: "spring", stiffness: 24, damping: 17, mass: 1\.7, restDelta: 0\.01 \}\}/,
-  'transition={reduceMotion ? { duration: 0.1 } : { duration: 5.8, ease: [0.16, 1, 0.3, 1] }}',
+  'transition={reduceMotion ? { duration: 0.1 } : { duration: 2.6, ease: [0.16, 1, 0.3, 1] }}',
 );
 source = source.replace(
   /transition=\{reduceMotion \? \{ duration: 0\.1 \} : \{ duration: [\d.]+, ease: \[0\.16, 1, 0\.3, 1\] \}\}/,
-  'transition={reduceMotion ? { duration: 0.1 } : { duration: 5.8, ease: [0.16, 1, 0.3, 1] }}',
+  'transition={reduceMotion ? { duration: 0.1 } : { duration: 2.6, ease: [0.16, 1, 0.3, 1] }}',
 );
 source = source.replace('transition={{ duration: 110, repeat: Infinity, ease: "linear" }}', 'transition={{ duration: 180, repeat: Infinity, ease: "linear" }}');
 source = source.replace('transition={{ duration: 62, repeat: Infinity, ease: "linear" }}', 'transition={{ duration: 120, repeat: Infinity, ease: "linear" }}');
@@ -66,8 +65,6 @@ source = source.replace(
   '<Gear scene={scene} wheelTurn={wheelTurn} reduceMotion={reduceMotion} onNavigate={navigate} />',
 );
 
-// Mark the main scene text areas so floating journey controls can be kept out of
-// meaningful content at every viewport size.
 source = source.replace(
   '<div className="order-2 lg:order-1">',
   '<div data-intro-content="true" className="order-2 lg:order-1">',
@@ -76,26 +73,21 @@ source = source.replace(
   '<div className="max-h-[calc(100dvh-8rem)] overflow-y-auto pr-1 lg:max-h-[76vh]">',
   '<div data-story-content="true" className="max-h-[calc(100dvh-8rem)] overflow-y-auto pr-1 lg:max-h-[76vh]">',
 );
-
 source = source.replace(
   '<div className="grid min-h-[calc(100dvh-8rem)] gap-6 lg:grid-cols-[260px_minmax(0,1fr)] lg:items-center xl:grid-cols-[260px_220px_minmax(0,1fr)] xl:gap-6">\n                <div className="min-w-0">',
   '<div className="grid min-h-[calc(100dvh-8rem)] gap-6 lg:grid-cols-[260px_minmax(0,1fr)] lg:items-center xl:grid-cols-[260px_220px_minmax(0,1fr)] xl:gap-6">\n                <div data-project-controls="true" className="min-w-0">',
 );
-
 source = source.replace(
   'onClick={() => { setSelectedProject(project); setWheelTurn((value) => value + 1); }}',
   'onClick={() => { setSelectedProject(project); setWheelTurn((value) => value + 1); window.setTimeout(() => { const card = document.querySelector(\'[data-project-card="true"]\'); const rect = card?.getBoundingClientRect(); if (card && rect && (rect.top > window.innerHeight - 140 || rect.bottom < 96)) card.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" }); }, 180); }}',
 );
-
 source = source.replace(/\s*<p className="mt-4 max-w-\[190px\][^>]*>rotating project mechanism<\/p>/g, "");
 source = source.replace(/\s*<p className="mt-2 text-center[^>]*>rotating project mechanism<\/p>/g, "");
-
 source = source.replace(
   '{scene === 3 && (\n            <SceneShell>\n              <div><Gear scene={scene} wheelTurn={wheelTurn} reduceMotion={reduceMotion} onNavigate={navigate} /></div>\n              <div>',
   '{scene === 3 && (\n            <SceneShell>\n              <div data-contact-roller="true"><Gear scene={scene} wheelTurn={wheelTurn} reduceMotion={reduceMotion} onNavigate={navigate} /></div>\n              <div data-contact-content="true">',
 );
 
-// The idle speech switches to the "Bzzz" copy after ten seconds instead of one minute.
 robotSource = robotSource.replace(
   /window\.setTimeout\(\(\) => setIdle\(true\), \d+\)/,
   'window.setTimeout(() => setIdle(true), 10000)',
@@ -108,7 +100,7 @@ const required = [
   'data-project-card="true"',
   'data-contact-content="true"',
   'data-project-image-preview="true"',
-  'duration: 5.8',
+  'duration: 2.6',
   'duration: 180',
   'duration: 120',
   'wheelTurn * 18',
@@ -131,4 +123,4 @@ if (source.includes("rotating project mechanism")) {
 
 fs.writeFileSync(cinematicPath, source);
 fs.writeFileSync(robotPath, robotSource);
-console.log("Portfolio QA fixes applied: matching roller scale, slower shared motion, 10-second robot idle copy, full-fit project previews, two new featured security projects, and responsive safe areas");
+console.log("Portfolio QA fixes applied: matching roller scale, slow ambient motion with a gentle scene speed-up, 10-second robot idle copy, full-fit project previews, two featured security projects, and responsive safe areas");
