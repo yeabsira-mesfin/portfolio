@@ -19,7 +19,6 @@ const topMobileCount = count("data-project-gear-mobile-top");
 const allMobileGearMarkers = count("data-project-gear-mobile");
 const lowerMobileCount = allMobileGearMarkers - topMobileCount;
 const projectSceneCount = count("data-project-scene");
-const journeyRobotCount = count("data-journey-robot");
 
 if (topMobileCount !== 1) {
   throw new Error(`Build QA failed: expected exactly 1 top mobile project roller, found ${topMobileCount}`);
@@ -33,10 +32,6 @@ if (projectSceneCount !== 1) {
   throw new Error(`Build QA failed: expected exactly 1 Projects scene marker, found ${projectSceneCount}`);
 }
 
-if (journeyRobotCount !== 1) {
-  throw new Error(`Build QA failed: expected exactly 1 journey robot marker, found ${journeyRobotCount}`);
-}
-
 if (!bundle.includes("AppSec Vulnerability Manager")) {
   throw new Error("Build QA failed: AppSec Vulnerability Manager is missing from the production bundle");
 }
@@ -45,4 +40,8 @@ if (!bundle.includes("https://appsec-vulnerability-manager.vercel.app/")) {
   throw new Error("Build QA failed: AppSec live product URL is missing from the production bundle");
 }
 
-console.log("Production bundle QA passed: roller count, project scene, robot, and AppSec project are correct");
+if (!bundle.includes("Click to explore more") || !bundle.includes("Open portfolio assistant")) {
+  throw new Error("Build QA failed: portfolio assistant navigation content is incomplete");
+}
+
+console.log("Production bundle QA passed: one top roller, no lower duplicate, one Projects scene, assistants, and AppSec project are present");
