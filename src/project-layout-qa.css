@@ -260,16 +260,3 @@
     overflow: visible !important;
   }
 }
-
-/* Keep the journey robot at one scene-independent size so Projects never looks smaller. */
-button[data-journey-robot="true"] > div:last-child {
-  width: 104px !important;
-  height: 128px !important;
-}
-
-@media (max-width: 640px) {
-  button[data-journey-robot="true"] > div:last-child {
-    width: 96px !important;
-    height: 118px !important;
-  }
-}
