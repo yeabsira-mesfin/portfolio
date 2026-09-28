@@ -53,9 +53,13 @@ if (!bundle.includes("AppSec Vulnerability Manager") || !bundle.includes("https:
 if (!bundle.includes("AI Security Testing Lab") || !bundle.includes("https://github.com/yeabsira-mesfin/ai-security-testing-lab")) throw new Error("Build QA failed: AI Security Testing Lab was not added to Projects");
 if (!bundle.includes("SignalDesk Endpoint Posture Advisor") || !bundle.includes("https://github.com/yeabsira-mesfin/endpoint-posture-advisor")) throw new Error("Build QA failed: SignalDesk Endpoint Posture Advisor was not added to Projects");
 
-// The assistant must be scene-owned, not globally mounted. The animated journey robot remains separate.
+// Journey robot is global so it can guide Intro -> Story -> Projects, but it hides itself on Contact.
+// The actual chatbot belongs only to the Contact scene.
 if (!source.includes("scene === 3 && <PortfolioAssistant")) throw new Error("Build QA failed: contact-only portfolio assistant condition is missing");
-if (appSource.includes("EnhancedPortfolioAssistant") || appSource.includes("HomeExplorerRobot")) throw new Error("Build QA failed: a global assistant/robot overlay is mounted outside the cinematic scenes");
+if (!appSource.includes("HomeExplorerRobot")) throw new Error("Build QA failed: journey robot is not mounted");
+if (appSource.includes("EnhancedPortfolioAssistant")) throw new Error("Build QA failed: duplicate global chatbot is mounted");
+if (!robotSource.includes('scene === "contact"') || !robotSource.includes("return null")) throw new Error("Build QA failed: journey robot must hide on Contact");
+if (!robotSource.includes('scene === "intro"') || !robotSource.includes('scene === "story"') || !robotSource.includes('scene === "projects"')) throw new Error("Build QA failed: journey robot navigation chain is incomplete");
 
 for (const requiredCss of ["data-project-gear", "data-project-controls", "data-project-card", "data-appsec-preview", "data-project-image-preview", "data-contact-content", "data-journey-robot"]) {
   if (!css.includes(requiredCss)) throw new Error(`Build QA failed: responsive CSS token missing: ${requiredCss}`);
@@ -63,4 +67,4 @@ for (const requiredCss of ["data-project-gear", "data-project-controls", "data-p
 if (!css.includes("object-fit:contain") && !css.includes("object-fit: contain")) throw new Error("Build QA failed: project images are not protected by object-fit contain");
 if (!css.includes("max-height:none") && !css.includes("max-height: none")) throw new Error("Build QA failed: desktop selected-project card can still be height-clipped");
 
-console.log("Production bundle QA passed: contact-only assistant, no global duplicate overlay, slower roller motion, 10-second Bzzz timer, uncropped previews, featured security projects, and responsive layout rules are present");
+console.log("Production bundle QA passed: journey robot guides Intro, Story, and Projects; Contact uses only the chatbot; responsive project and security content checks passed");
