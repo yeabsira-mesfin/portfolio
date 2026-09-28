@@ -1,0 +1,45 @@
+/* Keep the journey robot anchored on the right whenever the intro/home scene is visible,
+   even during the short state handoff after returning from another section. */
+body:has(h1) [data-journey-robot="true"] {
+  left: auto !important;
+  right: max(10px, env(safe-area-inset-right)) !important;
+  transform-origin: bottom right !important;
+}
+
+/* The metal gear itself drifts continuously and very slowly. Scene changes still
+   rotate the parent mechanism separately, creating a gentle speed-up without a jump. */
+svg[viewBox="0 0 600 600"] {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: ym-gear-ambient 150s linear infinite;
+  will-change: transform;
+}
+
+@keyframes ym-gear-ambient {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* A restrained light breath on the mechanical teeth adds depth without changing
+   the original palette or the existing balls, rings, portrait, and navigation. */
+svg[viewBox="0 0 600 600"] g[filter="url(#gearShadow)"] > rect {
+  animation: ym-tooth-breathe 8s ease-in-out infinite;
+}
+
+svg[viewBox="0 0 600 600"] g[filter="url(#gearShadow)"] > rect:nth-child(4n + 1) { animation-delay: -1.5s; }
+svg[viewBox="0 0 600 600"] g[filter="url(#gearShadow)"] > rect:nth-child(4n + 2) { animation-delay: -3s; }
+svg[viewBox="0 0 600 600"] g[filter="url(#gearShadow)"] > rect:nth-child(4n + 3) { animation-delay: -4.5s; }
+svg[viewBox="0 0 600 600"] g[filter="url(#gearShadow)"] > rect:nth-child(4n) { animation-delay: -6s; }
+
+@keyframes ym-tooth-breathe {
+  0%, 100% { stroke-opacity: .18; filter: brightness(.96); }
+  45% { stroke-opacity: .34; filter: brightness(1.08) drop-shadow(0 0 2px rgba(88,230,209,.18)); }
+  65% { stroke-opacity: .22; filter: brightness(1.01); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  svg[viewBox="0 0 600 600"],
+  svg[viewBox="0 0 600 600"] g[filter="url(#gearShadow)"] > rect {
+    animation: none !important;
+  }
+}
