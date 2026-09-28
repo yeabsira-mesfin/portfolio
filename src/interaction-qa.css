@@ -1,19 +1,46 @@
 /* Interaction safety layer: floating robots must never cover meaningful content. */
 
-/* The Contact assistant is self-explanatory from the robot affordance. Remove the
-   large hint bubble that previously covered the Based in card. */
+/* Contact: the robot itself is enough affordance. The large hint bubble was the
+   source of the Based in overlap, so Contact keeps a compact launcher only. */
 body:has([data-contact-content]) button[aria-label="Open portfolio assistant"] > div:first-child {
   display: none !important;
 }
 
-/* Give the Contact assistant a compact fixed footprint. */
 body:has([data-contact-content]) button[aria-label="Open portfolio assistant"] {
   height: 96px !important;
 }
 
-/* On Projects the journey robot remains available, but phones/tablets drop its
-   wide speech bubble and reserve a content lane for the robot itself. */
-@media (max-width: 1023px) {
+/* Phones: use one consistent compact journey-robot footprint across Intro, Story,
+   and Projects. Hide the wide speech bubble and reserve a clean right-side lane
+   in the text areas so the robot never sits on top of copy or cards. */
+@media (max-width: 639px) {
+  button[data-journey-robot="true"] > div:first-child {
+    display: none !important;
+  }
+
+  button[data-journey-robot="true"] {
+    width: 104px !important;
+    height: 122px !important;
+    right: max(8px, env(safe-area-inset-right)) !important;
+    bottom: max(8px, env(safe-area-inset-bottom)) !important;
+    left: auto !important;
+    transform-origin: bottom right !important;
+  }
+
+  [data-intro-content="true"],
+  [data-story-content="true"] {
+    padding-right: 6.5rem !important;
+    padding-bottom: 1.25rem !important;
+  }
+
+  [data-project-card="true"] > div:last-child {
+    padding-right: 6.5rem !important;
+  }
+}
+
+/* Tablets: the bubble still fits on Intro/Story, but Projects keeps a compact
+   bubble-free robot because its selected-project card uses the full width. */
+@media (min-width: 640px) and (max-width: 1023px) {
   button[data-journey-robot="true"][aria-label*="contact page"] > div:first-child {
     display: none !important;
   }
@@ -21,8 +48,10 @@ body:has([data-contact-content]) button[aria-label="Open portfolio assistant"] {
   button[data-journey-robot="true"][aria-label*="contact page"] {
     width: 104px !important;
     height: 122px !important;
-    right: max(8px, env(safe-area-inset-right)) !important;
-    bottom: max(8px, env(safe-area-inset-bottom)) !important;
+    right: max(10px, env(safe-area-inset-right)) !important;
+    bottom: max(10px, env(safe-area-inset-bottom)) !important;
+    left: auto !important;
+    transform-origin: bottom right !important;
   }
 
   [data-project-card="true"] > div:last-child {
@@ -30,9 +59,10 @@ body:has([data-contact-content]) button[aria-label="Open portfolio assistant"] {
   }
 }
 
-/* On laptops/monitors, dock the Projects journey robot into the empty left lane
-   beneath the roller instead of floating over the selected project card. */
+/* Laptops/monitors: dock Story and Projects journey robots into the left mechanism
+   lane. That keeps the large project/story cards on the right completely clear. */
 @media (min-width: 1024px) {
+  button[data-journey-robot="true"][aria-label*="projects"],
   button[data-journey-robot="true"][aria-label*="contact page"] {
     left: max(18px, env(safe-area-inset-left)) !important;
     right: auto !important;
@@ -41,9 +71,13 @@ body:has([data-contact-content]) button[aria-label="Open portfolio assistant"] {
   }
 }
 
-/* Extra narrow phones keep enough readable width while protecting the robot lane. */
 @media (max-width: 430px) {
+  [data-intro-content="true"],
+  [data-story-content="true"] {
+    padding-right: 6rem !important;
+  }
+
   [data-project-card="true"] > div:last-child {
-    padding-right: 6.25rem !important;
+    padding-right: 6rem !important;
   }
 }
