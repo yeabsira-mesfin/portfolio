@@ -1,25 +1,18 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 
-const getActiveNavScene = () => {
+const getCurrentScene = () => {
+  const explicitScene = document.querySelector("[data-portfolio-scene]")?.getAttribute("data-portfolio-scene");
+  if (["intro", "story", "projects", "contact"].includes(explicitScene)) return explicitScene;
+
   const activeNav = Array.from(document.querySelectorAll("header nav button")).find((button) =>
     String(button.className).includes("bg-[#7CEBDD]/10")
   );
   const label = activeNav?.textContent?.trim().toLowerCase();
   if (label === "story" || label === "projects" || label === "contact") return label;
-  return null;
-};
 
-const getCurrentScene = () => {
-  const navScene = getActiveNavScene();
-  if (navScene) return navScene;
   const heading = document.querySelector("h1");
-  const normalizedHeading = heading?.textContent?.replace(/\s+/g, "");
-  if (normalizedHeading?.includes("YeabsiraMesfin")) return "intro";
-  const bodyText = document.body?.innerText || "";
-  if (bodyText.includes("03 / Contact") || bodyText.includes("Let’s build what comes next.") || bodyText.includes("Let's build what comes next.") || document.querySelector('[aria-label="Open portfolio assistant"]') || document.querySelector('[aria-label="Minimize portfolio assistant"]')) return "contact";
-  if (bodyText.includes("02 / Project orbit") || bodyText.includes("Choose a project. The mechanism responds")) return "projects";
-  if (bodyText.includes("Software engineer with systems instincts.") || bodyText.includes("Going deeper into cybersecurity.") || bodyText.includes("Built and operated real client systems.")) return "story";
+  if (heading?.textContent?.replace(/\s+/g, "")?.includes("YeabsiraMesfin")) return "intro";
   return null;
 };
 
@@ -68,17 +61,10 @@ const HomeExplorerRobot = () => {
 
   useEffect(() => {
     const sync = () => setScene(getCurrentScene());
-    const handleNavIntent = (event) => {
-      const button = event.target instanceof Element ? event.target.closest("header nav button") : null;
-      if (!button) return;
-      const label = button.textContent?.trim().toLowerCase();
-      if (label === "story" || label === "projects" || label === "contact") setScene(label);
-    };
     sync();
     const observer = new MutationObserver(sync);
-    observer.observe(document.body, { childList: true, subtree: true, characterData: true, attributes: true, attributeFilter: ["class", "aria-label"] });
-    document.addEventListener("click", handleNavIntent, true);
-    return () => { observer.disconnect(); document.removeEventListener("click", handleNavIntent, true); };
+    observer.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ["class", "data-portfolio-scene"] });
+    return () => observer.disconnect();
   }, []);
 
   useEffect(() => { armIdleMessage(); return () => window.clearTimeout(idleTimer.current); }, [scene, armIdleMessage]);
@@ -86,12 +72,10 @@ const HomeExplorerRobot = () => {
 
   const navigateNext = () => {
     let target;
-    let nextScene;
-    if (scene === "intro") { nextScene = "story"; target = findButton((text) => text.startsWith("Enter my story")); }
-    else if (scene === "story") { nextScene = "projects"; target = findButton((text) => text.toLowerCase() === "projects"); }
-    else if (scene === "projects") { nextScene = "contact"; target = findButton((text) => text.toLowerCase() === "contact"); }
-    if (!target || !nextScene) return;
-    setScene(nextScene);
+    if (scene === "intro") target = findButton((text) => text.startsWith("Enter my story"));
+    else if (scene === "story") target = findButton((text) => text.toLowerCase() === "projects");
+    else if (scene === "projects") target = findButton((text) => text.toLowerCase() === "contact");
+    if (!target) return;
     target.click();
     if (document.activeElement instanceof HTMLElement) document.activeElement.blur();
   };
