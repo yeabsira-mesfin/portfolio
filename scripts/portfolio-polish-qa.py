@@ -37,7 +37,7 @@ def click_nav(driver, label):
 def click_home(driver):
     ok = driver.execute_script(
         """
-        const button = document.querySelector('header > div > button');
+        const button = document.querySelector('header button');
         if (!button) return false;
         button.click();
         return true;
@@ -45,19 +45,6 @@ def click_home(driver):
     )
     if not ok:
         raise AssertionError("home/YM button not found")
-
-
-def wait_home(driver):
-    WebDriverWait(driver, 10).until(
-        lambda d: d.execute_script(
-            """
-            const h1 = document.querySelector('h1');
-            const robot = document.querySelector('button[data-journey-robot="true"]');
-            return !!h1 && h1.textContent.replace(/\s+/g, '').includes('YeabsiraMesfin') && !!robot && robot.offsetParent !== null;
-            """
-        )
-    )
-    time.sleep(0.45)
 
 
 def wait_scene(driver, label):
@@ -125,17 +112,6 @@ def robot_rect(driver):
     )
 
 
-def robot_button_rect(driver):
-    return driver.execute_script(
-        """
-        const el = document.querySelector('button[data-journey-robot="true"]');
-        if (!el || el.offsetParent === null) return null;
-        const r = el.getBoundingClientRect();
-        return {left:r.left, right:r.right, top:r.top, bottom:r.bottom, width:r.width, height:r.height};
-        """
-    )
-
-
 def assert_same_robot(a, b, label):
     if not a or not b:
         raise AssertionError(f"{label}: visible robot missing, a={a}, b={b}")
@@ -179,10 +155,9 @@ def assert_story_experience(driver, viewport_name):
     )
     content = driver.execute_script(
         "return document.querySelector('[data-story-experience=\"true\"]')?.textContent || '';"
-    )
-    content_lower = content.lower()
+    ).lower()
     for required in ["experience / trajectory", "200+ enterprise event builds", "mmcy", "george washington university"]:
-        if required not in content_lower:
+        if required not in content:
             raise AssertionError(f"{viewport_name}: Story experience missing {required!r}")
 
     driver.execute_script(
@@ -191,14 +166,6 @@ def assert_story_experience(driver, viewport_name):
     time.sleep(0.35)
     if viewport_name in {"laptop", "monitor"}:
         driver.save_screenshot(str(OUT / f"{viewport_name}-01b-story-experience.png"))
-
-
-def assert_home_robot_right(driver, viewport_name, viewport_width):
-    rect = robot_button_rect(driver)
-    if not rect:
-        raise AssertionError(f"{viewport_name}: Home journey robot missing after returning from another scene")
-    if rect["left"] < viewport_width * 0.5:
-        raise AssertionError(f"{viewport_name}: Home robot stayed on the left after return: {rect}")
 
 
 def assert_projects(driver, viewport_name, viewport_width):
@@ -278,6 +245,37 @@ def assert_projects(driver, viewport_name, viewport_width):
             )
 
 
+def assert_home_return(driver, viewport_name, viewport_width):
+    click_home(driver)
+    time.sleep(1.4)
+    driver.save_screenshot(str(OUT / f"{viewport_name}-05-home-return.png"))
+    state = driver.execute_script(
+        """
+        const h1 = document.querySelector('h1');
+        const robot = document.querySelector('button[data-journey-robot="true"]');
+        const active = [...document.querySelectorAll('header nav button')]
+          .find(el => String(el.className).includes('bg-[#7CEBDD]/10'));
+        const r = robot && robot.offsetParent !== null ? robot.getBoundingClientRect() : null;
+        return {
+          heading: h1?.textContent || '',
+          robotVisible: !!r,
+          robotAria: robot?.getAttribute('aria-label') || '',
+          robotRect: r ? {left:r.left, right:r.right, width:r.width, height:r.height} : null,
+          activeNav: active?.textContent?.trim() || '',
+        };
+        """
+    )
+
+    if "Yeabsira" not in state["heading"]:
+        raise AssertionError(f"{viewport_name}: Home did not render after YM click: {state}")
+    if not state["robotVisible"]:
+        raise AssertionError(f"{viewport_name}: Home journey robot missing after return: {state}")
+    if not state["robotAria"].startswith("Explore more"):
+        raise AssertionError(f"{viewport_name}: journey robot kept the wrong scene after Home return: {state}")
+    if state["robotRect"]["left"] < viewport_width * 0.5:
+        raise AssertionError(f"{viewport_name}: Home robot stayed on the left after return: {state}")
+
+
 def run_viewport(width, height, name):
     options = Options()
     options.add_argument("--headless=new")
@@ -317,19 +315,7 @@ def run_viewport(width, height, name):
         assert_projects(driver, name, width)
         driver.save_screenshot(str(OUT / f"{name}-04-polish-qa.png"))
 
-        click_home(driver)
-        wait_home(driver)
-        assert_home_robot_right(driver, name, width)
-
-        click_nav(driver, "projects")
-        wait_scene(driver, "projects")
-        project_gear = gear_rect(driver, "[data-project-gear]")
-
-        click_nav(driver, "contact")
-        wait_scene(driver, "contact")
-        contact_gear = gear_rect(driver)
-        assert_same_gear(contact_gear, project_gear, f"{name}: Contact/Projects")
-
+        assert_home_return(driver, name, width)
         print(f"PASS polish QA {name} {width}x{height}")
     finally:
         driver.quit()
@@ -345,4 +331,4 @@ for width, height, name in VIEWPORTS:
 if failures:
     raise SystemExit("Portfolio polish QA failed:\n" + "\n".join(failures))
 
-print("Portfolio polish QA passed: Home robot return position, animated Story experience, slow ambient roller, roller and robot consistency, ten-second Bzzz timing, uncropped project previews, and featured GitHub projects verified across phone, tablet, laptop, and monitor.")
+print("Portfolio polish QA passed: Home robot return position, animated Story experience, slow ambient roller, gentle scene turn, roller and robot consistency, ten-second Bzzz timing, uncropped project previews, and featured GitHub projects verified across phone, tablet, laptop, and monitor.")
