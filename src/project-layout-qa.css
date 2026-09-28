@@ -1,0 +1,110 @@
+/* Projects should feel like the Story scene: one full roller on the left, content on the right. */
+
+[data-appsec-preview="true"] {
+  aspect-ratio: 16 / 9 !important;
+  min-height: 260px;
+  background: #01080d !important;
+}
+
+[data-appsec-preview="true"] > img {
+  position: relative !important;
+  inset: auto !important;
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-height: none !important;
+  object-fit: contain !important;
+  opacity: 1 !important;
+}
+
+/* One project roller only. On phones/tablets it sits above the content. */
+[data-project-gear="true"] {
+  display: flex !important;
+  width: 100% !important;
+  max-width: 590px !important;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  justify-self: center;
+}
+
+[data-project-gear="true"] > div {
+  width: 100% !important;
+  max-width: 590px !important;
+}
+
+@media (max-width: 1023px) {
+  [data-project-scene="true"] > div.grid {
+    display: flex !important;
+    min-height: 0 !important;
+    flex-direction: column !important;
+    gap: 1.5rem !important;
+  }
+
+  [data-project-gear="true"] {
+    order: -3;
+    max-width: min(590px, 92vw) !important;
+    margin-inline: auto;
+  }
+
+  [data-project-scene="true"] > div.grid > div:first-child {
+    order: -2;
+    width: 100%;
+  }
+
+  [data-project-card="true"] {
+    order: -1;
+    width: 100%;
+  }
+}
+
+@media (min-width: 1024px) {
+  [data-project-scene="true"] {
+    max-width: 1280px !important;
+  }
+
+  [data-project-scene="true"] > div.grid {
+    display: grid !important;
+    grid-template-columns: minmax(430px, 590px) minmax(0, 1fr) !important;
+    grid-template-rows: auto auto !important;
+    align-items: center !important;
+    column-gap: clamp(2rem, 4vw, 4.5rem) !important;
+    row-gap: 1.25rem !important;
+  }
+
+  [data-project-gear="true"] {
+    grid-column: 1 !important;
+    grid-row: 1 / span 2 !important;
+    align-self: center !important;
+  }
+
+  [data-project-scene="true"] > div.grid > div:first-child {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+    align-self: end !important;
+  }
+
+  [data-project-card="true"] {
+    grid-column: 2 !important;
+    grid-row: 2 !important;
+    align-self: start !important;
+    max-width: 100% !important;
+  }
+
+  [data-project-scene="true"] > div.grid > div:first-child > div:last-child {
+    max-height: 260px !important;
+  }
+}
+
+/* Keep the right-side project content readable instead of squeezing it beside a third column. */
+@media (min-width: 1280px) {
+  [data-project-scene="true"] > div.grid {
+    grid-template-columns: minmax(500px, 590px) minmax(0, 1fr) !important;
+  }
+}
+
+@media (max-width: 640px) {
+  [data-appsec-preview="true"] {
+    min-height: 190px;
+  }
+}
