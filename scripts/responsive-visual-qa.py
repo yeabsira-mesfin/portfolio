@@ -113,7 +113,7 @@ def run_viewport(width, height, name):
         no_horizontal_overflow(driver, f"{name}/projects")
 
         gear_count = driver.execute_script(
-            "return document.querySelectorAll('[data-project-gear=" + '"true"' + "]').length;"
+            'return document.querySelectorAll(\'[data-project-gear="true"]\').length;'
         )
         if gear_count != 1:
             raise AssertionError(f"{name}/projects: expected one roller, found {gear_count}")
