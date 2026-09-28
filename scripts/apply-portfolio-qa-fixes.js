@@ -43,14 +43,22 @@ source = source.replace(
   '<Gear scene={scene} wheelTurn={wheelTurn} reduceMotion={reduceMotion} onNavigate={navigate} />',
 );
 
+// Mark the main scene text areas so floating journey controls can be kept out of
+// meaningful content at every viewport size.
+source = source.replace(
+  '<div className="order-2 lg:order-1">',
+  '<div data-intro-content="true" className="order-2 lg:order-1">',
+);
+source = source.replace(
+  '<div className="max-h-[calc(100dvh-8rem)] overflow-y-auto pr-1 lg:max-h-[76vh]">',
+  '<div data-story-content="true" className="max-h-[calc(100dvh-8rem)] overflow-y-auto pr-1 lg:max-h-[76vh]">',
+);
+
 source = source.replace(
   '<div className="grid min-h-[calc(100dvh-8rem)] gap-6 lg:grid-cols-[260px_minmax(0,1fr)] lg:items-center xl:grid-cols-[260px_220px_minmax(0,1fr)] xl:gap-6">\n                <div className="min-w-0">',
   '<div className="grid min-h-[calc(100dvh-8rem)] gap-6 lg:grid-cols-[260px_minmax(0,1fr)] lg:items-center xl:grid-cols-[260px_220px_minmax(0,1fr)] xl:gap-6">\n                <div data-project-controls="true" className="min-w-0">',
 );
 
-// Reveal the selected project automatically only when it is actually outside the
-// viewport. This keeps desktop/laptop layouts pinned at the top while phones and
-// tablets smoothly move to the selected card with no manual follow-up scroll.
 source = source.replace(
   'onClick={() => { setSelectedProject(project); setWheelTurn((value) => value + 1); }}',
   'onClick={() => { setSelectedProject(project); setWheelTurn((value) => value + 1); window.setTimeout(() => { const card = document.querySelector(\'[data-project-card="true"]\'); const rect = card?.getBoundingClientRect(); if (card && rect && (rect.top > window.innerHeight - 140 || rect.bottom < 96)) card.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" }); }, 180); }}',
@@ -65,6 +73,8 @@ source = source.replace(
 );
 
 const required = [
+  'data-intro-content="true"',
+  'data-story-content="true"',
   'data-project-controls="true"',
   'data-project-card="true"',
   'data-contact-content="true"',
@@ -83,4 +93,4 @@ if (source.includes("rotating project mechanism")) {
 }
 
 fs.writeFileSync(filePath, source);
-console.log("Portfolio QA fixes applied: slow smooth rollers, responsive scenes, smart project reveal, contact safe area, and stable previews");
+console.log("Portfolio QA fixes applied: slow smooth rollers, scene overlap markers, smart project reveal, contact safe area, and stable previews");
