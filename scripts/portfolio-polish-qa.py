@@ -85,7 +85,7 @@ def journey_robot_state(driver):
         const rr=robot ? robot.getBoundingClientRect() : null;
         return {
           aria:el.getAttribute('aria-label')||'',
-          visible:r.width>0 && r.height>0 && s.display!=='none' && s.visibility!=='hidden' && Number(s.opacity||1)>0,
+          visible:r.width>0 && r.height>0 && s.display!=='none' && s.visibility!=='hidden',
           left:r.left,right:r.right,width:r.width,height:r.height,
           robotWidth:rr?.width||0,robotHeight:rr?.height||0
         };
