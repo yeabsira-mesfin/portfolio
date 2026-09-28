@@ -43,23 +43,23 @@ if (!source.includes('id: "ai-security"')) {
   );
 }
 
-// Slow the shared portrait mechanism noticeably. The Projects scene uses the exact
-// same Gear component as Story and Contact, so one motion setting stays consistent.
+// Keep the mechanism calm while reading. Scene changes add a controlled, slightly
+// quicker turn, while cinematic-enhancements.css supplies the ultra-slow ambient turn.
 source = source.replace(
   /const rotation = reduceMotion \? scene \* \d+ : wheelTurn \* \d+ \+ scene \* \d+;/,
-  'const rotation = reduceMotion ? scene * 8 : wheelTurn * 18 + scene * 12;',
+  'const rotation = reduceMotion ? scene * 10 : wheelTurn * 28 + scene * 16;',
 );
 source = source.replace(
   /transition=\{reduceMotion \? \{ duration: 0\.1 \} : \{ type: "spring", stiffness: 24, damping: 17, mass: 1\.7, restDelta: 0\.01 \}\}/,
-  'transition={reduceMotion ? { duration: 0.1 } : { duration: 5.8, ease: [0.16, 1, 0.3, 1] }}',
+  'transition={reduceMotion ? { duration: 0.1 } : { duration: 2.9, ease: [0.16, 1, 0.3, 1] }}',
 );
 source = source.replace(
   /transition=\{reduceMotion \? \{ duration: 0\.1 \} : \{ duration: [\d.]+, ease: \[0\.16, 1, 0\.3, 1\] \}\}/,
-  'transition={reduceMotion ? { duration: 0.1 } : { duration: 5.8, ease: [0.16, 1, 0.3, 1] }}',
+  'transition={reduceMotion ? { duration: 0.1 } : { duration: 2.9, ease: [0.16, 1, 0.3, 1] }}',
 );
 source = source.replace('transition={{ duration: 110, repeat: Infinity, ease: "linear" }}', 'transition={{ duration: 180, repeat: Infinity, ease: "linear" }}');
 source = source.replace('transition={{ duration: 62, repeat: Infinity, ease: "linear" }}', 'transition={{ duration: 120, repeat: Infinity, ease: "linear" }}');
-source = source.replace(/\}, reduceMotion \? 80 : \d+\);/, '}, reduceMotion ? 80 : 420);');
+source = source.replace(/\}, reduceMotion \? 80 : \d+\);/, '}, reduceMotion ? 80 : 520);');
 
 source = source.replace(
   '<Gear scene={scene} wheelTurn={wheelTurn} reduceMotion={reduceMotion} onNavigate={navigate} compact showSceneNav={false} />',
@@ -101,6 +101,14 @@ robotSource = robotSource.replace(
   'window.setTimeout(() => setIdle(true), 10000)',
 );
 
+// Clicking the YM/home button should immediately reset the journey robot to Intro.
+// This prevents the Story/Projects desktop dock from lingering on the left while
+// the Home scene is already visible.
+robotSource = robotSource.replace(
+  `      const button = event.target instanceof Element ? event.target.closest("header nav button") : null;\n      if (!button) return;\n\n      const label = button.textContent?.trim().toLowerCase();\n      if (label === "story" || label === "projects" || label === "contact") {\n        setScene(label);\n      }`,
+  `      const button = event.target instanceof Element ? event.target.closest("header button") : null;\n      if (!button) return;\n\n      if (!button.closest("nav")) {\n        setScene("intro");\n        return;\n      }\n\n      const label = button.textContent?.trim().toLowerCase();\n      if (label === "story" || label === "projects" || label === "contact") {\n        setScene(label);\n      }`,
+);
+
 const required = [
   'data-intro-content="true"',
   'data-story-content="true"',
@@ -108,11 +116,11 @@ const required = [
   'data-project-card="true"',
   'data-contact-content="true"',
   'data-project-image-preview="true"',
-  'duration: 5.8',
+  'duration: 2.9',
   'duration: 180',
   'duration: 120',
-  'wheelTurn * 18',
-  'reduceMotion ? 80 : 420',
+  'wheelTurn * 28',
+  'reduceMotion ? 80 : 520',
   'rect.top > window.innerHeight - 140',
   'scrollIntoView',
   'data-appsec-preview="true"',
@@ -125,10 +133,13 @@ for (const token of required) {
 if (!robotSource.includes('window.setTimeout(() => setIdle(true), 10000)')) {
   throw new Error("Portfolio QA patch validation failed: journey robot idle message is not set to ten seconds");
 }
+if (!robotSource.includes('setScene("intro")')) {
+  throw new Error("Portfolio QA patch validation failed: home robot scene reset is missing");
+}
 if (source.includes("rotating project mechanism")) {
   throw new Error("Portfolio QA patch validation failed: stray project mechanism label remains");
 }
 
 fs.writeFileSync(cinematicPath, source);
 fs.writeFileSync(robotPath, robotSource);
-console.log("Portfolio QA fixes applied: matching roller scale, slower shared motion, 10-second robot idle copy, full-fit project previews, two new featured security projects, and responsive safe areas");
+console.log("Portfolio QA fixes applied: calm ambient roller, gentle page-turn motion, home robot reset, 10-second idle copy, full-fit previews, featured security projects, and responsive safe areas");
