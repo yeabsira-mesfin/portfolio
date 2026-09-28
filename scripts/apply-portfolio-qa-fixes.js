@@ -24,8 +24,6 @@ if (source.includes('project.id === "appsec" && project.demo')) {
   );
 }
 
-// Smooth shared roller motion. Keep the page navigation responsive while the
-// mechanism continues its long, deliberate turn in the destination scene.
 source = source.replace(
   /const rotation = reduceMotion \? scene \* \d+ : wheelTurn \* \d+ \+ scene \* \d+;/,
   'const rotation = reduceMotion ? scene * 12 : wheelTurn * 34 + scene * 16;',
@@ -50,9 +48,12 @@ source = source.replace(
   '<div className="grid min-h-[calc(100dvh-8rem)] gap-6 lg:grid-cols-[260px_minmax(0,1fr)] lg:items-center xl:grid-cols-[260px_220px_minmax(0,1fr)] xl:gap-6">\n                <div data-project-controls="true" className="min-w-0">',
 );
 
+// Reveal the selected project automatically only when it is actually outside the
+// viewport. This keeps desktop/laptop layouts pinned at the top while phones and
+// tablets smoothly move to the selected card with no manual follow-up scroll.
 source = source.replace(
   'onClick={() => { setSelectedProject(project); setWheelTurn((value) => value + 1); }}',
-  'onClick={() => { setSelectedProject(project); setWheelTurn((value) => value + 1); window.setTimeout(() => document.querySelector(\'[data-project-card="true"]\')?.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "nearest" }), 120); }}',
+  'onClick={() => { setSelectedProject(project); setWheelTurn((value) => value + 1); window.setTimeout(() => { const card = document.querySelector(\'[data-project-card="true"]\'); const rect = card?.getBoundingClientRect(); if (card && rect && (rect.top > window.innerHeight - 140 || rect.bottom < 96)) card.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" }); }, 180); }}',
 );
 
 source = source.replace(/\s*<p className="mt-4 max-w-\[190px\][^>]*>rotating project mechanism<\/p>/g, "");
@@ -70,6 +71,7 @@ const required = [
   'duration: 3.4',
   'wheelTurn * 34',
   'reduceMotion ? 80 : 420',
+  'rect.top > window.innerHeight - 140',
   'scrollIntoView',
   'data-appsec-preview="true"',
 ];
@@ -81,4 +83,4 @@ if (source.includes("rotating project mechanism")) {
 }
 
 fs.writeFileSync(filePath, source);
-console.log("Portfolio QA fixes applied: slow smooth rollers, responsive scene changes, immediate project reveal, contact safe area, and stable previews");
+console.log("Portfolio QA fixes applied: slow smooth rollers, responsive scenes, smart project reveal, contact safe area, and stable previews");
