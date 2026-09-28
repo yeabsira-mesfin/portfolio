@@ -146,6 +146,24 @@ def require_scene(driver, expected, name):
     return state
 
 
+def journey_robot_overlaps_content(driver, content_selector):
+    return driver.execute_script(
+        """
+        const robot = document.querySelector('button[data-journey-robot="true"]');
+        const root = document.querySelector(arguments[0]);
+        if (!robot || !root) return false;
+        const rr = robot.getBoundingClientRect();
+        const meaningful = [...root.querySelectorAll('h1, h2, h3, p, a, button')]
+          .filter(el => el.offsetParent !== null);
+        return meaningful.some(el => {
+          const r = el.getBoundingClientRect();
+          return !(rr.right <= r.left || rr.left >= r.right || rr.bottom <= r.top || rr.top >= r.bottom);
+        });
+        """,
+        content_selector,
+    )
+
+
 def project_robot_overlaps_content(driver):
     return driver.execute_script(
         """
@@ -185,12 +203,18 @@ def run_viewport(width, height, name):
         time.sleep(0.5)
 
         no_horizontal_overflow(driver, f"{name}/intro")
+        if journey_robot_overlaps_content(driver, '[data-intro-content]'):
+            driver.save_screenshot(str(OUT / f"{name}-00-intro-overlap.png"))
+            raise AssertionError(f"{name}/intro: journey robot overlaps intro text or controls")
         driver.save_screenshot(str(OUT / f"{name}-00-intro.png"))
 
         click_nav(driver, "story")
         wait_for_scene(driver, "story")
         require_scene(driver, "Story", name)
         no_horizontal_overflow(driver, f"{name}/story")
+        if journey_robot_overlaps_content(driver, '[data-story-content]'):
+            driver.save_screenshot(str(OUT / f"{name}-01-story-overlap.png"))
+            raise AssertionError(f"{name}/story: journey robot overlaps story content")
         driver.save_screenshot(str(OUT / f"{name}-01-story.png"))
 
         click_nav(driver, "projects")
