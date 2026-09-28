@@ -29,7 +29,7 @@ body:has([data-contact-content]) button[aria-label="Open portfolio assistant"] {
 
   [data-intro-content="true"],
   [data-story-content="true"] {
-    padding-right: 6.5rem !important;
+    padding-right: 7.5rem !important;
     padding-bottom: 1.25rem !important;
   }
 
@@ -38,9 +38,15 @@ body:has([data-contact-content]) button[aria-label="Open portfolio assistant"] {
   }
 }
 
-/* Tablets: the bubble still fits on Intro/Story, but Projects keeps a compact
-   bubble-free robot because its selected-project card uses the full width. */
+/* Tablets: keep a dedicated right-side lane on Intro and Story. Projects uses a
+   compact bubble-free robot because its selected-project card uses the full width. */
 @media (min-width: 640px) and (max-width: 1023px) {
+  [data-intro-content="true"],
+  [data-story-content="true"] {
+    padding-right: 13rem !important;
+    padding-bottom: 1.5rem !important;
+  }
+
   button[data-journey-robot="true"][aria-label*="contact page"] > div:first-child {
     display: none !important;
   }
@@ -74,7 +80,7 @@ body:has([data-contact-content]) button[aria-label="Open portfolio assistant"] {
 @media (max-width: 430px) {
   [data-intro-content="true"],
   [data-story-content="true"] {
-    padding-right: 6rem !important;
+    padding-right: 7rem !important;
   }
 
   [data-project-card="true"] > div:last-child {
