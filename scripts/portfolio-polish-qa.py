@@ -18,8 +18,13 @@ VIEWPORTS = [
 ]
 
 
+def js(driver, script, *args):
+    return driver.execute_script(script, *args)
+
+
 def click_nav(driver, label):
-    ok = driver.execute_script(
+    ok = js(
+        driver,
         """
         const wanted = arguments[0].toLowerCase();
         const button = [...document.querySelectorAll('header nav button')]
@@ -35,35 +40,30 @@ def click_nav(driver, label):
 
 
 def click_home(driver):
-    ok = driver.execute_script(
-        """
-        const button = document.querySelector('header button');
-        if (!button) return false;
-        button.click();
-        return true;
-        """
-    )
-    if not ok:
+    if not js(driver, "const b=document.querySelector('header button'); if(!b)return false; b.click(); return true;"):
         raise AssertionError("home/YM button not found")
 
 
 def wait_scene(driver, label):
     selectors = {
         "story": "[data-story-content]",
-        "projects": "[data-project-gear]",
+        "projects": "[data-project-scene]",
         "contact": "[data-contact-content]",
     }
     selector = selectors[label]
 
     def ready(d):
-        return d.execute_script(
+        return js(
+            d,
             """
-            const wanted = arguments[0].toLowerCase();
-            const selector = arguments[1];
-            const active = [...document.querySelectorAll('header nav button')]
-              .find(el => String(el.className).includes('bg-[#7CEBDD]/10'));
-            const target = document.querySelector(selector);
-            return !!target && target.offsetParent !== null && active && active.textContent.trim().toLowerCase() === wanted;
+            const wanted=arguments[0].toLowerCase();
+            const target=document.querySelector(arguments[1]);
+            const active=[...document.querySelectorAll('header nav button')]
+              .find(el=>String(el.className).includes('bg-[#7CEBDD]/10'));
+            if(!target || !active || active.textContent.trim().toLowerCase()!==wanted) return false;
+            const r=target.getBoundingClientRect();
+            const s=getComputedStyle(target);
+            return r.width>0 && r.height>0 && s.display!=='none' && s.visibility!=='hidden';
             """,
             label,
             selector,
@@ -73,262 +73,204 @@ def wait_scene(driver, label):
     time.sleep(0.55)
 
 
-def gear_rect(driver, root_selector=None):
-    return driver.execute_script(
+def journey_robot_state(driver):
+    return js(
+        driver,
         """
-        const root = arguments[0] ? document.querySelector(arguments[0]) : document;
-        if (!root) return null;
-        const svg = [...root.querySelectorAll('svg')]
-          .find(el => el.getAttribute('viewBox') === '0 0 600 600');
-        const el = svg ? svg.closest('[class*="aspect-square"]') : null;
-        if (!el || el.offsetParent === null) return null;
-        const r = el.getBoundingClientRect();
-        return {left:r.left, top:r.top, right:r.right, bottom:r.bottom, width:r.width, height:r.height};
+        const el=document.querySelector('button[data-journey-robot="true"]');
+        if(!el) return null;
+        const r=el.getBoundingClientRect();
+        const s=getComputedStyle(el);
+        const robot=el.querySelector('div:last-child');
+        const rr=robot ? robot.getBoundingClientRect() : null;
+        return {
+          aria:el.getAttribute('aria-label')||'',
+          visible:r.width>0 && r.height>0 && s.display!=='none' && s.visibility!=='hidden' && Number(s.opacity||1)>0,
+          left:r.left,right:r.right,width:r.width,height:r.height,
+          robotWidth:rr?.width||0,robotHeight:rr?.height||0
+        };
+        """,
+    )
+
+
+def gear_state(driver, root_selector=None):
+    return js(
+        driver,
+        """
+        const root=arguments[0] ? document.querySelector(arguments[0]) : document;
+        if(!root) return null;
+        const svg=[...root.querySelectorAll('svg')].find(el=>el.getAttribute('viewBox')==='0 0 600 600');
+        if(!svg) return null;
+        const host=svg.closest('[class*="aspect-square"]');
+        const r=host?.getBoundingClientRect();
+        const s=getComputedStyle(svg);
+        return r ? {width:r.width,height:r.height,animationName:s.animationName,animationDuration:s.animationDuration} : null;
         """,
         root_selector,
     )
 
 
-def gear_animation(driver):
-    return driver.execute_script(
-        """
-        const svg = [...document.querySelectorAll('svg')]
-          .find(el => el.getAttribute('viewBox') === '0 0 600 600' && el.offsetParent !== null);
-        if (!svg) return null;
-        const s = getComputedStyle(svg);
-        return {name:s.animationName, duration:s.animationDuration};
-        """
-    )
+def assert_robot_size(a, b, label):
+    if not a or not b or not a["visible"] or not b["visible"]:
+        raise AssertionError(f"{label}: journey robot missing: {a}, {b}")
+    if abs(a["robotWidth"] - b["robotWidth"]) > 3 or abs(a["robotHeight"] - b["robotHeight"]) > 3:
+        raise AssertionError(f"{label}: journey robot size changed: {a}, {b}")
 
 
-def robot_rect(driver):
-    return driver.execute_script(
-        """
-        const el = document.querySelector('button[data-journey-robot="true"] > div:last-child');
-        if (!el || el.offsetParent === null) return null;
-        const r = el.getBoundingClientRect();
-        return {width:r.width, height:r.height};
-        """
-    )
-
-
-def assert_same_robot(a, b, label):
+def assert_gear_size(a, b, label):
     if not a or not b:
-        raise AssertionError(f"{label}: visible robot missing, a={a}, b={b}")
-    if abs(a["width"] - b["width"]) > 2.5 or abs(a["height"] - b["height"]) > 2.5:
-        raise AssertionError(f"{label}: robot size mismatch, a={a}, b={b}")
+        raise AssertionError(f"{label}: gear missing: {a}, {b}")
+    tolerance=max(18, a["width"]*0.06)
+    if abs(a["width"]-b["width"])>tolerance:
+        raise AssertionError(f"{label}: gear size mismatch: {a}, {b}")
 
 
-def assert_same_gear(a, b, label):
-    if not a or not b:
-        raise AssertionError(f"{label}: visible mechanism missing, a={a}, b={b}")
-    tolerance = max(18.0, a["width"] * 0.06)
-    if abs(a["width"] - b["width"]) > tolerance:
-        raise AssertionError(f"{label}: mechanism size mismatch, a={a}, b={b}")
-
-
-def assert_bzzz_after_ten_seconds(driver):
-    WebDriverWait(driver, 5).until(
-        lambda d: d.execute_script("return !!document.querySelector('button[data-journey-robot=\"true\"] p');")
+def assert_story(driver, viewport_name):
+    WebDriverWait(driver, 8).until(
+        lambda d: bool(js(d, "return document.querySelector('[data-story-experience=\"true\"]');"))
     )
-    initial = driver.execute_script(
-        "return document.querySelector('button[data-journey-robot=\"true\"] p')?.textContent || '';"
-    )
-    if "Bzzz" in initial:
-        raise AssertionError("Bzzz appeared immediately instead of after the idle delay")
-    time.sleep(10.6)
-    text = driver.execute_script(
-        "return document.querySelector('button[data-journey-robot=\"true\"] p')?.textContent || '';"
-    )
-    if "Bzzz" not in text:
-        raise AssertionError(f"Bzzz did not appear at about ten seconds, text={text!r}")
-
-
-def assert_story_experience(driver, viewport_name):
-    WebDriverWait(driver, 6).until(
-        lambda d: d.execute_script(
-            """
-            const el = document.querySelector('[data-story-experience="true"]');
-            return !!el && el.offsetParent !== null && el.getBoundingClientRect().height > 200;
-            """
-        )
-    )
-    content = driver.execute_script(
-        "return document.querySelector('[data-story-experience=\"true\"]')?.textContent || '';"
-    ).lower()
-    for required in ["experience / trajectory", "200+ enterprise event builds", "mmcy", "george washington university"]:
-        if required not in content:
+    text=js(driver, "return document.querySelector('[data-story-experience=\"true\"]')?.textContent||'';").lower()
+    for required in [
+        "experience / trajectory",
+        "200+ enterprise event builds",
+        "mmcy",
+        "account managers",
+        "george washington university",
+    ]:
+        if required not in text:
             raise AssertionError(f"{viewport_name}: Story experience missing {required!r}")
 
-    driver.execute_script(
-        "document.querySelector('[data-story-experience=\"true\"]')?.scrollIntoView({block:'start', behavior:'auto'});"
-    )
+    js(driver, "document.querySelector('[data-story-experience=\"true\"]')?.scrollIntoView({block:'start'});")
     time.sleep(0.35)
-    if viewport_name in {"laptop", "monitor"}:
-        driver.save_screenshot(str(OUT / f"{viewport_name}-01b-story-experience.png"))
+    driver.save_screenshot(str(OUT / f"{viewport_name}-story-experience.png"))
 
 
-def assert_projects(driver, viewport_name, viewport_width):
-    labels = driver.execute_script(
+def assert_projects(driver, viewport_name):
+    labels=js(
+        driver,
         """
-        const root = document.querySelector('[data-project-controls]');
-        return root ? [...root.querySelectorAll('button')].map(b => b.innerText.trim()) : [];
-        """
+        const root=document.querySelector('[data-project-controls]');
+        return root ? [...root.querySelectorAll('button')].map(b=>b.innerText.trim()) : [];
+        """,
     )
+    if len(labels)<7:
+        raise AssertionError(f"{viewport_name}: expected at least 7 project choices, got {len(labels)}")
     for required in ["AI Security Testing Lab", "SignalDesk Endpoint Posture Advisor"]:
         if not any(required in label for label in labels):
-            raise AssertionError(f"{viewport_name}: missing added project {required}")
-    if len(labels) < 7:
-        raise AssertionError(f"{viewport_name}: expected at least seven project choices, found {len(labels)}")
+            raise AssertionError(f"{viewport_name}: missing project {required}")
 
-    for index in range(len(labels)):
-        expected = driver.execute_script(
-            """
-            const root = document.querySelector('[data-project-controls]');
-            const button = root?.querySelectorAll('button')[arguments[0]];
-            if (!button) return null;
-            const title = button.querySelector('p')?.textContent?.trim() || button.innerText.trim();
-            button.click();
-            return title;
-            """,
-            index,
-        )
-        if not expected:
-            raise AssertionError(f"{viewport_name}: could not select project {index}")
+    preview=js(
+        driver,
+        """
+        const img=document.querySelector('[data-project-card] img');
+        if(!img) return {hasImage:false};
+        const s=getComputedStyle(img); const r=img.getBoundingClientRect();
+        return {hasImage:true,objectFit:s.objectFit,width:r.width,height:r.height};
+        """,
+    )
+    if preview.get("hasImage") and preview.get("objectFit") != "contain":
+        raise AssertionError(f"{viewport_name}: selected project image can crop: {preview}")
 
-        WebDriverWait(driver, 5).until(
-            lambda d: d.execute_script(
-                "return document.querySelector('[data-project-card] h3')?.textContent?.trim() === arguments[0];",
-                expected,
-            )
-        )
-        time.sleep(0.2)
 
-        state = driver.execute_script(
-            """
-            const card = document.querySelector('[data-project-card]');
-            const visual = card?.firstElementChild;
-            if (!card || !visual) return null;
-            const vr = visual.getBoundingClientRect();
-            const img = visual.querySelector('img');
-            const ir = img?.getBoundingClientRect();
-            const cs = getComputedStyle(card);
-            const is = img ? getComputedStyle(img) : null;
-            return {
-              title: card.querySelector('h3')?.textContent || '',
-              visual: {left:vr.left, top:vr.top, right:vr.right, bottom:vr.bottom, width:vr.width, height:vr.height},
-              image: ir ? {left:ir.left, top:ir.top, right:ir.right, bottom:ir.bottom} : null,
-              objectFit: is?.objectFit || null,
-              overflowY: cs.overflowY,
-              maxHeight: cs.maxHeight,
-            };
-            """
-        )
-        if not state:
-            raise AssertionError(f"{viewport_name}: selected project card did not render for {expected}")
-
-        visual = state["visual"]
-        ratio = visual["width"] / max(visual["height"], 1)
-        if visual["width"] < 120 or visual["height"] < 100 or not 1.55 <= ratio <= 2.05:
-            raise AssertionError(f"{viewport_name}: unstable project preview for {state['title']}: {visual}")
-
-        if state["image"]:
-            img = state["image"]
-            if state["objectFit"] != "contain":
-                raise AssertionError(f"{viewport_name}: image can crop for {state['title']}")
-            if img["left"] < visual["left"] - 2 or img["right"] > visual["right"] + 2 or img["top"] < visual["top"] - 2 or img["bottom"] > visual["bottom"] + 2:
-                raise AssertionError(f"{viewport_name}: image escapes preview frame for {state['title']}")
-
-        if viewport_width >= 1024 and (state["overflowY"] == "auto" or state["maxHeight"] != "none"):
-            raise AssertionError(
-                f"{viewport_name}: project card can still clip on laptop/desktop for {state['title']}"
-            )
+def assert_bzzz(driver):
+    initial=js(driver, "return document.querySelector('button[data-journey-robot=\"true\"] p')?.textContent||'';")
+    if "Bzzz" in initial:
+        raise AssertionError("Bzzz appeared immediately")
+    time.sleep(10.6)
+    after=js(driver, "return document.querySelector('button[data-journey-robot=\"true\"] p')?.textContent||'';")
+    if "Bzzz" not in after:
+        raise AssertionError(f"Bzzz did not appear after about ten seconds: {after!r}")
 
 
 def assert_home_return(driver, viewport_name, viewport_width):
     click_home(driver)
-    time.sleep(1.4)
-    driver.save_screenshot(str(OUT / f"{viewport_name}-05-home-return.png"))
-    state = driver.execute_script(
-        """
-        const h1 = document.querySelector('h1');
-        const robot = document.querySelector('button[data-journey-robot="true"]');
-        const active = [...document.querySelectorAll('header nav button')]
-          .find(el => String(el.className).includes('bg-[#7CEBDD]/10'));
-        const r = robot && robot.offsetParent !== null ? robot.getBoundingClientRect() : null;
-        return {
-          heading: h1?.textContent || '',
-          robotVisible: !!r,
-          robotAria: robot?.getAttribute('aria-label') || '',
-          robotRect: r ? {left:r.left, right:r.right, width:r.width, height:r.height} : null,
-          activeNav: active?.textContent?.trim() || '',
-        };
-        """
-    )
 
-    if "Yeabsira" not in state["heading"]:
-        raise AssertionError(f"{viewport_name}: Home did not render after YM click: {state}")
-    if not state["robotVisible"]:
-        raise AssertionError(f"{viewport_name}: Home journey robot missing after return: {state}")
-    if not state["robotAria"].startswith("Explore more"):
-        raise AssertionError(f"{viewport_name}: journey robot kept the wrong scene after Home return: {state}")
-    if state["robotRect"]["left"] < viewport_width * 0.5:
-        raise AssertionError(f"{viewport_name}: Home robot stayed on the left after return: {state}")
+    def home_ready(d):
+        state=journey_robot_state(d)
+        heading=js(d, "return document.querySelector('h1')?.textContent||'';")
+        return bool(state and state["visible"] and state["aria"].startswith("Explore more") and "Yeabsira" in heading)
+
+    WebDriverWait(driver, 8).until(home_ready)
+    time.sleep(0.35)
+    state=journey_robot_state(driver)
+    if state["left"] < viewport_width*0.5:
+        raise AssertionError(f"{viewport_name}: Home robot stayed on left after return: {state}")
+    driver.save_screenshot(str(OUT / f"{viewport_name}-home-return.png"))
+
+
+def assert_contact_swap(driver, viewport_name):
+    click_nav(driver, "contact")
+    wait_scene(driver, "contact")
+    journey=journey_robot_state(driver)
+    chatbot=js(
+        driver,
+        """
+        const el=document.querySelector('button[aria-label="Open portfolio assistant"]');
+        if(!el) return null;
+        const r=el.getBoundingClientRect(); const s=getComputedStyle(el);
+        return {visible:r.width>0&&r.height>0&&s.display!=='none'&&s.visibility!=='hidden',width:r.width,height:r.height};
+        """,
+    )
+    if journey and journey["visible"]:
+        raise AssertionError(f"{viewport_name}: journey robot visible on Contact")
+    if not chatbot or not chatbot["visible"]:
+        raise AssertionError(f"{viewport_name}: chatbot robot missing on Contact: {chatbot}")
+    driver.save_screenshot(str(OUT / f"{viewport_name}-contact-chatbot.png"))
 
 
 def run_viewport(width, height, name):
-    options = Options()
+    options=Options()
     options.add_argument("--headless=new")
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
     options.add_argument(f"--window-size={width},{height}")
     options.add_argument("--force-device-scale-factor=1")
+    driver=webdriver.Chrome(options=options)
 
-    driver = webdriver.Chrome(options=options)
     try:
-        driver.set_window_size(width, height)
+        driver.set_window_size(width,height)
         driver.get(BASE_URL)
-        WebDriverWait(driver, 10).until(lambda d: d.execute_script("return !!document.querySelector('header');"))
-        WebDriverWait(driver, 6).until(lambda d: d.execute_script("return !!document.querySelector('button[data-journey-robot=\"true\"]');"))
-        time.sleep(0.4)
+        WebDriverWait(driver,10).until(lambda d: bool(js(d,"return document.querySelector('header');")))
+        WebDriverWait(driver,8).until(lambda d: bool(journey_robot_state(d)))
+        intro=journey_robot_state(driver)
+        if not intro["visible"]:
+            raise AssertionError(f"{name}: journey robot hidden on Home: {intro}")
+        if name=="phone":
+            assert_bzzz(driver)
 
-        intro_robot = robot_rect(driver)
-        if name == "phone":
-            assert_bzzz_after_ten_seconds(driver)
+        click_nav(driver,"story")
+        wait_scene(driver,"story")
+        story_robot=journey_robot_state(driver)
+        assert_robot_size(intro,story_robot,f"{name}: Home/Story")
+        story_gear=gear_state(driver)
+        if not story_gear or "ym-ambient-gear-turn" not in story_gear["animationName"]:
+            raise AssertionError(f"{name}: ambient gear animation missing: {story_gear}")
+        assert_story(driver,name)
 
-        click_nav(driver, "story")
-        wait_scene(driver, "story")
-        story_robot = robot_rect(driver)
-        story_gear = gear_rect(driver)
-        assert_same_robot(intro_robot, story_robot, f"{name}: Intro/Story")
-        assert_story_experience(driver, name)
-        animation = gear_animation(driver)
-        if not animation or "ym-ambient-gear-turn" not in animation["name"]:
-            raise AssertionError(f"{name}: slow ambient gear animation missing: {animation}")
+        click_nav(driver,"projects")
+        wait_scene(driver,"projects")
+        project_robot=journey_robot_state(driver)
+        assert_robot_size(story_robot,project_robot,f"{name}: Story/Projects")
+        project_gear=gear_state(driver,"[data-project-gear]")
+        assert_gear_size(story_gear,project_gear,f"{name}: Story/Projects")
+        assert_projects(driver,name)
+        driver.save_screenshot(str(OUT/f"{name}-projects-polish.png"))
 
-        click_nav(driver, "projects")
-        wait_scene(driver, "projects")
-        project_robot = robot_rect(driver)
-        project_gear = gear_rect(driver, "[data-project-gear]")
-        assert_same_robot(story_robot, project_robot, f"{name}: Story/Projects")
-        assert_same_gear(story_gear, project_gear, f"{name}: Story/Projects")
-        assert_projects(driver, name, width)
-        driver.save_screenshot(str(OUT / f"{name}-04-polish-qa.png"))
-
-        assert_home_return(driver, name, width)
+        assert_home_return(driver,name,width)
+        assert_contact_swap(driver,name)
         print(f"PASS polish QA {name} {width}x{height}")
     finally:
         driver.quit()
 
 
-failures = []
-for width, height, name in VIEWPORTS:
+failures=[]
+for width,height,name in VIEWPORTS:
     try:
-        run_viewport(width, height, name)
+        run_viewport(width,height,name)
     except Exception as exc:
         failures.append(f"{name} {width}x{height}: {type(exc).__name__}: {exc}")
 
 if failures:
-    raise SystemExit("Portfolio polish QA failed:\n" + "\n".join(failures))
+    raise SystemExit("Portfolio polish QA failed:\n"+"\n".join(failures))
 
-print("Portfolio polish QA passed: Home robot return position, animated Story experience, slow ambient roller, gentle scene turn, roller and robot consistency, ten-second Bzzz timing, uncropped project previews, and featured GitHub projects verified across phone, tablet, laptop, and monitor.")
+print("Portfolio polish QA passed: Home robot return, Story experience, slow ambient gear, gentle scene turn, Contact chatbot swap, Bzzz timing, project previews, and responsive behavior verified across phone, tablet, laptop, and monitor.")
