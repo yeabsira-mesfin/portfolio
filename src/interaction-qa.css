@@ -1,56 +1,72 @@
 /* Interaction safety layer: floating robots must never cover meaningful content. */
 
-/* Hard scene boundary: the journey/navigation robot is NEVER allowed on Contact.
-   Contact owns the interactive PortfolioAssistant robot instead. */
-body:has([data-contact-content="true"]) [data-journey-robot="true"] {
+/* Contact: the robot itself is enough affordance. The large hint bubble was the
+   source of the Based in overlap, so Contact keeps a compact launcher only. */
+body:has([data-contact-content]) button[aria-label="Open portfolio assistant"] > div:first-child {
   display: none !important;
 }
 
-/* Contact chatbot robot stays visible and compact. Only its optional hint bubble is
-   suppressed so it does not cover the contact copy. */
-body:has([data-contact-content="true"]) button[aria-label="Open portfolio assistant"],
-body:has([data-contact-content="true"]) button[aria-label="Minimize portfolio assistant"] {
-  display: block !important;
-}
-
-body:has([data-contact-content="true"]) button[aria-label="Open portfolio assistant"] > div:first-child {
-  display: none !important;
-}
-
-body:has([data-contact-content="true"]) button[aria-label="Open portfolio assistant"] {
+body:has([data-contact-content]) button[aria-label="Open portfolio assistant"] {
   height: 96px !important;
 }
 
 /* Phones: use one consistent compact journey-robot footprint across Intro, Story,
-   and Projects. Hide the wide speech bubble and reserve a clean right-side lane. */
+   and Projects. Hide the wide speech bubble and reserve a clean right-side lane
+   in the text areas so the robot never sits on top of copy or cards. */
 @media (max-width: 639px) {
-  button[data-journey-robot="true"] > div:first-child { display: none !important; }
+  button[data-journey-robot="true"] > div:first-child {
+    display: none !important;
+  }
+
   button[data-journey-robot="true"] {
-    width: 86px !important; height: 105px !important;
+    width: 86px !important;
+    height: 105px !important;
     right: max(8px, env(safe-area-inset-right)) !important;
     bottom: max(8px, env(safe-area-inset-bottom)) !important;
-    left: auto !important; transform-origin: bottom right !important;
+    left: auto !important;
+    transform-origin: bottom right !important;
   }
-  [data-intro-content="true"], [data-story-content="true"] {
-    padding-right: 7.5rem !important; padding-bottom: 1.25rem !important;
+
+  [data-intro-content="true"],
+  [data-story-content="true"] {
+    padding-right: 7.5rem !important;
+    padding-bottom: 1.25rem !important;
   }
-  [data-project-card="true"] > div:last-child { padding-right: 6.5rem !important; }
+
+  [data-project-card="true"] > div:last-child {
+    padding-right: 6.5rem !important;
+  }
 }
 
+/* Tablets: keep a dedicated right-side lane on Intro and Story. Projects uses a
+   compact bubble-free robot because its selected-project card uses the full width. */
 @media (min-width: 640px) and (max-width: 1023px) {
-  [data-intro-content="true"], [data-story-content="true"] {
-    padding-right: 13rem !important; padding-bottom: 1.5rem !important;
+  [data-intro-content="true"],
+  [data-story-content="true"] {
+    padding-right: 13rem !important;
+    padding-bottom: 1.5rem !important;
   }
-  button[data-journey-robot="true"][aria-label*="contact page"] > div:first-child { display: none !important; }
+
+  button[data-journey-robot="true"][aria-label*="contact page"] > div:first-child {
+    display: none !important;
+  }
+
   button[data-journey-robot="true"][aria-label*="contact page"] {
-    width: 104px !important; height: 122px !important;
+    width: 104px !important;
+    height: 122px !important;
     right: max(10px, env(safe-area-inset-right)) !important;
     bottom: max(10px, env(safe-area-inset-bottom)) !important;
-    left: auto !important; transform-origin: bottom right !important;
+    left: auto !important;
+    transform-origin: bottom right !important;
   }
-  [data-project-card="true"] > div:last-child { padding-right: 7rem !important; }
+
+  [data-project-card="true"] > div:last-child {
+    padding-right: 7rem !important;
+  }
 }
 
+/* Laptops/monitors: dock Story and Projects journey robots into the left mechanism
+   lane. That keeps the large project/story cards on the right completely clear. */
 @media (min-width: 1024px) {
   button[data-journey-robot="true"][aria-label*="projects"],
   button[data-journey-robot="true"][aria-label*="contact page"] {
@@ -62,6 +78,12 @@ body:has([data-contact-content="true"]) button[aria-label="Open portfolio assist
 }
 
 @media (max-width: 430px) {
-  [data-intro-content="true"], [data-story-content="true"] { padding-right: 7rem !important; }
-  [data-project-card="true"] > div:last-child { padding-right: 6rem !important; }
+  [data-intro-content="true"],
+  [data-story-content="true"] {
+    padding-right: 7rem !important;
+  }
+
+  [data-project-card="true"] > div:last-child {
+    padding-right: 6rem !important;
+  }
 }

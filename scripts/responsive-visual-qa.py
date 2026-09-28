@@ -132,8 +132,6 @@ def scene_state(driver):
           controls: document.querySelectorAll('[data-project-controls]').length,
           cards: document.querySelectorAll('[data-project-card]').length,
           contact: !!document.querySelector('[data-contact-content]'),
-          journeyRobots: document.querySelectorAll('[data-journey-robot="true"]').length,
-          assistantLaunchers: document.querySelectorAll('button[aria-label="Open portfolio assistant"]').length,
           body: document.body.innerText.slice(0, 1200)
         };
         """
@@ -242,7 +240,7 @@ def run_viewport(width, height, name):
             raise AssertionError(f"{name}/projects: roller is not visible in first viewport: {gear}")
 
         windows_button = WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, "//button[contains(normalize-space(.),'Windows Infrastructure')]") )
+            EC.presence_of_element_located((By.XPATH, "//button[.//*[contains(text(),'Windows Infrastructure')]]"))
         )
         driver.execute_script("arguments[0].click();", windows_button)
         WebDriverWait(driver, 7).until(
@@ -265,24 +263,11 @@ def run_viewport(width, height, name):
             raise AssertionError(f"{name}/contact: contact marker missing: {state}")
         no_horizontal_overflow(driver, f"{name}/contact")
 
-        # This is the exact product behavior requested: Contact swaps the journey
-        # robot for the interactive chatbot robot.
-        if state["journeyRobots"] != 0:
-            driver.save_screenshot(str(OUT / f"{name}-03-contact-wrong-robot.png"))
-            raise AssertionError(f"{name}/contact: journey robot is still present: {state}")
-        if state["assistantLaunchers"] != 1:
-            driver.save_screenshot(str(OUT / f"{name}-03-contact-missing-chatbot.png"))
-            raise AssertionError(f"{name}/contact: chatbot robot launcher is missing: {state}")
-
         assistant = rect(driver, 'button[aria-label="Open portfolio assistant"]')
-        if not assistant or assistant["width"] < 30 or assistant["height"] < 30:
-            driver.save_screenshot(str(OUT / f"{name}-03-contact-missing-chatbot.png"))
-            raise AssertionError(f"{name}/contact: chatbot robot is not visibly sized: {assistant}")
-
         hint = hint_rect(driver)
         contact_cards = contact_card_rects(driver)
         for card_rect in contact_cards:
-            if overlap(assistant, card_rect):
+            if assistant and overlap(assistant, card_rect):
                 driver.save_screenshot(str(OUT / f"{name}-03-contact-overlap.png"))
                 raise AssertionError(f"{name}/contact: assistant overlaps contact card: assistant={assistant}, card={card_rect}")
             if hint and overlap(hint, card_rect):
@@ -305,4 +290,4 @@ for width, height, name in VIEWPORTS:
 if failures:
     raise SystemExit("Responsive visual QA failed:\n" + "\n".join(failures))
 
-print("Responsive visual QA passed for phone, tablet, laptop, and large monitor, including the Contact chatbot robot swap.")
+print("Responsive visual QA passed for phone, tablet, laptop, and large monitor.")

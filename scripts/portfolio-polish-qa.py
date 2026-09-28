@@ -65,20 +65,9 @@ def gear_rect(driver, root_selector=None):
         """
         const root = arguments[0] ? document.querySelector(arguments[0]) : document;
         if (!root) return null;
-
-        // Current Gear is CSS/Framer based, not an SVG. Locate the actual square
-        // mechanism by its aspect-square wrapper. For Story/Contact, use the
-        // portrait as an anchor so unrelated square UI elements are ignored.
-        let el = null;
-        if (arguments[0]) {
-          if (String(root.className).includes('aspect-square')) el = root;
-          else el = root.querySelector('[class*="aspect-square"]');
-        } else {
-          const portrait = [...document.querySelectorAll('img')]
-            .find(img => img.alt === 'Yeabsira Mesfin' && img.offsetParent !== null);
-          el = portrait?.closest('[class*="aspect-square"]') || null;
-        }
-
+        const svg = [...root.querySelectorAll('svg')]
+          .find(el => el.getAttribute('viewBox') === '0 0 600 600');
+        const el = svg ? svg.closest('[class*="aspect-square"]') : null;
         if (!el || el.offsetParent === null) return null;
         const r = el.getBoundingClientRect();
         return {left:r.left, top:r.top, right:r.right, bottom:r.bottom, width:r.width, height:r.height};
