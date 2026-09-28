@@ -51,8 +51,12 @@ if (bundle.includes("/windows-reliability-preview.html")) {
   throw new Error("Build QA failed: legacy Windows iframe preview returned; use the animated project visual");
 }
 
-if (!bundle.includes("Windows Infrastructure Reliability Console preview")) {
-  throw new Error("Build QA failed: Windows project visual is missing");
+if (!bundle.includes("Windows Infrastructure Reliability Console")) {
+  throw new Error("Build QA failed: Windows project is missing from the production bundle");
+}
+
+if (!css.includes('Windows Infrastructure Reliability Console preview')) {
+  throw new Error("Build QA failed: animated Windows visual CSS was not emitted");
 }
 
 if (!bundle.includes("AppSec Vulnerability Manager") || !bundle.includes("https://appsec-vulnerability-manager.vercel.app/")) {
