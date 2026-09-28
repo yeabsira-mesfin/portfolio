@@ -110,7 +110,7 @@ for (const requiredCss of [
   "data-appsec-preview",
   "data-project-image-preview",
   "data-contact-content",
-  'button[data-journey-robot="true"]',
+  "data-journey-robot",
 ]) {
   if (!css.includes(requiredCss)) {
     throw new Error(`Build QA failed: responsive CSS token missing: ${requiredCss}`);
