@@ -1,12 +1,14 @@
 /* Responsive layout QA: one roller, visible project details, and no assistant collisions. */
 
-[data-appsec-preview="true"] {
+[data-appsec-preview="true"],
+[data-project-image-preview="true"] {
   aspect-ratio: 16 / 9 !important;
   min-height: 240px;
   background: #01080d !important;
 }
 
-[data-appsec-preview="true"] > img {
+[data-appsec-preview="true"] > img,
+[data-project-image-preview="true"] > img {
   position: relative !important;
   inset: auto !important;
   display: block !important;
@@ -17,7 +19,7 @@
   opacity: 1 !important;
 }
 
-/* The Projects roller is the same full mechanism used by Story and Contact. */
+/* Projects uses the same full-size mechanism as Story and Contact. */
 [data-project-gear="true"] {
   display: flex !important;
   width: 100% !important;
@@ -35,12 +37,12 @@
   max-width: 590px !important;
 }
 
-/* Project choices stay compact so the selected card is visible in the first viewport. */
+/* Project choices stay compact so the selected card remains easy to reach. */
 [data-project-controls="true"] > div:last-child {
   scrollbar-gutter: stable;
 }
 
-/* Phones: roller, controls, then card. Clicking a project smoothly reveals the card. */
+/* Phones: roller, controls, then card. */
 @media (max-width: 639px) {
   [data-project-scene="true"] {
     padding-top: 6.75rem !important;
@@ -57,7 +59,7 @@
 
   [data-project-gear="true"] {
     order: -3;
-    max-width: min(500px, 92vw) !important;
+    max-width: min(590px, 92vw) !important;
     margin-inline: auto;
   }
 
@@ -77,10 +79,13 @@
   [data-project-card="true"] {
     order: -1;
     width: 100%;
+    max-height: none !important;
+    overflow: visible !important;
     scroll-margin-top: 6.5rem;
   }
 
-  [data-appsec-preview="true"] {
+  [data-appsec-preview="true"],
+  [data-project-image-preview="true"] {
     min-height: 175px;
   }
 
@@ -90,7 +95,7 @@
   }
 }
 
-/* Tablets: keep the roller first, compress choices into two columns, and keep the card nearby. */
+/* Tablets: keep the same roller scale as Story, then compact choices. */
 @media (min-width: 640px) and (max-width: 1023px) {
   [data-project-scene="true"] {
     padding-top: 7rem !important;
@@ -107,7 +112,7 @@
 
   [data-project-gear="true"] {
     order: -3;
-    max-width: min(540px, 80vw) !important;
+    max-width: 590px !important;
     margin-inline: auto;
   }
 
@@ -127,6 +132,8 @@
   [data-project-card="true"] {
     order: -1;
     width: 100%;
+    max-height: none !important;
+    overflow: visible !important;
     scroll-margin-top: 7rem;
   }
 
@@ -140,22 +147,22 @@
   }
 }
 
-/* Laptops and monitors: Story-style two-column composition. */
+/* Laptops and monitors: match the mechanism size used by Story/Contact and let the page scroll instead of clipping the selected project. */
 @media (min-width: 1024px) {
   [data-project-scene="true"] {
-    max-width: 1380px !important;
+    max-width: 1480px !important;
     padding-top: 7.25rem !important;
   }
 
   [data-project-scene="true"] > div.grid {
     display: grid !important;
     min-height: calc(100dvh - 7.75rem) !important;
-    grid-template-columns: minmax(430px, 560px) minmax(0, 1fr) !important;
+    grid-template-columns: minmax(500px, 525px) minmax(0, 1fr) !important;
     grid-template-rows: auto auto !important;
     align-items: start !important;
     align-content: start !important;
     justify-content: center !important;
-    column-gap: clamp(2rem, 3.4vw, 4rem) !important;
+    column-gap: clamp(1.5rem, 2.5vw, 3rem) !important;
     row-gap: 0.9rem !important;
   }
 
@@ -163,6 +170,11 @@
     grid-column: 1 !important;
     grid-row: 1 / span 2 !important;
     justify-self: center !important;
+    max-width: 525px !important;
+  }
+
+  [data-project-gear="true"] > div {
+    max-width: 525px !important;
   }
 
   [data-project-controls="true"] {
@@ -192,10 +204,16 @@
     align-self: start !important;
     width: 100% !important;
     max-width: 100% !important;
-    max-height: calc(100dvh - 23rem) !important;
+    max-height: none !important;
     min-height: 260px !important;
-    overflow-y: auto !important;
+    overflow: visible !important;
     scroll-margin-top: 7.5rem;
+  }
+
+  [data-appsec-preview="true"],
+  [data-project-image-preview="true"] {
+    min-height: 220px;
+    max-height: 360px;
   }
 
   /* Reserve a clean lane for the contact assistant instead of covering cards. */
@@ -210,19 +228,10 @@
   }
 }
 
-/* Large monitors can keep the roller at full size without squeezing the project card. */
 @media (min-width: 1600px) {
-  [data-project-scene="true"] {
-    max-width: 1480px !important;
-  }
-
   [data-project-scene="true"] > div.grid {
-    grid-template-columns: 590px minmax(0, 1fr) !important;
+    grid-template-columns: 525px minmax(0, 1fr) !important;
     column-gap: 4.5rem !important;
-  }
-
-  [data-project-card="true"] {
-    max-height: calc(100dvh - 21.5rem) !important;
   }
 
   [data-contact-content="true"] {
@@ -230,18 +239,10 @@
   }
 }
 
-/* Short laptop screens need tighter controls so the selected project is still immediately visible. */
+/* Short laptop screens keep the same mechanism scale as Story. Only the controls tighten vertically. */
 @media (min-width: 1024px) and (max-height: 800px) {
   [data-project-scene="true"] {
     padding-top: 6.5rem !important;
-  }
-
-  [data-project-gear="true"] {
-    max-width: 500px !important;
-  }
-
-  [data-project-gear="true"] > div {
-    max-width: 500px !important;
   }
 
   [data-project-controls="true"] h2 {
@@ -259,6 +260,7 @@
   }
 
   [data-project-card="true"] {
-    max-height: calc(100dvh - 18.5rem) !important;
+    max-height: none !important;
+    overflow: visible !important;
   }
 }
