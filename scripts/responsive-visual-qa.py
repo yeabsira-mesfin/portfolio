@@ -86,30 +86,36 @@ def no_horizontal_overflow(driver, label):
         )
 
 
-def contact_card_rect(driver, label_text):
-    return driver.execute_script(
-        """
-        const target = [...document.querySelectorAll('[data-contact-content] *')]
-          .find(el => el.textContent && el.textContent.trim() === arguments[0]);
-        if (!target) return null;
-        const card = target.closest('a, div[class*="rounded-2xl"]');
-        if (!card) return null;
-        const r = card.getBoundingClientRect();
-        return {left:r.left, top:r.top, right:r.right, bottom:r.bottom, width:r.width, height:r.height};
-        """,
-        label_text,
-    )
-
-
 def hint_rect(driver):
     return driver.execute_script(
         """
         const p = [...document.querySelectorAll('p')]
           .find(el => el.textContent && el.textContent.includes('Curious? Ask me anything.'));
-        if (!p) return null;
+        if (!p || p.offsetParent === null) return null;
         const bubble = p.parentElement;
         const r = bubble.getBoundingClientRect();
         return {left:r.left, top:r.top, right:r.right, bottom:r.bottom, width:r.width, height:r.height};
+        """
+    )
+
+
+def contact_card_rects(driver):
+    return driver.execute_script(
+        """
+        const root = document.querySelector('[data-contact-content]');
+        if (!root) return [];
+        const cards = [...root.querySelectorAll('a, div[class*="rounded-2xl"]')]
+          .filter(el => el.offsetParent !== null)
+          .filter(el => /Email|LinkedIn|GitHub|Based in/i.test(el.innerText || ''));
+        const unique = [];
+        for (const el of cards) {
+          if (unique.some(parent => parent.contains(el))) continue;
+          unique.push(el);
+        }
+        return unique.map(el => {
+          const r = el.getBoundingClientRect();
+          return {label:(el.innerText || '').trim().slice(0,80), left:r.left, top:r.top, right:r.right, bottom:r.bottom, width:r.width, height:r.height};
+        });
         """
     )
 
@@ -157,6 +163,12 @@ def project_robot_overlaps_content(driver):
     )
 
 
+def selected_card_text(driver):
+    return driver.execute_script(
+        "const el=document.querySelector('[data-project-card]'); return el ? el.innerText : '';"
+    )
+
+
 def run_viewport(width, height, name):
     options = Options()
     options.add_argument("--headless=new")
@@ -197,13 +209,12 @@ def run_viewport(width, height, name):
             EC.presence_of_element_located((By.XPATH, "//button[.//*[contains(text(),'Windows Infrastructure')]]"))
         )
         driver.execute_script("arguments[0].click();", windows_button)
-        time.sleep(1.15)
-        card = rect(driver, '[data-project-card]')
-        card_text = driver.execute_script(
-            "const el=document.querySelector('[data-project-card]'); return el ? el.innerText : '';"
+        WebDriverWait(driver, 7).until(
+            lambda d: "Windows Infrastructure" in selected_card_text(d)
         )
-        if "Windows Infrastructure" not in card_text:
-            raise AssertionError(f"{name}/projects: selected card did not update to Windows")
+        time.sleep(0.3)
+
+        card = rect(driver, '[data-project-card]')
         if not card or card["top"] >= height - 24 or card["bottom"] <= 90:
             raise AssertionError(f"{name}/projects: selected project is not visible after click: {card}")
         if project_robot_overlaps_content(driver):
@@ -219,14 +230,15 @@ def run_viewport(width, height, name):
         no_horizontal_overflow(driver, f"{name}/contact")
 
         assistant = rect(driver, 'button[aria-label="Open portfolio assistant"]')
-        based_in = contact_card_rect(driver, "Based in")
         hint = hint_rect(driver)
-        if assistant and based_in and overlap(assistant, based_in):
-            driver.save_screenshot(str(OUT / f"{name}-03-contact-overlap.png"))
-            raise AssertionError(f"{name}/contact: assistant overlaps Based in card: assistant={assistant}, card={based_in}")
-        if hint and based_in and overlap(hint, based_in):
-            driver.save_screenshot(str(OUT / f"{name}-03-contact-overlap.png"))
-            raise AssertionError(f"{name}/contact: hint overlaps Based in card: hint={hint}, card={based_in}")
+        contact_cards = contact_card_rects(driver)
+        for card_rect in contact_cards:
+            if assistant and overlap(assistant, card_rect):
+                driver.save_screenshot(str(OUT / f"{name}-03-contact-overlap.png"))
+                raise AssertionError(f"{name}/contact: assistant overlaps contact card: assistant={assistant}, card={card_rect}")
+            if hint and overlap(hint, card_rect):
+                driver.save_screenshot(str(OUT / f"{name}-03-contact-overlap.png"))
+                raise AssertionError(f"{name}/contact: hint overlaps contact card: hint={hint}, card={card_rect}")
 
         driver.save_screenshot(str(OUT / f"{name}-03-contact.png"))
         print(f"PASS {name} {width}x{height}")
