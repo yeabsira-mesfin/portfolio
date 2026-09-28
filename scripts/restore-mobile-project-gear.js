@@ -30,23 +30,26 @@ const legacyLowerMobileGear = `
 
 `;
 
-// Remove the older second mobile roller if it exists from a previous build transform.
+// Normalize the Projects scene before inserting the one allowed mobile roller.
+// This makes repeated local or CI builds safe instead of accumulating copies.
 source = source.replaceAll(legacyLowerMobileGear, "");
+source = source.replaceAll(topMobileGear, sceneMarker);
 
-// Keep exactly one mobile/tablet roller, at the top of the Projects scene.
-if (!source.includes('data-project-gear-mobile-top="true"')) {
-  if (!source.includes(sceneMarker)) {
-    throw new Error("Could not locate the project scene layout");
-  }
-  source = source.replace(sceneMarker, topMobileGear);
+if (!source.includes(sceneMarker)) {
+  throw new Error("Could not locate the project scene layout");
 }
+
+source = source.replace(sceneMarker, topMobileGear);
 
 const topCount = (source.match(/data-project-gear-mobile-top="true"/g) || []).length;
 const lowerCount = (source.match(/data-project-gear-mobile="true"/g) || []).length;
+const desktopCount = (source.match(/data-project-gear="true"/g) || []).length;
 
-if (topCount !== 1 || lowerCount !== 0) {
-  throw new Error(`Project roller QA failed: expected 1 top mobile roller and 0 lower rollers, found ${topCount} top and ${lowerCount} lower`);
+if (topCount !== 1 || lowerCount !== 0 || desktopCount !== 1) {
+  throw new Error(
+    `Project roller QA failed: expected 1 top mobile roller, 0 lower mobile rollers, and 1 desktop roller; found ${topCount}, ${lowerCount}, ${desktopCount}`,
+  );
 }
 
 fs.writeFileSync(filePath, source);
-console.log("Project roller QA passed: one mobile/tablet roller at the top, no duplicate lower roller");
+console.log("Project roller QA passed: exactly one top mobile/tablet roller and one desktop roller");
