@@ -54,10 +54,7 @@ svg[viewBox="0 0 600 600"] g > rect:nth-of-type(30) { animation-delay: -5.8s; }
 svg[viewBox="0 0 600 600"] g > rect:nth-of-type(31) { animation-delay: -6s; }
 svg[viewBox="0 0 600 600"] g > rect:nth-of-type(32) { animation-delay: -6.2s; }
 
-/* Replace the older contact-only assistant UI with the richer global assistant. */
-section[aria-label="Chat with Yeabsira's portfolio assistant"],
-button[aria-label="Open portfolio assistant"],
-button[aria-label="Minimize portfolio assistant"] { display: none !important; }
+/* PortfolioAssistant is intentionally visible only when the Contact scene mounts it. */
 
 @media (prefers-reduced-motion: reduce) {
   svg[viewBox="0 0 600 600"], svg[viewBox="0 0 600 600"] g > rect { animation: none !important; }
