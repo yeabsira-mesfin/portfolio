@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Windows Infrastructure Reliability Console Preview</title>
+  <style>
+    *{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#05101a;color:#eef7ff;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased;text-rendering:geometricPrecision}
+    body{background:radial-gradient(circle at 15% 10%,rgba(43,113,180,.24),transparent 34%),radial-gradient(circle at 82% 84%,rgba(38,160,124,.11),transparent 34%),linear-gradient(145deg,#102945 0%,#071521 43%,#03100d 100%)}
+    .stage{height:100%;padding:3.7%;display:flex;align-items:center;justify-content:center}
+    .window{width:100%;height:100%;min-height:0;border:1px solid #314963;border-radius:18px;overflow:hidden;background:#08111e;box-shadow:0 24px 70px rgba(0,0,0,.42)}
+    .titlebar{height:8%;min-height:38px;display:flex;align-items:center;padding:0 2%;gap:10px;background:#17273c;border-bottom:1px solid #263b55}
+    .winicon{width:22px;height:22px;border-radius:6px;background:#4f9dff;display:grid;grid-template-columns:1fr 1fr;gap:3px;padding:5px;flex:0 0 auto}.winicon i{display:block;background:#fff}
+    .title strong{display:block;font-size:clamp(9px,1.15vw,14px);line-height:1.1}.title span{display:block;margin-top:2px;color:#8298b0;font-size:clamp(6px,.75vw,9px)}
+    .shell{display:grid;grid-template-columns:18% 1fr;height:92%;min-height:0}
+    .side{padding:3.5% 8%;background:#091421;border-right:1px solid #263b55;min-width:0}.env{padding:10px;border:1px solid #24547f;border-radius:10px;background:#0e2237}.envline{display:flex;align-items:center;gap:7px}.dot{width:7px;height:7px;border-radius:50%;background:#45d483;box-shadow:0 0 12px rgba(69,212,131,.55);flex:0 0 auto}.env strong{font-size:clamp(7px,.8vw,10px)}.env small{display:block;margin:4px 0 0 14px;color:#8097b1;font-size:clamp(6px,.65vw,8px)}
+    .nav{margin-top:12px;display:grid;gap:7px}.nav div{padding:9px 10px;border-radius:8px;color:#869db7;font-size:clamp(7px,.8vw,10px)}.nav .active{background:#112943;color:#fff;font-weight:700}.nav .active:before{content:"";display:inline-block;width:7px;height:7px;margin-right:8px;border-radius:2px;background:#54a8ff}
+    .main{padding:3% 3.2% 3%;overflow:hidden;min-width:0}.topline{display:flex;justify-content:space-between;align-items:start;gap:12px}.eyebrow{color:#69b4ff;font-size:clamp(6px,.7vw,8px);font-weight:800;letter-spacing:.14em}.main h1{margin:4px 0 0;font-size:clamp(17px,2.4vw,28px);line-height:1.05}.sub{margin-top:5px;color:#8fa6bf;font-size:clamp(7px,.9vw,10px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.status{display:flex;align-items:center;gap:7px;padding:7px 11px;border:1px solid #2d8054;border-radius:999px;background:#0d2e23;color:#8cebae;font-size:clamp(7px,.8vw,9px);font-weight:700;white-space:nowrap}.status i{width:6px;height:6px;border-radius:50%;background:#45d483;box-shadow:0 0 10px rgba(69,212,131,.7)}
+    .metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1.5%;margin-top:2.3%}.metric{padding:7.5% 8%;border:1px solid #293f58;border-radius:11px;background:linear-gradient(#142842,#0b1829);min-width:0}.metric label{display:block;color:#8fa6bf;font-size:clamp(6px,.75vw,9px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.metric b{display:block;margin-top:5px;font-size:clamp(13px,2vw,23px);line-height:1.05;white-space:nowrap}.metric small{display:block;margin-top:5px;color:#72d99b;font-size:clamp(5px,.62vw,8px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .lower{display:grid;grid-template-columns:minmax(0,2.1fr) minmax(145px,1fr);gap:1.6%;height:48%;margin-top:2.2%}.panel{height:100%;padding:2.5% 3%;border:1px solid #293f58;border-radius:12px;background:linear-gradient(#142842,#0b1829);overflow:hidden}.panel .kicker{color:#69b4ff;font-size:clamp(5px,.63vw,8px);font-weight:800;letter-spacing:.13em}.panel h2{margin:4px 0 7px;font-size:clamp(11px,1.4vw,16px)}
+    .nodes{display:grid}.node{display:grid;grid-template-columns:1.3fr .75fr .55fr;align-items:center;gap:10px;padding:6px 0;border-top:1px solid #21364c;min-width:0}.identity{display:flex;align-items:center;gap:8px;min-width:0}.identity i{width:6px;height:6px;border-radius:50%;background:#45d483;flex:0 0 auto}.identity span{min-width:0}.identity b{display:block;font-size:clamp(7px,.82vw,10px);white-space:nowrap}.identity small{display:block;color:#8096ae;font-size:clamp(5px,.65vw,8px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.zone{color:#b8c9da;font-size:clamp(6px,.73vw,9px);white-space:nowrap}.healthy{justify-self:end;padding:4px 8px;border:1px solid #286f4c;border-radius:999px;background:#0e2b22;color:#8cebae;font-size:clamp(5px,.65vw,8px);font-weight:700;white-space:nowrap}
+    .event{display:grid;grid-template-columns:7px 1fr;gap:8px;padding:8px 0;border-top:1px solid #21364c}.event:first-of-type{border-top:0}.event i{width:6px;height:6px;margin-top:4px;border-radius:50%;background:#45d483}.event.blue i{background:#54a8ff}.event b{display:block;color:#d8e5f2;font-size:clamp(6px,.7vw,9px);line-height:1.25}.event small{display:block;margin-top:3px;color:#6f859e;font-size:clamp(5px,.6vw,8px)}
+    @media(max-width:560px){.stage{padding:2.8%}.shell{grid-template-columns:22% 1fr}.metrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:5px}.metric{padding:7px}.lower{grid-template-columns:1fr;height:auto}.events{display:none}.main{padding:2.5%}.panel{padding:8px}.node{padding:4px 0}.status{padding:5px 8px}.sub{display:none}.side{padding:8px}.env{padding:7px}.nav{gap:3px;margin-top:7px}.nav div{padding:5px 6px}.main h1{font-size:15px}}
+  </style>
+</head>
+<body>
+  <main class="stage" aria-label="Windows Infrastructure Reliability Console preview">
+    <section class="window">
+      <header class="titlebar">
+        <span class="winicon" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        <div class="title"><strong>Infrastructure Reliability Console</strong><span>Windows Operations Lab</span></div>
+      </header>
+      <div class="shell">
+        <aside class="side">
+          <div class="env"><div class="envline"><span class="dot"></span><strong>Lab environment</strong></div><small>Simulation mode</small></div>
+          <div class="nav"><div class="active">Overview</div><div>Network</div><div>Backup</div><div>Events</div></div>
+        </aside>
+        <section class="main">
+          <div class="topline">
+            <div><div class="eyebrow">ENTERPRISE INFRASTRUCTURE PRACTICE LAB</div><h1>Overview</h1><div class="sub">Service health, network paths, backup integrity and safe recovery workflows.</div></div>
+            <div class="status"><i></i>Operational</div>
+          </div>
+          <div class="metrics">
+            <div class="metric"><label>Availability</label><b>100.0%</b><small>4 of 4 nodes healthy</small></div>
+            <div class="metric"><label>Average latency</label><b>21 ms</b><small>Healthy service paths</small></div>
+            <div class="metric"><label>Backup integrity</label><b>Verified</b><small>SHA-256 verification</small></div>
+            <div class="metric"><label>Last health scan</label><b>All clear</b><small>PowerShell workflow</small></div>
+          </div>
+          <div class="lower">
+            <section class="panel"><div class="kicker">INFRASTRUCTURE</div><h2>Service nodes</h2><div class="nodes">
+              <div class="node"><div class="identity"><i></i><span><b>WEB-01</b><small>Web Gateway</small></span></div><span class="zone">Zone A</span><span class="healthy">Healthy</span></div>
+              <div class="node"><div class="identity"><i></i><span><b>WEB-02</b><small>Web Gateway</small></span></div><span class="zone">Zone B</span><span class="healthy">Healthy</span></div>
+              <div class="node"><div class="identity"><i></i><span><b>APP-01</b><small>Application Service</small></span></div><span class="zone">Zone A</span><span class="healthy">Healthy</span></div>
+              <div class="node"><div class="identity"><i></i><span><b>DB-01</b><small>Data Service</small></span></div><span class="zone">Zone B</span><span class="healthy">Healthy</span></div>
+            </div></section>
+            <section class="panel events"><div class="kicker">OPERATIONS</div><h2>Recent events</h2><div class="event"><i></i><div><b>Backup integrity check passed.</b><small>09:41:15</small></div></div><div class="event blue"><i></i><div><b>Four infrastructure nodes loaded.</b><small>09:41:12</small></div></div></section>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
