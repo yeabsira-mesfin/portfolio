@@ -22,7 +22,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "prebuild": "node scripts/build-appsec-preview.js && node scripts/enable-crisp-appsec-preview.js && node scripts/restore-mobile-project-gear.js",
+    "prebuild": "node scripts/build-appsec-preview.js && node scripts/enable-crisp-appsec-preview.js && node scripts/enable-crisp-windows-preview.js && node scripts/restore-mobile-project-gear.js",
     "build": "react-scripts build",
     "postbuild": "node scripts/qa-build.js",
     "test": "react-scripts test",
