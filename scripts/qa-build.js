@@ -58,7 +58,8 @@ if (!/scene\s*===\s*3\s*&&\s*<PortfolioAssistant\s*\/>/.test(source)) throw new 
 if (!appSource.includes("HomeExplorerRobot")) throw new Error("Build QA failed: journey robot is not mounted");
 if (appSource.includes("EnhancedPortfolioAssistant")) throw new Error("Build QA failed: duplicate global chatbot is mounted");
 if (!/scene\s*===\s*["']contact["']/.test(robotSource) || !robotSource.includes("return null")) throw new Error("Build QA failed: journey robot must hide itself on Contact");
-if (!css.includes('body:has([data-contact-content="true"]) [data-journey-robot="true"]')) throw new Error("Build QA failed: Contact does not have a hard CSS block against the journey robot");
+const contactRobotBlock = /body:has\(\[data-contact-content(?:=(?:"true"|true))?\]\)\s*\[data-journey-robot(?:=(?:"true"|true))?\]/;
+if (!contactRobotBlock.test(css)) throw new Error("Build QA failed: Contact does not have a hard CSS block against the journey robot");
 if (!css.includes('button[aria-label="Open portfolio assistant"]')) throw new Error("Build QA failed: Contact chatbot launcher styling is missing");
 
 for (const requiredCss of ["data-project-gear", "data-project-controls", "data-project-card", "data-appsec-preview", "data-project-image-preview", "data-contact-content", "data-journey-robot"]) {
