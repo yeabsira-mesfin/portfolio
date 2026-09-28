@@ -1,4 +1,5 @@
 import './App.css';
+import './portfolio-polish.css';
 import CinematicPortfolio from './Components/CinematicPortfolio';
 import HomeExplorerRobot from './Components/HomeExplorerRobot';
 
