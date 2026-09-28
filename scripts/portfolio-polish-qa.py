@@ -34,6 +34,32 @@ def click_nav(driver, label):
         raise AssertionError(f"navigation button not found: {label}")
 
 
+def click_home(driver):
+    ok = driver.execute_script(
+        """
+        const button = document.querySelector('header > div > button');
+        if (!button) return false;
+        button.click();
+        return true;
+        """
+    )
+    if not ok:
+        raise AssertionError("home/YM button not found")
+
+
+def wait_home(driver):
+    WebDriverWait(driver, 10).until(
+        lambda d: d.execute_script(
+            """
+            const h1 = document.querySelector('h1');
+            const robot = document.querySelector('button[data-journey-robot="true"]');
+            return !!h1 && h1.textContent.replace(/\s+/g, '').includes('YeabsiraMesfin') && !!robot && robot.offsetParent !== null;
+            """
+        )
+    )
+    time.sleep(0.45)
+
+
 def wait_scene(driver, label):
     selectors = {
         "story": "[data-story-content]",
@@ -76,6 +102,18 @@ def gear_rect(driver, root_selector=None):
     )
 
 
+def gear_animation(driver):
+    return driver.execute_script(
+        """
+        const svg = [...document.querySelectorAll('svg')]
+          .find(el => el.getAttribute('viewBox') === '0 0 600 600' && el.offsetParent !== null);
+        if (!svg) return null;
+        const s = getComputedStyle(svg);
+        return {name:s.animationName, duration:s.animationDuration};
+        """
+    )
+
+
 def robot_rect(driver):
     return driver.execute_script(
         """
@@ -83,6 +121,17 @@ def robot_rect(driver):
         if (!el || el.offsetParent === null) return null;
         const r = el.getBoundingClientRect();
         return {width:r.width, height:r.height};
+        """
+    )
+
+
+def robot_button_rect(driver):
+    return driver.execute_script(
+        """
+        const el = document.querySelector('button[data-journey-robot="true"]');
+        if (!el || el.offsetParent === null) return null;
+        const r = el.getBoundingClientRect();
+        return {left:r.left, right:r.right, top:r.top, bottom:r.bottom, width:r.width, height:r.height};
         """
     )
 
@@ -117,6 +166,26 @@ def assert_bzzz_after_ten_seconds(driver):
     )
     if "Bzzz" not in text:
         raise AssertionError(f"Bzzz did not appear at about ten seconds, text={text!r}")
+
+
+def assert_story_experience(driver, viewport_name):
+    WebDriverWait(driver, 6).until(
+        lambda d: d.execute_script("return !!document.querySelector('[data-story-experience=\"true\"]');")
+    )
+    content = driver.execute_script(
+        "return document.querySelector('[data-story-experience=\"true\"]')?.innerText || '';"
+    )
+    for required in ["Experience / trajectory", "200+ enterprise event builds", "MMCY", "George Washington University"]:
+        if required not in content:
+            raise AssertionError(f"{viewport_name}: Story experience missing {required!r}")
+
+
+def assert_home_robot_right(driver, viewport_name, viewport_width):
+    rect = robot_button_rect(driver)
+    if not rect:
+        raise AssertionError(f"{viewport_name}: Home journey robot missing after returning from another scene")
+    if rect["left"] < viewport_width * 0.5:
+        raise AssertionError(f"{viewport_name}: Home robot stayed on the left after return: {rect}")
 
 
 def assert_projects(driver, viewport_name, viewport_width):
@@ -221,6 +290,10 @@ def run_viewport(width, height, name):
         story_robot = robot_rect(driver)
         story_gear = gear_rect(driver)
         assert_same_robot(intro_robot, story_robot, f"{name}: Intro/Story")
+        assert_story_experience(driver, name)
+        animation = gear_animation(driver)
+        if not animation or "ym-ambient-gear-turn" not in animation["name"]:
+            raise AssertionError(f"{name}: slow ambient gear animation missing: {animation}")
 
         click_nav(driver, "projects")
         wait_scene(driver, "projects")
@@ -230,6 +303,16 @@ def run_viewport(width, height, name):
         assert_same_gear(story_gear, project_gear, f"{name}: Story/Projects")
         assert_projects(driver, name, width)
         driver.save_screenshot(str(OUT / f"{name}-04-polish-qa.png"))
+
+        # Regression: after coming back from another page, Home must dock the robot
+        # on the right again instead of retaining the desktop left-side placement.
+        click_home(driver)
+        wait_home(driver)
+        assert_home_robot_right(driver, name, width)
+
+        click_nav(driver, "projects")
+        wait_scene(driver, "projects")
+        project_gear = gear_rect(driver, "[data-project-gear]")
 
         click_nav(driver, "contact")
         wait_scene(driver, "contact")
@@ -251,4 +334,4 @@ for width, height, name in VIEWPORTS:
 if failures:
     raise SystemExit("Portfolio polish QA failed:\n" + "\n".join(failures))
 
-print("Portfolio polish QA passed: roller and robot size consistency, ten-second Bzzz timing, uncropped project previews, and both added GitHub projects verified across phone, tablet, laptop, and monitor.")
+print("Portfolio polish QA passed: Home robot return position, animated Story experience, slow ambient roller, roller and robot consistency, ten-second Bzzz timing, uncropped project previews, and featured GitHub projects verified across phone, tablet, laptop, and monitor.")
