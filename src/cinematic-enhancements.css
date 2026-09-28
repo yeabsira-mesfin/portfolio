@@ -1,0 +1,80 @@
+/* Targeted cinematic polish only. Keep the existing layout and scene styling intact. */
+
+/* The metal roller turns very slowly while the visitor is reading. The parent
+   Framer Motion layer still handles the slightly quicker turn between scenes. */
+svg[viewBox="0 0 600 600"] {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: ym-ambient-gear-turn 108s linear infinite;
+  filter: drop-shadow(0 0 7px rgba(88, 230, 209, 0.12));
+}
+
+@keyframes ym-ambient-gear-turn {
+  to { transform: rotate(360deg); }
+}
+
+/* A restrained travelling highlight moves over the existing metal teeth without
+   replacing their gradients, shadows, bolts, dashed rings, or portrait treatment. */
+svg[viewBox="0 0 600 600"] g[filter="url(#gearShadow)"] > rect {
+  animation: ym-tooth-signal 8s ease-in-out infinite;
+}
+
+@keyframes ym-tooth-signal {
+  0%, 78%, 100% { stroke-opacity: 0.18; stroke-width: 1.4px; }
+  7%, 15% { stroke-opacity: 0.78; stroke-width: 2px; }
+  26% { stroke-opacity: 0.28; stroke-width: 1.5px; }
+}
+
+svg[viewBox="0 0 600 600"] g[filter="url(#gearShadow)"] > rect:nth-child(1) { animation-delay: 0s; }
+svg[viewBox="0 0 600 600"] g[filter="url(#gearShadow)"] > rect:nth-child(2) { animation-delay: -0.25s; }
+svg[viewBox="0 0 600 600"] g[filter="url(#gearShadow)"] > rect:nth-child(3) { animation-delay: -0.5s; }
+svg[viewBox="0 0 600 600"] g[filter="url(#gearShadow)"] > rect:nth-child(4) { animation-delay: -0.75s; }
+svg[viewBox="0 0 600 600"] g[filter="url(#gearShadow)"] > rect:nth-child(5) { animation-delay: -1s; }
+svg[viewBox="0 0 600 600"] g[filter="url(#gearShadow)"] > rect:nth-child(6) { animation-delay: -1.25s; }
+svg[viewBox="0 0 600 600"] g[filter="url(#gearShadow)"] > rect:nth-child(7) { animation-delay: -1.5s; }
+svg[viewBox="0 0 600 600"] g[filter="url(#gearShadow)"] > rect:nth-child(8) { animation-delay: -1.75s; }
+svg[viewBox="0 0 600 600"] g[filter="url(#gearShadow)"] > rect:nth-child(9) { animation-delay: -2s; }
+svg[viewBox="0 0 600 600"] g[filter="url(#gearShadow)"] > rect:nth-child(10) { animation-delay: -2.25s; }
+svg[viewBox="0 0 600 600"] g[filter="url(#gearShadow)"] > rect:nth-child(11) { animation-delay: -2.5s; }
+svg[viewBox="0 0 600 600"] g[filter="url(#gearShadow)"] > rect:nth-child(12) { animation-delay: -2.75s; }
+svg[viewBox="0 0 600 600"] g[filter="url(#gearShadow)"] > rect:nth-child(13) { animation-delay: -3s; }
+svg[viewBox="0 0 600 600"] g[filter="url(#gearShadow)"] > rect:nth-child(14) { animation-delay: -3.25s; }
+svg[viewBox="0 0 600 600"] g[filter="url(#gearShadow)"] > rect:nth-child(15) { animation-delay: -3.5s; }
+svg[viewBox="0 0 600 600"] g[filter="url(#gearShadow)"] > rect:nth-child(16) { animation-delay: -3.75s; }
+svg[viewBox="0 0 600 600"] g[filter="url(#gearShadow)"] > rect:nth-child(17) { animation-delay: -4s; }
+svg[viewBox="0 0 600 600"] g[filter="url(#gearShadow)"] > rect:nth-child(18) { animation-delay: -4.25s; }
+svg[viewBox="0 0 600 600"] g[filter="url(#gearShadow)"] > rect:nth-child(19) { animation-delay: -4.5s; }
+svg[viewBox="0 0 600 600"] g[filter="url(#gearShadow)"] > rect:nth-child(20) { animation-delay: -4.75s; }
+svg[viewBox="0 0 600 600"] g[filter="url(#gearShadow)"] > rect:nth-child(21) { animation-delay: -5s; }
+svg[viewBox="0 0 600 600"] g[filter="url(#gearShadow)"] > rect:nth-child(22) { animation-delay: -5.25s; }
+svg[viewBox="0 0 600 600"] g[filter="url(#gearShadow)"] > rect:nth-child(23) { animation-delay: -5.5s; }
+svg[viewBox="0 0 600 600"] g[filter="url(#gearShadow)"] > rect:nth-child(24) { animation-delay: -5.75s; }
+svg[viewBox="0 0 600 600"] g[filter="url(#gearShadow)"] > rect:nth-child(25) { animation-delay: -6s; }
+svg[viewBox="0 0 600 600"] g[filter="url(#gearShadow)"] > rect:nth-child(26) { animation-delay: -6.25s; }
+svg[viewBox="0 0 600 600"] g[filter="url(#gearShadow)"] > rect:nth-child(27) { animation-delay: -6.5s; }
+svg[viewBox="0 0 600 600"] g[filter="url(#gearShadow)"] > rect:nth-child(28) { animation-delay: -6.75s; }
+svg[viewBox="0 0 600 600"] g[filter="url(#gearShadow)"] > rect:nth-child(29) { animation-delay: -7s; }
+svg[viewBox="0 0 600 600"] g[filter="url(#gearShadow)"] > rect:nth-child(30) { animation-delay: -7.25s; }
+svg[viewBox="0 0 600 600"] g[filter="url(#gearShadow)"] > rect:nth-child(31) { animation-delay: -7.5s; }
+svg[viewBox="0 0 600 600"] g[filter="url(#gearShadow)"] > rect:nth-child(32) { animation-delay: -7.75s; }
+
+/* Returning to Home must always restore the journey robot to its original
+   bottom-right dock instead of inheriting Story/Projects desktop docking. */
+button[data-journey-robot="true"][aria-label^="Explore more"] {
+  left: auto !important;
+  right: max(8px, env(safe-area-inset-right)) !important;
+  transform-origin: bottom right !important;
+}
+
+@media (min-width: 640px) {
+  button[data-journey-robot="true"][aria-label^="Explore more"] {
+    right: max(20px, env(safe-area-inset-right)) !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  svg[viewBox="0 0 600 600"],
+  svg[viewBox="0 0 600 600"] g[filter="url(#gearShadow)"] > rect {
+    animation: none !important;
+  }
+}
