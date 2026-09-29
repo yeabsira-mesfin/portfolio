@@ -42,17 +42,31 @@ def test_mobile_hint():
         driver.get(f"{BASE_URL}/#story")
         WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, '[data-story-content="true"]')))
         WebDriverWait(driver, 10).until(lambda d: hint_visible(d))
-        time.sleep(1.9)
+        time.sleep(2.1)
 
-        driver.execute_script("window.scrollTo(0, Math.min(document.body.scrollHeight - window.innerHeight, 520));")
-        time.sleep(0.8)
-        if hint_visible(driver):
-            raise AssertionError("mobile assistant hint did not smoothly hide after scrolling down")
+        moved_to = driver.execute_script(
+            """
+            const maxY = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+            const target = Math.min(maxY, 520);
+            window.scrollTo(0, target);
+            window.dispatchEvent(new Event('scroll'));
+            return window.scrollY;
+            """
+        )
+        if moved_to < 20:
+            raise AssertionError(f"Story page did not provide enough vertical scroll for hint QA: scrollY={moved_to}")
+        WebDriverWait(driver, 4).until(lambda d: not hint_visible(d))
 
-        driver.execute_script("window.scrollBy(0, -220);")
-        time.sleep(0.8)
-        if not hint_visible(driver):
-            raise AssertionError("mobile assistant hint did not return after scrolling up")
+        moved_up_to = driver.execute_script(
+            """
+            window.scrollBy(0, -220);
+            window.dispatchEvent(new Event('scroll'));
+            return window.scrollY;
+            """
+        )
+        if moved_up_to >= moved_to:
+            raise AssertionError(f"Scroll-up action did not move upward: before={moved_to}, after={moved_up_to}")
+        WebDriverWait(driver, 4).until(lambda d: hint_visible(d))
 
         driver.save_screenshot(str(OUT / "polish-phone-hint-scroll.png"))
     finally:
