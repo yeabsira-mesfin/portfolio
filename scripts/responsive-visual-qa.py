@@ -8,7 +8,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-BASE_URL = os.environ.get("PORTFOLIO_QA_URL", "http://127.0.0.1:4173")
+BASE_URL = os.environ.get("PORTFOLIO_QA_URL", "http://127.0.0.1:4173").rstrip("/")
 OUT = Path(os.environ.get("PORTFOLIO_QA_OUT", "qa-screenshots"))
 OUT.mkdir(parents=True, exist_ok=True)
 
@@ -18,14 +18,49 @@ VIEWPORTS = [
     (1366, 768, "laptop"),
     (1920, 1080, "monitor"),
 ]
+SCENES = ["intro", "story", "projects", "contact"]
 
 
-def overlap(a, b):
-    return not (
-        a["right"] <= b["left"]
-        or a["left"] >= b["right"]
-        or a["bottom"] <= b["top"]
-        or a["top"] >= b["bottom"]
+def no_horizontal_overflow(driver, label):
+    values = driver.execute_script("return {w: document.documentElement.scrollWidth, vw: window.innerWidth};")
+    if values["w"] > values["vw"] + 3:
+        raise AssertionError(f"{label}: horizontal overflow detected ({values['w']} > {values['vw']})")
+
+
+def visible(driver, selector):
+    return driver.execute_script(
+        """
+        const el = document.querySelector(arguments[0]);
+        if (!el || el.offsetParent === null) return false;
+        const r = el.getBoundingClientRect();
+        return r.width > 0 && r.height > 0;
+        """,
+        selector,
+    )
+
+
+def open_scene(driver, scene):
+    suffix = "" if scene == "intro" else f"#{scene}"
+    driver.get(f"{BASE_URL}/{suffix}")
+    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.TAG_NAME, "header")))
+
+    selectors = {
+        "intro": "h1",
+        "story": '[data-story-content="true"]',
+        "projects": '[data-project-scene="true"]',
+        "contact": '[data-contact-content="true"]',
+    }
+    WebDriverWait(driver, 10).until(lambda d: visible(d, selectors[scene]))
+    time.sleep(0.35)
+
+
+def active_nav_label(driver):
+    return driver.execute_script(
+        """
+        const active = [...document.querySelectorAll('header nav button')]
+          .find(el => el.getAttribute('aria-current') === 'page');
+        return active ? active.textContent.trim().toLowerCase() : null;
+        """
     )
 
 
@@ -33,7 +68,7 @@ def rect(driver, selector):
     return driver.execute_script(
         """
         const el = document.querySelector(arguments[0]);
-        if (!el) return null;
+        if (!el || el.offsetParent === null) return null;
         const r = el.getBoundingClientRect();
         return {left:r.left, top:r.top, right:r.right, bottom:r.bottom, width:r.width, height:r.height};
         """,
@@ -41,160 +76,128 @@ def rect(driver, selector):
     )
 
 
-def click_nav(driver, label):
-    result = driver.execute_script(
+def overlap(a, b):
+    if not a or not b:
+        return False
+    return not (a["right"] <= b["left"] or a["left"] >= b["right"] or a["bottom"] <= b["top"] or a["top"] >= b["bottom"])
+
+
+def assistant_overlaps_interactive(driver):
+    return driver.execute_script(
         """
-        const wanted = arguments[0].toLowerCase();
-        const button = [...document.querySelectorAll('header nav button')]
-          .find(el => el.textContent.trim().toLowerCase() === wanted);
-        if (!button) return false;
-        button.click();
-        return true;
-        """,
-        label,
+        const launcher = document.querySelector('[data-portfolio-assistant-launcher="true"]');
+        if (!launcher || launcher.offsetParent === null) return null;
+        const lr = launcher.getBoundingClientRect();
+        const controls = [...document.querySelectorAll('main a, main button')]
+          .filter(el => el.offsetParent !== null)
+          .filter(el => {
+            const r = el.getBoundingClientRect();
+            return r.bottom > 0 && r.top < window.innerHeight;
+          });
+        const hit = controls.find(el => {
+          const r = el.getBoundingClientRect();
+          return !(lr.right <= r.left || lr.left >= r.right || lr.bottom <= r.top || lr.top >= r.bottom);
+        });
+        if (!hit) return null;
+        const r = hit.getBoundingClientRect();
+        return {text:(hit.innerText || hit.getAttribute('aria-label') || '').trim().slice(0,80), rect:{left:r.left,top:r.top,right:r.right,bottom:r.bottom}, launcher:{left:lr.left,top:lr.top,right:lr.right,bottom:lr.bottom}};
+        """
     )
-    if not result:
-        raise AssertionError(f"navigation button not found: {label}")
 
 
-def wait_for_scene(driver, scene):
-    selectors = {
-        "story": "h2",
-        "projects": "[data-project-scene]",
-        "contact": "[data-contact-content]",
-    }
-    selector = selectors[scene]
-
-    def rendered(d):
-        if scene == "story":
-            return d.execute_script(
-                "return [...document.querySelectorAll('h2')].some(el => el.textContent.includes('The person'));"
-            )
-        return d.execute_script("return !!document.querySelector(arguments[0]);", selector)
-
-    WebDriverWait(driver, 7).until(rendered)
-    time.sleep(0.3)
-
-
-def no_horizontal_overflow(driver, label):
-    values = driver.execute_script(
-        "return {w: document.documentElement.scrollWidth, vw: window.innerWidth};"
-    )
-    if values["w"] > values["vw"] + 3:
-        raise AssertionError(
-            f"{label}: horizontal overflow detected ({values['w']} > {values['vw']})"
+def check_intro(driver, width):
+    if not visible(driver, "h1"):
+        raise AssertionError("intro heading is not visible")
+    if not visible(driver, 'a[href="/resume.html"]'):
+        raise AssertionError("intro resume link is missing")
+    if width <= 639:
+        state = driver.execute_script(
+            """
+            const content = document.querySelector('[data-intro-content="true"]');
+            const gear = document.querySelector('svg[viewBox="0 0 600 600"]')?.closest('div.relative');
+            if (!content || !gear) return null;
+            const c = content.getBoundingClientRect();
+            const g = gear.getBoundingClientRect();
+            return {contentTop:c.top, gearTop:g.top};
+            """
         )
+        if state and state["gearTop"] < state["contentTop"]:
+            raise AssertionError(f"mobile intro should lead with recruiter copy before the gear: {state}")
 
 
-def hint_rect(driver):
-    return driver.execute_script(
+def check_story(driver, width):
+    content = driver.execute_script(
         """
-        const p = [...document.querySelectorAll('p')]
-          .find(el => el.textContent && el.textContent.includes('Curious? Ask me anything.'));
-        if (!p || p.offsetParent === null) return null;
-        const bubble = p.parentElement;
-        const r = bubble.getBoundingClientRect();
-        return {left:r.left, top:r.top, right:r.right, bottom:r.bottom, width:r.width, height:r.height};
-        """
-    )
-
-
-def contact_card_rects(driver):
-    return driver.execute_script(
-        """
-        const root = document.querySelector('[data-contact-content]');
-        if (!root) return [];
-        const cards = [...root.querySelectorAll('a, div[class*="rounded-2xl"]')]
-          .filter(el => el.offsetParent !== null)
-          .filter(el => /Email|LinkedIn|GitHub|Based in/i.test(el.innerText || ''));
-        const unique = [];
-        for (const el of cards) {
-          if (unique.some(parent => parent.contains(el))) continue;
-          unique.push(el);
-        }
-        return unique.map(el => {
-          const r = el.getBoundingClientRect();
-          return {label:(el.innerText || '').trim().slice(0,80), left:r.left, top:r.top, right:r.right, bottom:r.bottom, width:r.width, height:r.height};
-        });
+        const el = document.querySelector('[data-story-content="true"]');
+        if (!el) return null;
+        const r = el.getBoundingClientRect();
+        const style = getComputedStyle(el);
+        return {width:r.width, overflowY:style.overflowY, clientHeight:el.clientHeight, scrollHeight:el.scrollHeight};
         """
     )
+    if not content:
+        raise AssertionError("story content marker missing")
+    if content["overflowY"] in ("auto", "scroll"):
+        raise AssertionError(f"story still has nested vertical scrolling: {content}")
+    if width <= 639 and content["width"] < width * 0.78:
+        raise AssertionError(f"mobile story content is too narrow: {content['width']}px at {width}px viewport")
+    if not driver.find_elements(By.XPATH, "//*[contains(text(),'Software engineer with systems instincts')]"):
+        raise AssertionError("story card content missing")
 
 
-def scene_state(driver):
-    return driver.execute_script(
+def check_projects(driver):
+    if not visible(driver, '[data-project-controls="true"]'):
+        raise AssertionError("project controls missing")
+    if not visible(driver, '[data-project-gear="true"]'):
+        raise AssertionError("project mechanism missing")
+
+    scroll_state = driver.execute_script(
         """
-        const active = [...document.querySelectorAll('header nav button')]
-          .find(el => String(el.className).includes('bg-[#7CEBDD]/10'));
-        return {
-          active: active ? active.textContent.trim() : null,
-          projectScene: !!document.querySelector('[data-project-scene]'),
-          gears: document.querySelectorAll('[data-project-gear]').length,
-          controls: document.querySelectorAll('[data-project-controls]').length,
-          cards: document.querySelectorAll('[data-project-card]').length,
-          contact: !!document.querySelector('[data-contact-content]'),
-          body: document.body.innerText.slice(0, 1200)
-        };
-        """
-    )
-
-
-def require_scene(driver, expected, name):
-    state = scene_state(driver)
-    if state["active"] is None or state["active"].lower() != expected.lower():
-        driver.save_screenshot(str(OUT / f"{name}-scene-error-{expected}.png"))
-        raise AssertionError(f"{name}: expected active scene {expected}, state={state}")
-    return state
-
-
-def journey_robot_overlaps_content(driver, content_selector):
-    return driver.execute_script(
-        """
-        const button = document.querySelector('button[data-journey-robot="true"]');
-        const robot = button?.querySelector(':scope > div:last-child');
-        const root = document.querySelector(arguments[0]);
-        if (!robot || !root) return false;
-        const rr = robot.getBoundingClientRect();
-        const meaningful = [...root.querySelectorAll('h1, h2, h3, p, a, button')]
-          .filter(el => el.offsetParent !== null)
-          .filter(el => {
-            const r = el.getBoundingClientRect();
-            return r.bottom > 0 && r.top < window.innerHeight && r.right > 0 && r.left < window.innerWidth;
-          });
-        return meaningful.some(el => {
-          const r = el.getBoundingClientRect();
-          return !(rr.right <= r.left || rr.left >= r.right || rr.bottom <= r.top || rr.top >= r.bottom);
-        });
-        """,
-        content_selector,
-    )
-
-
-def project_robot_overlaps_content(driver):
-    return driver.execute_script(
-        """
-        const button = document.querySelector('button[data-journey-robot="true"][aria-label*="contact page"]');
-        const robot = button?.querySelector(':scope > div:last-child');
-        const card = document.querySelector('[data-project-card]');
-        if (!robot || !card) return false;
-        const rr = robot.getBoundingClientRect();
-        const meaningful = [...card.querySelectorAll('h3, p, a, div[class*="font-mono"]')]
-          .filter(el => el.offsetParent !== null)
-          .filter(el => {
-            const r = el.getBoundingClientRect();
-            return r.bottom > 0 && r.top < window.innerHeight && r.right > 0 && r.left < window.innerWidth;
-          });
-        return meaningful.some(el => {
-          const r = el.getBoundingClientRect();
-          return !(rr.right <= r.left || rr.left >= r.right || rr.bottom <= r.top || rr.top >= r.bottom);
-        });
+        const root = document.querySelector('[data-project-controls="true"] > div:last-child');
+        if (!root) return null;
+        const style = getComputedStyle(root);
+        return {overflowY:style.overflowY, clientHeight:root.clientHeight, scrollHeight:root.scrollHeight};
         """
     )
+    if scroll_state and scroll_state["overflowY"] in ("auto", "scroll"):
+        raise AssertionError(f"project controls still use nested scrolling: {scroll_state}")
+
+    buttons = driver.find_elements(By.CSS_SELECTOR, '[data-project-controls="true"] button')
+    if len(buttons) < 7:
+        raise AssertionError(f"expected at least 7 project choices, found {len(buttons)}")
+
+    windows = next((b for b in buttons if "Windows Infrastructure" in b.text), None)
+    if windows is None:
+        raise AssertionError("Windows Infrastructure project choice missing")
+    driver.execute_script("arguments[0].click();", windows)
+    WebDriverWait(driver, 7).until(lambda d: "Windows Infrastructure Reliability Console" in d.find_element(By.CSS_SELECTOR, '[data-project-card="true"]').text)
+    if windows.get_attribute("aria-pressed") != "true":
+        raise AssertionError("selected project does not expose aria-pressed=true")
 
 
-def selected_card_text(driver):
-    return driver.execute_script(
-        "const el=document.querySelector('[data-project-card]'); return el ? el.innerText : '';"
-    )
+def check_contact(driver):
+    required = [
+        'a[href="mailto:yeabsira.mesfin29@gmail.com"]',
+        'a[href*="linkedin.com/in/yeabsira-mesfin"]',
+        'a[href="https://github.com/yeabsira-mesfin"]',
+        'a[href="/resume.html"]',
+    ]
+    for selector in required:
+        if not visible(driver, selector):
+            raise AssertionError(f"contact action missing or hidden: {selector}")
+
+
+def check_assistant(driver):
+    launcher = WebDriverWait(driver, 7).until(EC.element_to_be_clickable((By.CSS_SELECTOR, 'button[aria-label="Open portfolio assistant"]')))
+    driver.execute_script("arguments[0].click();", launcher)
+    WebDriverWait(driver, 7).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '[role="dialog"]')))
+    input_el = driver.find_element(By.ID, "portfolio-assistant-input")
+    input_el.send_keys("Hi")
+    input_el.submit()
+    WebDriverWait(driver, 7).until(lambda d: "engineering background" in d.find_element(By.CSS_SELECTOR, '[role="dialog"]').text)
+    close = driver.find_element(By.CSS_SELECTOR, 'button[aria-label="Close portfolio assistant"]')
+    driver.execute_script("arguments[0].click();", close)
+    WebDriverWait(driver, 7).until(EC.invisibility_of_element_located((By.CSS_SELECTOR, '[role="dialog"]')))
 
 
 def run_viewport(width, height, name):
@@ -206,88 +209,48 @@ def run_viewport(width, height, name):
     options.add_argument("--force-device-scale-factor=1")
 
     driver = webdriver.Chrome(options=options)
+    failures = []
     try:
         driver.set_window_size(width, height)
-        driver.get(BASE_URL)
-        WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.TAG_NAME, "header")))
-        time.sleep(0.5)
+        for index, scene in enumerate(SCENES):
+            label = f"{name}/{scene}"
+            try:
+                open_scene(driver, scene)
+                no_horizontal_overflow(driver, label)
+                if scene != "intro" and active_nav_label(driver) != scene:
+                    raise AssertionError(f"active nav state does not match direct #{scene} route")
 
-        no_horizontal_overflow(driver, f"{name}/intro")
-        if journey_robot_overlaps_content(driver, '[data-intro-content]'):
-            driver.save_screenshot(str(OUT / f"{name}-00-intro-overlap.png"))
-            raise AssertionError(f"{name}/intro: journey robot overlaps intro text or controls")
-        driver.save_screenshot(str(OUT / f"{name}-00-intro.png"))
+                if scene == "intro":
+                    check_intro(driver, width)
+                elif scene == "story":
+                    check_story(driver, width)
+                elif scene == "projects":
+                    check_projects(driver)
+                elif scene == "contact":
+                    check_contact(driver)
 
-        click_nav(driver, "story")
-        wait_for_scene(driver, "story")
-        require_scene(driver, "Story", name)
-        no_horizontal_overflow(driver, f"{name}/story")
-        if journey_robot_overlaps_content(driver, '[data-story-content]'):
-            driver.save_screenshot(str(OUT / f"{name}-01-story-overlap.png"))
-            raise AssertionError(f"{name}/story: journey robot overlaps story content")
-        driver.save_screenshot(str(OUT / f"{name}-01-story.png"))
+                collision = assistant_overlaps_interactive(driver)
+                if collision:
+                    raise AssertionError(f"assistant launcher overlaps an interactive control: {collision}")
 
-        click_nav(driver, "projects")
-        wait_for_scene(driver, "projects")
-        state = require_scene(driver, "Projects", name)
-        no_horizontal_overflow(driver, f"{name}/projects")
-        if not state["projectScene"] or state["gears"] != 1 or state["controls"] != 1 or state["cards"] < 1:
-            driver.save_screenshot(str(OUT / f"{name}-02-projects-debug.png"))
-            raise AssertionError(f"{name}/projects: invalid structure: {state}")
+                if scene == "intro" and name in ("phone", "laptop"):
+                    check_assistant(driver)
 
-        gear = rect(driver, '[data-project-gear]')
-        if not gear or gear["bottom"] <= 80 or gear["top"] >= height:
-            raise AssertionError(f"{name}/projects: roller is not visible in first viewport: {gear}")
-
-        windows_button = WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, "//button[.//*[contains(text(),'Windows Infrastructure')]]"))
-        )
-        driver.execute_script("arguments[0].click();", windows_button)
-        WebDriverWait(driver, 7).until(
-            lambda d: "Windows Infrastructure" in selected_card_text(d)
-        )
-        time.sleep(0.3)
-
-        card = rect(driver, '[data-project-card]')
-        if not card or card["top"] >= height - 24 or card["bottom"] <= 90:
-            raise AssertionError(f"{name}/projects: selected project is not visible after click: {card}")
-        if project_robot_overlaps_content(driver):
-            driver.save_screenshot(str(OUT / f"{name}-02-projects-overlap.png"))
-            raise AssertionError(f"{name}/projects: journey robot overlaps selected-project content")
-        driver.save_screenshot(str(OUT / f"{name}-02-projects.png"))
-
-        click_nav(driver, "contact")
-        wait_for_scene(driver, "contact")
-        state = require_scene(driver, "Contact", name)
-        if not state["contact"]:
-            raise AssertionError(f"{name}/contact: contact marker missing: {state}")
-        no_horizontal_overflow(driver, f"{name}/contact")
-
-        assistant = rect(driver, 'button[aria-label="Open portfolio assistant"]')
-        hint = hint_rect(driver)
-        contact_cards = contact_card_rects(driver)
-        for card_rect in contact_cards:
-            if assistant and overlap(assistant, card_rect):
-                driver.save_screenshot(str(OUT / f"{name}-03-contact-overlap.png"))
-                raise AssertionError(f"{name}/contact: assistant overlaps contact card: assistant={assistant}, card={card_rect}")
-            if hint and overlap(hint, card_rect):
-                driver.save_screenshot(str(OUT / f"{name}-03-contact-overlap.png"))
-                raise AssertionError(f"{name}/contact: hint overlaps contact card: hint={hint}, card={card_rect}")
-
-        driver.save_screenshot(str(OUT / f"{name}-03-contact.png"))
-        print(f"PASS {name} {width}x{height}")
+                driver.save_screenshot(str(OUT / f"{name}-{index:02d}-{scene}.png"))
+                print(f"PASS {label}")
+            except Exception as exc:
+                driver.save_screenshot(str(OUT / f"{name}-{index:02d}-{scene}-failure.png"))
+                failures.append(f"{label}: {type(exc).__name__}: {exc}")
+        return failures
     finally:
         driver.quit()
 
 
 failures = []
 for width, height, name in VIEWPORTS:
-    try:
-        run_viewport(width, height, name)
-    except Exception as exc:
-        failures.append(f"{name} {width}x{height}: {type(exc).__name__}: {exc}")
+    failures.extend(run_viewport(width, height, name))
 
 if failures:
     raise SystemExit("Responsive visual QA failed:\n" + "\n".join(failures))
 
-print("Responsive visual QA passed for phone, tablet, laptop, and large monitor.")
+print("Responsive visual QA passed for Intro, Story, Projects, Contact, and the assistant on phone, tablet, laptop, and large monitor.")
