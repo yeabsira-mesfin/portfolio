@@ -22,9 +22,32 @@
     overflow: visible !important;
   }
 
+  /* Keep the robot available without covering a large part of a card. The hint
+     still appears on entry and follows the assistant's scroll-direction logic. */
   [data-portfolio-assistant-launcher="true"] {
-    transform: scale(0.9);
     transform-origin: bottom right;
+  }
+
+  [data-portfolio-assistant-launcher="true"] > button {
+    width: 72px !important;
+    height: 86px !important;
+  }
+
+  [data-portfolio-assistant-launcher="true"] > button > div:last-child {
+    width: 68px !important;
+    height: 80px !important;
+    border-radius: 1.15rem !important;
+  }
+
+  [data-portfolio-assistant-launcher="true"] > button > div:not(:last-child) {
+    width: 132px !important;
+    bottom: 82px !important;
+    padding: 0.5rem 0.65rem !important;
+  }
+
+  [data-portfolio-assistant-launcher="true"] > button > div:not(:last-child) p {
+    font-size: 10px !important;
+    line-height: 0.9rem !important;
   }
 }
 
