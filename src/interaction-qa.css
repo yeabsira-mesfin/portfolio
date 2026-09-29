@@ -1,103 +1,48 @@
-/* Interaction safety layer: floating robots must never cover meaningful content. */
+/* Responsive interaction safety. Keep one scrolling surface and one assistant. */
 
-/* The contact assistant owns its own hint visibility and smooth scroll behavior.
-   Do not force-hide the hint or collapse its launcher here. On phones, extra
-   bottom space lets the contact cards scroll clear of the floating assistant. */
-@media (max-width: 639px) {
-  [data-contact-content="true"] {
-    padding-bottom: 10.5rem !important;
-  }
+[data-story-content="true"],
+[data-contact-content="true"],
+[data-project-controls="true"],
+[data-project-card="true"] {
+  min-width: 0;
 }
 
-/* Phones: keep the journey robot compact, but do not reserve a permanent right
-   gutter on Story. The old right padding squeezed the Story cards to roughly
-   half the viewport. Story now uses the full mobile width and reserves space
-   below the content instead, so the robot stays available without crushing text. */
+/* Reserve only bottom space for the fixed assistant. Never squeeze mobile copy. */
 @media (max-width: 639px) {
-  button[data-journey-robot="true"] > div:first-child {
-    display: none !important;
-  }
-
-  button[data-journey-robot="true"] {
-    width: 82px !important;
-    height: 100px !important;
-    right: max(8px, env(safe-area-inset-right)) !important;
-    bottom: max(8px, env(safe-area-inset-bottom)) !important;
-    left: auto !important;
-    transform-origin: bottom right !important;
-  }
-
-  button[data-journey-robot="true"] > div:last-child {
-    width: 80px !important;
-    height: 98px !important;
-  }
-
-  [data-intro-content="true"] {
-    padding-right: 7.5rem !important;
-    padding-bottom: 1.25rem !important;
-  }
-
-  [data-story-content="true"] {
-    padding-right: 0.25rem !important;
-    padding-bottom: 7.25rem !important;
-    overflow-x: hidden !important;
-  }
-
-  [data-project-card="true"] > div:last-child {
-    padding-right: 6.5rem !important;
-  }
-}
-
-/* Tablets: keep a dedicated right-side lane on Intro and Story. Projects uses a
-   compact bubble-free robot because its selected-project card uses the full width. */
-@media (min-width: 640px) and (max-width: 1023px) {
   [data-intro-content="true"],
+  [data-story-content="true"],
+  [data-contact-content="true"],
+  [data-project-scene="true"] {
+    padding-bottom: 7.75rem !important;
+  }
+
   [data-story-content="true"] {
-    padding-right: 13rem !important;
-    padding-bottom: 1.5rem !important;
+    width: 100% !important;
+    padding-right: 0 !important;
+    overflow: visible !important;
   }
 
-  button[data-journey-robot="true"][aria-label*="contact page"] > div:first-child {
-    display: none !important;
-  }
-
-  button[data-journey-robot="true"][aria-label*="contact page"] {
-    width: 104px !important;
-    height: 122px !important;
-    right: max(10px, env(safe-area-inset-right)) !important;
-    bottom: max(10px, env(safe-area-inset-bottom)) !important;
-    left: auto !important;
-    transform-origin: bottom right !important;
-  }
-
-  [data-project-card="true"] > div:last-child {
-    padding-right: 7rem !important;
+  [data-portfolio-assistant-launcher="true"] {
+    transform: scale(0.9);
+    transform-origin: bottom right;
   }
 }
 
-/* Laptops/monitors: dock Story and Projects journey robots into the left mechanism
-   lane. That keeps the large project/story cards on the right completely clear. */
+@media (min-width: 640px) and (max-width: 1023px) {
+  [data-story-content="true"],
+  [data-contact-content="true"] {
+    padding-bottom: 7.25rem !important;
+  }
+
+  [data-portfolio-assistant-launcher="true"] {
+    transform: scale(0.94);
+    transform-origin: bottom right;
+  }
+}
+
+/* Desktop assistant stays clear of bottom content while preserving full content width. */
 @media (min-width: 1024px) {
-  button[data-journey-robot="true"][aria-label*="projects"],
-  button[data-journey-robot="true"][aria-label*="contact page"] {
-    left: max(18px, env(safe-area-inset-left)) !important;
-    right: auto !important;
-    bottom: max(16px, env(safe-area-inset-bottom)) !important;
-    transform-origin: bottom left !important;
-  }
-}
-
-@media (max-width: 430px) {
-  [data-intro-content="true"] {
-    padding-right: 7rem !important;
-  }
-
-  [data-story-content="true"] {
-    padding-right: 0.25rem !important;
-    padding-bottom: 7rem !important;
-  }
-
-  [data-project-card="true"] > div:last-child {
-    padding-right: 6rem !important;
+  [data-contact-content="true"] {
+    padding-bottom: 6rem !important;
   }
 }
