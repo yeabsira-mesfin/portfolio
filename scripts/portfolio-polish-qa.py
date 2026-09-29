@@ -39,8 +39,10 @@ def hint_visible(driver):
 def test_mobile_hint():
     driver = browser(390, 844)
     try:
-        driver.get(f"{BASE_URL}/#story")
-        WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, '[data-story-content="true"]')))
+        # Projects is intentionally a long scene, so it gives us a deterministic
+        # mobile document scroll while exercising the same persistent assistant.
+        driver.get(f"{BASE_URL}/#projects")
+        WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, '[data-project-scene="true"]')))
         WebDriverWait(driver, 10).until(lambda d: hint_visible(d))
         time.sleep(2.1)
 
@@ -54,7 +56,7 @@ def test_mobile_hint():
             """
         )
         if moved_to < 20:
-            raise AssertionError(f"Story page did not provide enough vertical scroll for hint QA: scrollY={moved_to}")
+            raise AssertionError(f"Projects page did not provide enough vertical scroll for hint QA: scrollY={moved_to}")
         WebDriverWait(driver, 4).until(lambda d: not hint_visible(d))
 
         moved_up_to = driver.execute_script(
