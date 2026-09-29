@@ -1,13 +1,4 @@
-/* Keep the journey robot anchored on the right whenever the intro/home scene is visible,
-   even during the short state handoff after returning from another section. */
-body:has(h1) [data-journey-robot="true"] {
-  left: auto !important;
-  right: max(10px, env(safe-area-inset-right)) !important;
-  transform-origin: bottom right !important;
-}
-
-/* The metal gear itself drifts continuously and very slowly. Scene changes still
-   rotate the parent mechanism separately, creating a gentle speed-up without a jump. */
+/* Slow ambient gear movement, independent from the gentle scene-turn animation. */
 svg[viewBox="0 0 600 600"] {
   transform-box: fill-box;
   transform-origin: center;
@@ -20,8 +11,6 @@ svg[viewBox="0 0 600 600"] {
   to { transform: rotate(360deg); }
 }
 
-/* A restrained light breath on the mechanical teeth adds depth without changing
-   the original palette or the existing balls, rings, portrait, and navigation. */
 svg[viewBox="0 0 600 600"] g[filter="url(#gearShadow)"] > rect {
   animation: ym-tooth-breathe 8s ease-in-out infinite;
 }
