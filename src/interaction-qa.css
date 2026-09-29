@@ -22,32 +22,41 @@
     overflow: visible !important;
   }
 
-  /* Keep the robot available without covering a large part of a card. The hint
-     still appears on entry and follows the assistant's scroll-direction logic. */
+  /* Phones use a compact edge launcher. It keeps a 44px+ touch target while
+     preserving the full-width Story and Contact cards underneath. */
   [data-portfolio-assistant-launcher="true"] {
+    right: max(3px, env(safe-area-inset-right)) !important;
+    bottom: max(4px, env(safe-area-inset-bottom)) !important;
     transform-origin: bottom right;
   }
 
   [data-portfolio-assistant-launcher="true"] > button {
-    width: 72px !important;
-    height: 86px !important;
+    width: 60px !important;
+    height: 68px !important;
   }
 
   [data-portfolio-assistant-launcher="true"] > button > div:last-child {
-    width: 68px !important;
-    height: 80px !important;
-    border-radius: 1.15rem !important;
+    width: 56px !important;
+    height: 62px !important;
+    border-radius: 1rem !important;
+    padding: 0 !important;
+  }
+
+  [data-portfolio-assistant-launcher="true"] > button > div:last-child > div {
+    transform: scale(0.72) !important;
+    transform-origin: center !important;
   }
 
   [data-portfolio-assistant-launcher="true"] > button > div:not(:last-child) {
-    width: 132px !important;
-    bottom: 82px !important;
-    padding: 0.5rem 0.65rem !important;
+    width: 118px !important;
+    bottom: 64px !important;
+    padding: 0.42rem 0.55rem !important;
+    border-radius: 0.85rem !important;
   }
 
   [data-portfolio-assistant-launcher="true"] > button > div:not(:last-child) p {
-    font-size: 10px !important;
-    line-height: 0.9rem !important;
+    font-size: 9.5px !important;
+    line-height: 0.82rem !important;
   }
 }
 
