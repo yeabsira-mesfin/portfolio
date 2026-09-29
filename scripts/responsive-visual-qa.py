@@ -64,35 +64,18 @@ def active_nav_label(driver):
     )
 
 
-def rect(driver, selector):
-    return driver.execute_script(
-        """
-        const el = document.querySelector(arguments[0]);
-        if (!el || el.offsetParent === null) return null;
-        const r = el.getBoundingClientRect();
-        return {left:r.left, top:r.top, right:r.right, bottom:r.bottom, width:r.width, height:r.height};
-        """,
-        selector,
-    )
-
-
-def overlap(a, b):
-    if not a or not b:
-        return False
-    return not (a["right"] <= b["left"] or a["left"] >= b["right"] or a["bottom"] <= b["top"] or a["top"] >= b["bottom"])
-
-
 def assistant_overlaps_interactive(driver):
     return driver.execute_script(
         """
-        const launcher = document.querySelector('[data-portfolio-assistant-launcher="true"]');
+        const launcher = document.querySelector('button[aria-label="Open portfolio assistant"]');
         if (!launcher || launcher.offsetParent === null) return null;
         const lr = launcher.getBoundingClientRect();
         const controls = [...document.querySelectorAll('main a, main button')]
+          .filter(el => el !== launcher)
           .filter(el => el.offsetParent !== null)
           .filter(el => {
             const r = el.getBoundingClientRect();
-            return r.bottom > 0 && r.top < window.innerHeight;
+            return r.bottom > 0 && r.top < window.innerHeight && r.right > 0 && r.left < window.innerWidth;
           });
         const hit = controls.find(el => {
           const r = el.getBoundingClientRect();
@@ -100,7 +83,11 @@ def assistant_overlaps_interactive(driver):
         });
         if (!hit) return null;
         const r = hit.getBoundingClientRect();
-        return {text:(hit.innerText || hit.getAttribute('aria-label') || '').trim().slice(0,80), rect:{left:r.left,top:r.top,right:r.right,bottom:r.bottom}, launcher:{left:lr.left,top:lr.top,right:lr.right,bottom:lr.bottom}};
+        return {
+          text:(hit.innerText || hit.getAttribute('aria-label') || '').trim().slice(0,80),
+          rect:{left:r.left,top:r.top,right:r.right,bottom:r.bottom},
+          launcher:{left:lr.left,top:lr.top,right:lr.right,bottom:lr.bottom}
+        };
         """
     )
 
