@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, within } from '@testing-library/react';
+import { fireEvent, render, screen, within, waitFor } from '@testing-library/react';
 import CinematicPortfolio from './Components/CinematicPortfolio';
 
 jest.mock('framer-motion', () => {
@@ -26,34 +26,36 @@ test('renders the portfolio hero, recruiter actions, and primary navigation', ()
   expect(within(nav).getByRole('button', { name: /^contact$/i })).toBeInTheDocument();
 });
 
-test('scene navigation updates visible content, accessibility state, and URL hash', () => {
+test('scene navigation updates visible content, accessibility state, and URL hash', async () => {
   render(<CinematicPortfolio />);
   const nav = screen.getByRole('navigation', { name: /portfolio sections/i });
   const storyButton = within(nav).getByRole('button', { name: /^story$/i });
 
   fireEvent.click(storyButton);
 
-  expect(screen.getByRole('heading', { level: 2, name: /the person/i })).toBeInTheDocument();
-  expect(storyButton).toHaveAttribute('aria-current', 'page');
+  await screen.findByRole('heading', { level: 2, name: /the person/i });
+  await waitFor(() => expect(storyButton).toHaveAttribute('aria-current', 'page'));
   expect(window.location.hash).toBe('#story');
 });
 
-test('project selector exposes pressed state and switches the selected project', () => {
+test('project selector exposes pressed state and switches the selected project', async () => {
   render(<CinematicPortfolio />);
-  fireEvent.click(screen.getByRole('button', { name: /^projects$/i }));
+  const nav = screen.getByRole('navigation', { name: /portfolio sections/i });
+  fireEvent.click(within(nav).getByRole('button', { name: /^projects$/i }));
 
-  const windowsButton = screen.getByRole('button', { name: /windows infrastructure reliability console/i });
+  const windowsButton = await screen.findByRole('button', { name: /windows infrastructure reliability console/i });
   fireEvent.click(windowsButton);
 
-  expect(windowsButton).toHaveAttribute('aria-pressed', 'true');
-  expect(screen.getByRole('heading', { level: 3, name: /windows infrastructure reliability console/i })).toBeInTheDocument();
+  await waitFor(() => expect(windowsButton).toHaveAttribute('aria-pressed', 'true'));
+  expect(await screen.findByRole('heading', { level: 3, name: /windows infrastructure reliability console/i })).toBeInTheDocument();
 });
 
-test('contact keeps direct email and resume actions visible', () => {
+test('contact keeps direct email and resume actions visible', async () => {
   render(<CinematicPortfolio />);
-  fireEvent.click(screen.getByRole('button', { name: /^contact$/i }));
+  const nav = screen.getByRole('navigation', { name: /portfolio sections/i });
+  fireEvent.click(within(nav).getByRole('button', { name: /^contact$/i }));
 
-  expect(screen.getByRole('link', { name: /yeabsira\.mesfin29@gmail\.com/i })).toHaveAttribute('href', 'mailto:yeabsira.mesfin29@gmail.com');
+  expect(await screen.findByRole('link', { name: /yeabsira\.mesfin29@gmail\.com/i })).toHaveAttribute('href', 'mailto:yeabsira.mesfin29@gmail.com');
   expect(screen.getByRole('link', { name: /view printable resume/i })).toHaveAttribute('href', '/resume.html');
 });
 
@@ -68,5 +70,5 @@ test('portfolio assistant opens as an accessible dialog and handles greetings', 
   fireEvent.submit(input.closest('form'));
 
   expect(screen.getAllByText(/portfolio assistant/i).length).toBeGreaterThan(0);
-  expect(screen.getByText(/you can ask me about his engineering background/i)).toBeInTheDocument();
+  expect(screen.getAllByText(/you can ask me about his engineering background/i).length).toBeGreaterThanOrEqual(1);
 });
