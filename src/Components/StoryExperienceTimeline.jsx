@@ -53,38 +53,23 @@ export default function StoryExperienceTimeline() {
   if (!target) return null;
 
   return createPortal(
-    <section className="story-experience-timeline relative mt-8 overflow-hidden rounded-[1.65rem] border border-[#7CEBDD]/10 bg-[#061720]/55 p-5 shadow-[0_24px_80px_rgba(0,5,11,.25)] backdrop-blur-xl sm:p-6">
+    <section className="story-experience-timeline relative mt-8 overflow-hidden rounded-[1.65rem] border border-[#7CEBDD]/14 bg-[#061720]/62 p-5 shadow-[0_24px_80px_rgba(0,5,11,.25)] backdrop-blur-xl sm:p-6">
       <div className="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full bg-[#58E6D1]/[.055] blur-3xl" />
       <div className="pointer-events-none absolute -bottom-24 left-1/3 h-52 w-52 rounded-full bg-[#7CB7FF]/[.045] blur-3xl" />
 
-      <motion.div initial={reduceMotion ? false : { opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .75, ease: [0.16, 1, 0.3, 1] }} className="relative z-10">
-        <div className="flex items-center gap-3">
-          <span className="font-mono text-[8px] font-bold uppercase tracking-[.22em] text-[#58E6D1]">Experience / trajectory</span>
-          <span className="h-px flex-1 bg-gradient-to-r from-[#58E6D1]/30 to-transparent" />
-        </div>
-        <h3 className="mt-3 max-w-2xl text-xl font-semibold tracking-[-.035em] text-[#E8F7F5]/92 sm:text-2xl">Building products, operating real systems, and moving deeper into security.</h3>
-        <p className="mt-2 max-w-2xl text-sm leading-6 text-[#C5DFDC]/46">The path has been hands-on from the start: build it, ship it, support it, improve it, then understand how to secure the systems underneath it.</p>
+      <motion.div initial={reduceMotion ? false : { opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .65, ease: [0.16, 1, 0.3, 1] }} className="relative z-10">
+        <div className="flex items-center gap-3"><span className="font-mono text-[9px] font-bold uppercase tracking-[.18em] text-[#77EBDD]">Experience / trajectory</span><span className="h-px flex-1 bg-gradient-to-r from-[#58E6D1]/35 to-transparent" /></div>
+        <h3 className="mt-3 max-w-2xl text-xl font-semibold tracking-[-.035em] text-[#F0FFFD]/95 sm:text-2xl">Building products, operating real systems, and moving deeper into security.</h3>
+        <p className="mt-2 max-w-2xl text-sm leading-6 text-[#D1E6E3]/70">The path has been hands-on from the start: build it, ship it, support it, improve it, then understand how to secure the systems underneath it.</p>
       </motion.div>
 
-      <div className="relative z-10 mt-6 space-y-3 before:absolute before:bottom-4 before:left-[19px] before:top-4 before:w-px before:bg-gradient-to-b before:from-[#58E6D1]/45 before:via-[#7CB7FF]/18 before:to-transparent sm:before:left-[23px]">
+      <div className="relative z-10 mt-6 space-y-3 before:absolute before:bottom-4 before:left-[19px] before:top-4 before:w-px before:bg-gradient-to-b before:from-[#58E6D1]/45 before:via-[#7CB7FF]/22 before:to-transparent sm:before:left-[23px]">
         {experience.map((item, index) => {
           const Icon = item.icon;
           return (
-            <motion.article
-              key={item.title}
-              initial={reduceMotion ? false : { opacity: 0, x: 18 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: .72, delay: .08 * index, ease: [0.16, 1, 0.3, 1] }}
-              whileHover={reduceMotion ? undefined : { x: 4 }}
-              className="group relative grid grid-cols-[40px_1fr] gap-3 rounded-2xl border border-[#7CEBDD]/[.075] bg-[#020B12]/30 p-3 transition-colors duration-500 hover:border-[#7CEBDD]/20 hover:bg-[#7CEBDD]/[.035] sm:grid-cols-[48px_1fr] sm:gap-4 sm:p-4"
-            >
-              <span className="relative z-10 grid h-10 w-10 place-items-center rounded-xl border border-[#7CEBDD]/10 bg-[#071A22] text-sm shadow-[0_0_25px_rgba(88,230,209,.035)] sm:h-12 sm:w-12" style={{ color: item.accent }}><Icon /></span>
-              <div className="min-w-0">
-                <p className="font-mono text-[7px] font-bold uppercase tracking-[.2em]" style={{ color: item.accent }}>{item.period}</p>
-                <h4 className="mt-1 text-sm font-semibold tracking-[-.02em] text-[#E8F7F5]/88 sm:text-base">{item.title}</h4>
-                <p className="mt-1.5 text-xs leading-5 text-[#C5DFDC]/46 sm:text-[13px]">{item.text}</p>
-                <p className="mt-2 font-mono text-[7px] uppercase tracking-[.12em] text-[#B8D6D2]/30 sm:text-[8px]">{item.proof}</p>
-              </div>
+            <motion.article key={item.title} initial={reduceMotion ? false : { opacity: 0, x: 18 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: .62, delay: .07 * index, ease: [0.16, 1, 0.3, 1] }} whileHover={reduceMotion ? undefined : { x: 4 }} className="group relative grid grid-cols-[40px_1fr] gap-3 rounded-2xl border border-[#7CEBDD]/10 bg-[#020B12]/35 p-3 transition-colors duration-500 hover:border-[#7CEBDD]/22 hover:bg-[#7CEBDD]/[.04] sm:grid-cols-[48px_1fr] sm:gap-4 sm:p-4">
+              <span className="relative z-10 grid h-10 w-10 place-items-center rounded-xl border border-[#7CEBDD]/14 bg-[#071A22] text-sm shadow-[0_0_25px_rgba(88,230,209,.035)] sm:h-12 sm:w-12" style={{ color: item.accent }}><Icon /></span>
+              <div className="min-w-0"><p className="font-mono text-[8px] font-bold uppercase tracking-[.18em]" style={{ color: item.accent }}>{item.period}</p><h4 className="mt-1 text-sm font-semibold tracking-[-.02em] text-[#F0FFFD]/92 sm:text-base">{item.title}</h4><p className="mt-1.5 text-xs leading-5 text-[#D1E6E3]/70 sm:text-[13px]">{item.text}</p><p className="mt-2 font-mono text-[8px] uppercase tracking-[.11em] text-[#C8E1DD]/56">{item.proof}</p></div>
             </motion.article>
           );
         })}
