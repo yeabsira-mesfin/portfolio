@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="index, follow" />
+  <title>Yeabsira Mesfin | Resume</title>
+  <style>
+    :root { color-scheme: light; font-family: Arial, Helvetica, sans-serif; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #eef2f3; color: #111; }
+    .toolbar { position: sticky; top: 0; display: flex; justify-content: center; gap: 10px; padding: 12px; background: rgba(2,11,18,.96); }
+    .toolbar a, .toolbar button { min-height: 42px; border: 1px solid #48615d; border-radius: 999px; background: #fff; color: #071411; padding: 9px 16px; font: 700 13px Arial, sans-serif; text-decoration: none; cursor: pointer; }
+    .page { width: min(8.5in, calc(100% - 24px)); min-height: 11in; margin: 18px auto 36px; padding: .48in .55in; background: #fff; box-shadow: 0 16px 50px rgba(0,0,0,.14); }
+    h1 { margin: 0; font-size: 26px; line-height: 1; letter-spacing: -.5px; }
+    .headline { margin-top: 6px; font-size: 13px; font-weight: 700; }
+    .links { margin-top: 7px; font-size: 10.5px; line-height: 1.5; }
+    .links a { color: #111; }
+    section { margin-top: 13px; }
+    h2 { margin: 0 0 6px; padding-bottom: 3px; border-bottom: 1.5px solid #111; font-size: 12px; letter-spacing: .8px; text-transform: uppercase; }
+    p { margin: 0; font-size: 10.5px; line-height: 1.42; }
+    .row { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; }
+    .role { font-size: 11px; font-weight: 700; }
+    .date { white-space: nowrap; font-size: 10px; font-weight: 700; }
+    ul { margin: 5px 0 0 16px; padding: 0; }
+    li { margin: 2px 0; font-size: 10.2px; line-height: 1.35; }
+    .project { margin-top: 6px; }
+    .project:first-of-type { margin-top: 0; }
+    .project strong { font-size: 10.5px; }
+    .skills { font-size: 10.2px; line-height: 1.45; }
+    @media (max-width: 700px) {
+      .page { width: 100%; min-height: auto; margin: 0; padding: 24px 20px 40px; box-shadow: none; }
+      .row { align-items: flex-start; }
+    }
+    @media print {
+      body { background: #fff; }
+      .toolbar { display: none; }
+      .page { width: 8.5in; min-height: 11in; margin: 0; padding: .43in .52in; box-shadow: none; }
+      a { text-decoration: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="toolbar">
+    <a href="/">Back to portfolio</a>
+    <button type="button" onclick="window.print()">Print / Save PDF</button>
+  </div>
+
+  <main class="page">
+    <header>
+      <h1>Yeabsira Mesfin</h1>
+      <div class="headline">Full Stack Software Engineer | Software, Systems & Security</div>
+      <div class="links">
+        Bristow, VA · <a href="mailto:yeabsira.mesfin29@gmail.com">yeabsira.mesfin29@gmail.com</a> ·
+        <a href="https://www.linkedin.com/in/yeabsira-mesfin-76379928a">LinkedIn</a> ·
+        <a href="https://github.com/yeabsira-mesfin">GitHub</a> ·
+        <a href="https://yeabsira-mesfin.vercel.app/">Portfolio</a>
+      </div>
+    </header>
+
+    <section>
+      <h2>Summary</h2>
+      <p>Full Stack Software Engineer with 5+ years of experience building secure web and mobile applications and supporting enterprise production environments. Experienced across JavaScript, TypeScript, React, Node.js, Python, Java, SQL, REST APIs, authentication, Docker, Linux, CI/CD, testing, debugging, and secure API design. Currently completing an M.S. in Cybersecurity in Computer Science at The George Washington University.</p>
+    </section>
+
+    <section>
+      <h2>Experience</h2>
+      <div class="row"><div class="role">MMCY | Software Engineering, Client Success & Team Leadership</div><div class="date">Feb 2022 - Aug 2025</div></div>
+      <ul>
+        <li>Delivered 200+ end-to-end enterprise event builds spanning registration websites, attendee experiences, mobile apps, custom development, integrations, analytics, and live production support.</li>
+        <li>Supported enterprise clients including BCD, YPO, Abbott, and CDW while processing 5,000+ attendee records with zero data loss.</li>
+        <li>Improved database performance by 40% and helped reduce release cycles by 30% through stronger workflows, debugging, testing, and delivery practices.</li>
+        <li>Led four account managers, trained teammates, and maintained stable production delivery with no critical incidents over two years.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Selected Projects</h2>
+      <div class="project"><strong>AppSec Vulnerability Manager</strong> | Python, FastAPI, Semgrep, Trivy, OWASP ZAP, PostgreSQL<br/><p>Normalizes findings from multiple scanners into a persistent remediation queue with risk prioritization and production deployment.</p></div>
+      <div class="project"><strong>AI Security Testing Lab</strong> | Python, FastAPI, LLM Security, Pytest<br/><p>Defensive gateway for LLM-enabled applications with validation, sensitive-data redaction, tool allowlisting, output filtering, and security regression tests.</p></div>
+      <div class="project"><strong>Secure Cloud Infrastructure as Code</strong> | Terraform, AWS<br/><p>Multi-AZ AWS architecture with load balancing, autoscaling, segmentation, encryption, and versioned storage.</p></div>
+      <div class="project"><strong>TechBoard</strong> | Python, Django, PostgreSQL, RBAC<br/><p>Role-aware job platform with authentication, search, resume uploads, applicant tracking, and separate employer and candidate workflows.</p></div>
+    </section>
+
+    <section>
+      <h2>Education</h2>
+      <div class="row"><div class="role">The George Washington University | M.S. Cybersecurity in Computer Science</div><div class="date">In Progress</div></div>
+      <p style="margin-top:4px">Focus: secure systems, network security, software security, infrastructure, and information policy.</p>
+      <div class="row" style="margin-top:6px"><div class="role">Microlink Information Technology College | B.Sc. Computer Science</div><div class="date">2022</div></div>
+    </section>
+
+    <section>
+      <h2>Technical Skills</h2>
+      <p class="skills"><strong>Languages & Web:</strong> JavaScript, TypeScript, Python, Java, C#, HTML, CSS · <strong>Frontend:</strong> React, Next.js, Angular · <strong>Backend & APIs:</strong> Node.js, Express.js, REST APIs, JWT, RBAC, secure API design · <strong>Data:</strong> SQL, MySQL, MongoDB, PostgreSQL · <strong>Engineering:</strong> Git, Docker, CI/CD, Linux, Agile/Scrum, debugging, testing, documentation, production support</p>
+    </section>
+  </main>
+</body>
+</html>

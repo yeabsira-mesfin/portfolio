@@ -28,19 +28,3 @@ iframe::-webkit-scrollbar-thumb {
 iframe::-webkit-scrollbar-track {
   background: #0f1515;
 }
-
-/* The original hero-only robot is retired in favor of the persistent chat assistant. */
-button[aria-label="Open Yeabsira's story"] {
-  display: none !important;
-}
-
-/* Keep the contact view concise. */
-a[href^="mailto:"] {
-  display: none !important;
-}
-
-@media (min-width: 640px) {
-  div:has(> a[href^="mailto:"]) {
-    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-  }
-}
