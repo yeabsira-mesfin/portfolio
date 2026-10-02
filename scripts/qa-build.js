@@ -7,11 +7,13 @@ const staticJsDir = path.join(buildDir, "static", "js");
 const staticCssDir = path.join(buildDir, "static", "css");
 const cinematicPath = path.join(root, "src", "Components", "CinematicPortfolio.jsx");
 const robotPath = path.join(root, "src", "Components", "HomeExplorerRobot.jsx");
+const becPreviewPath = path.join(root, "src", "images", "bec-incident-investigation-lab.svg");
 
 if (!fs.existsSync(staticJsDir)) throw new Error("Build QA failed: build/static/js does not exist");
 if (!fs.existsSync(staticCssDir)) throw new Error("Build QA failed: build/static/css does not exist");
 if (!fs.existsSync(cinematicPath)) throw new Error("Build QA failed: CinematicPortfolio source is missing");
 if (!fs.existsSync(robotPath)) throw new Error("Build QA failed: HomeExplorerRobot source is missing");
+if (!fs.existsSync(becPreviewPath)) throw new Error("Build QA failed: crisp BEC project preview asset is missing");
 
 const source = fs.readFileSync(cinematicPath, "utf8");
 const robotSource = fs.readFileSync(robotPath, "utf8");
@@ -47,6 +49,8 @@ if (bundle.includes("/windows-reliability-preview.html")) throw new Error("Build
 if (!bundle.includes("Windows Infrastructure Reliability Console")) throw new Error("Build QA failed: Windows project is missing from the production bundle");
 if (!css.includes('Windows Infrastructure Reliability Console preview')) throw new Error("Build QA failed: animated Windows visual CSS was not emitted");
 if (!bundle.includes("AppSec Vulnerability Manager") || !bundle.includes("https://appsec-vulnerability-manager.vercel.app/")) throw new Error("Build QA failed: AppSec project content or live-product URL is missing");
+if (!bundle.includes("BEC Incident Investigation Lab") || !bundle.includes("Incident Response + Threat Analysis") || !bundle.includes("Microsoft 365")) throw new Error("Build QA failed: BEC Incident Investigation Lab is missing or incomplete");
+if (!source.includes('image: becPreview') || !source.includes('bec-incident-investigation-lab.svg')) throw new Error("Build QA failed: BEC project is not using the crisp vector preview");
 if (!bundle.includes("AI Security Testing Lab") || !bundle.includes("https://github.com/yeabsira-mesfin/ai-security-testing-lab")) throw new Error("Build QA failed: AI Security Testing Lab was not added to Projects");
 if (!bundle.includes("SignalDesk Endpoint Posture Advisor") || !bundle.includes("https://github.com/yeabsira-mesfin/endpoint-posture-advisor")) throw new Error("Build QA failed: SignalDesk Endpoint Posture Advisor was not added to Projects");
 if (!bundle.includes("Click to explore more") || !bundle.includes("Open portfolio assistant")) throw new Error("Build QA failed: portfolio assistant navigation content is incomplete");
@@ -59,4 +63,4 @@ for (const requiredCss of ["data-project-gear", "data-project-controls", "data-p
 if (!css.includes("object-fit:contain") && !css.includes("object-fit: contain")) throw new Error("Build QA failed: project images are not protected by object-fit contain");
 if (!css.includes("max-height:none") && !css.includes("max-height: none")) throw new Error("Build QA failed: desktop selected-project card can still be height-clipped");
 
-console.log("Production bundle QA passed: home robot anchoring, detailed Story experience, slow ambient gear motion, gentle scene speed-up, 10-second Bzzz timer, project previews, security projects, and responsive layout rules are present");
+console.log("Production bundle QA passed: BEC incident-response case study, crisp vector preview, home robot anchoring, detailed Story experience, slow ambient gear motion, gentle scene speed-up, 10-second Bzzz timer, project previews, security projects, and responsive layout rules are present");
