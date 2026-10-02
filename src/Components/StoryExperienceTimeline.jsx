@@ -43,11 +43,43 @@ export default function StoryExperienceTimeline() {
   const [target, setTarget] = useState(null);
 
   useEffect(() => {
-    const sync = () => setTarget(document.querySelector('[data-story-content="true"]'));
+    let portalHost = null;
+
+    const sync = () => {
+      const story = document.querySelector('[data-story-content="true"]');
+      if (!story) {
+        setTarget(null);
+        return;
+      }
+
+      portalHost = story.querySelector('[data-story-timeline-host="true"]');
+
+      if (!portalHost) {
+        portalHost = document.createElement("div");
+        portalHost.setAttribute("data-story-timeline-host", "true");
+
+        const projectsCta = Array.from(story.children).find(
+          (child) => child.tagName === "BUTTON" && child.textContent?.includes("See what I build")
+        );
+
+        if (projectsCta) {
+          story.insertBefore(portalHost, projectsCta);
+        } else {
+          story.appendChild(portalHost);
+        }
+      }
+
+      setTarget(portalHost);
+    };
+
     sync();
     const observer = new MutationObserver(sync);
     observer.observe(document.body, { childList: true, subtree: true });
-    return () => observer.disconnect();
+
+    return () => {
+      observer.disconnect();
+      if (portalHost?.isConnected) portalHost.remove();
+    };
   }, []);
 
   if (!target) return null;
