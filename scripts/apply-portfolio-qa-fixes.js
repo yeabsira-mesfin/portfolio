@@ -19,6 +19,21 @@ if (!source.includes('import appsecPreview from "../images/appsec-vulnerability-
   );
 }
 
+if (!source.includes('import becPreview from "../images/bec-incident-investigation-lab.svg";')) {
+  source = source.replace(
+    'import appsecPreview from "../images/appsec-vulnerability-manager.svg";',
+    'import appsecPreview from "../images/appsec-vulnerability-manager.svg";\nimport becPreview from "../images/bec-incident-investigation-lab.svg";',
+  );
+}
+
+if (!source.includes('id: "bec-investigation"')) {
+  replaceRequired(
+    "BEC incident investigation project",
+    /const projects = \[\n/,
+    `const projects = [\n  {\n    id: "bec-investigation",\n    title: "BEC Incident Investigation Lab",\n    lane: "Incident Response + Threat Analysis",\n    summary: "A defensive Microsoft 365 business email compromise investigation lab that correlates phishing, identity, mailbox, and forensic evidence into an analyst-ready case view.",\n    proof: "React · FastAPI · Microsoft 365 · Entra ID · MITRE ATT&CK · IOC Correlation",\n    image: becPreview,\n    code: "BEC",\n    accent: "#52E0C2",\n  },\n`,
+  );
+}
+
 if (source.includes('project.id === "appsec" && project.demo')) {
   replaceRequired(
     "AppSec iframe preview",
@@ -108,6 +123,9 @@ const required = [
   'rect.top > window.innerHeight - 140',
   'scrollIntoView',
   'data-appsec-preview="true"',
+  'id: "bec-investigation"',
+  'BEC Incident Investigation Lab',
+  'becPreview',
   'id: "ai-security"',
   'id: "endpoint-posture"',
 ];
@@ -123,4 +141,4 @@ if (source.includes("rotating project mechanism")) {
 
 fs.writeFileSync(cinematicPath, source);
 fs.writeFileSync(robotPath, robotSource);
-console.log("Portfolio QA fixes applied: matching roller scale, slow ambient motion with a gentle scene speed-up, 10-second robot idle copy, full-fit project previews, two featured security projects, and responsive safe areas");
+console.log("Portfolio QA fixes applied: BEC investigation case study, crisp vector project preview, matching roller scale, slow ambient motion with a gentle scene speed-up, 10-second robot idle copy, full-fit project previews, security projects, and responsive safe areas");
