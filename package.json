@@ -22,7 +22,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "prebuild": "node scripts/apply-portfolio-qa-fixes.js",
+    "prebuild": "node scripts/apply-portfolio-qa-fixes.js && node scripts/apply-requested-portfolio-updates.js",
     "build": "react-scripts build",
     "postbuild": "node scripts/qa-build.js",
     "test": "react-scripts test",
