@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">BEC Incident Investigation Lab dashboard preview</title>
+  <desc id="desc">Vector preview of an incident response console showing a Microsoft 365 business email compromise investigation.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#071017"/>
+      <stop offset="1" stop-color="#0b1c24"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#10242d"/>
+      <stop offset="1" stop-color="#0b171e"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="12" stdDeviation="18" flood-color="#000000" flood-opacity="0.28"/>
+    </filter>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <circle cx="1315" cy="135" r="230" fill="#1ad6b7" opacity="0.035"/>
+  <circle cx="290" cy="795" r="260" fill="#4ca8ff" opacity="0.035"/>
+
+  <rect x="54" y="42" width="1492" height="816" rx="34" fill="#071117" stroke="#ffffff" stroke-opacity="0.07" filter="url(#shadow)"/>
+
+  <g transform="translate(92 76)">
+    <rect width="48" height="48" rx="13" fill="#14323a" stroke="#4be2c4" stroke-opacity="0.35"/>
+    <text x="24" y="31" text-anchor="middle" fill="#75f1d9" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="800">IR</text>
+    <text x="68" y="19" fill="#eef9f7" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700">Incident Response Console</text>
+    <text x="68" y="41" fill="#94aab0" font-family="Arial, Helvetica, sans-serif" font-size="12">Defensive BEC investigation lab</text>
+  </g>
+
+  <g transform="translate(1294 84)">
+    <rect width="176" height="34" rx="17" fill="#0e2c28" stroke="#3ce1bc" stroke-opacity="0.28"/>
+    <circle cx="20" cy="17" r="5" fill="#42e6bf"/>
+    <text x="36" y="22" fill="#9bf6e2" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="700">DEMO EVIDENCE</text>
+  </g>
+
+  <g transform="translate(92 154)">
+    <rect width="1416" height="212" rx="26" fill="url(#panel)" stroke="#ffffff" stroke-opacity="0.06"/>
+    <text x="30" y="42" fill="#52ddc1" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="800" letter-spacing="1.8">CASE BEC-2026-0142</text>
+    <text x="30" y="83" fill="#f4fbfa" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="800">Microsoft 365 Business Email Compromise</text>
+    <text x="30" y="118" fill="#a8bbc0" font-family="Arial, Helvetica, sans-serif" font-size="16">Credential phishing, suspicious authentication, and a malicious external forwarding rule targeting finance messages.</text>
+
+    <g transform="translate(30 146)">
+      <rect width="128" height="36" rx="18" fill="#4a211d" stroke="#ff7f6f" stroke-opacity="0.25"/>
+      <text x="64" y="23" text-anchor="middle" fill="#ff9f92" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="700">HIGH SEVERITY</text>
+      <rect x="140" width="110" height="36" rx="18" fill="#173139" stroke="#6ccddb" stroke-opacity="0.22"/>
+      <text x="195" y="23" text-anchor="middle" fill="#8bdbea" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="700">INVESTIGATING</text>
+      <rect x="262" width="252" height="36" rx="18" fill="#111d23" stroke="#ffffff" stroke-opacity="0.08"/>
+      <text x="388" y="23" text-anchor="middle" fill="#9fb2b7" font-family="Arial, Helvetica, sans-serif" font-size="11">alex.morgan@example-corp.test</text>
+    </g>
+
+    <g transform="translate(1168 75)">
+      <rect width="212" height="58" rx="18" fill="#1cd6b1"/>
+      <text x="106" y="36" text-anchor="middle" fill="#062019" font-family="Arial, Helvetica, sans-serif" font-size="15" font-weight="800">RUN INVESTIGATION</text>
+    </g>
+  </g>
+
+  <g transform="translate(92 388)" font-family="Arial, Helvetica, sans-serif">
+    <g>
+      <rect width="330" height="104" rx="22" fill="#0d1b22" stroke="#ffffff" stroke-opacity="0.06"/>
+      <text x="24" y="34" fill="#7f969c" font-size="12" font-weight="700">TIMELINE EVENTS</text>
+      <text x="24" y="78" fill="#f1f8f7" font-size="36" font-weight="800">6</text>
+    </g>
+    <g transform="translate(352 0)">
+      <rect width="330" height="104" rx="22" fill="#0d1b22" stroke="#ffffff" stroke-opacity="0.06"/>
+      <text x="24" y="34" fill="#7f969c" font-size="12" font-weight="700">UNIQUE IOCS</text>
+      <text x="24" y="78" fill="#f1f8f7" font-size="36" font-weight="800">3</text>
+    </g>
+    <g transform="translate(704 0)">
+      <rect width="330" height="104" rx="22" fill="#0d1b22" stroke="#ffffff" stroke-opacity="0.06"/>
+      <text x="24" y="34" fill="#7f969c" font-size="12" font-weight="700">EVIDENCE SOURCES</text>
+      <text x="24" y="78" fill="#f1f8f7" font-size="36" font-weight="800">3</text>
+    </g>
+    <g transform="translate(1056 0)">
+      <rect width="330" height="104" rx="22" fill="#0d1b22" stroke="#ffffff" stroke-opacity="0.06"/>
+      <text x="24" y="34" fill="#7f969c" font-size="12" font-weight="700">EVIDENCE GAPS</text>
+      <text x="24" y="78" fill="#ffb082" font-size="36" font-weight="800">1</text>
+    </g>
+  </g>
+
+  <g transform="translate(92 516)" font-family="Arial, Helvetica, sans-serif">
+    <rect width="1416" height="48" rx="18" fill="#09151b" stroke="#ffffff" stroke-opacity="0.05"/>
+    <rect x="8" y="7" width="132" height="34" rx="13" fill="#123028"/>
+    <text x="74" y="29" text-anchor="middle" fill="#78f0d5" font-size="12" font-weight="800">OVERVIEW</text>
+    <text x="194" y="29" fill="#7f959b" font-size="12" font-weight="700">TIMELINE</text>
+    <text x="304" y="29" fill="#7f959b" font-size="12" font-weight="700">EVIDENCE</text>
+    <text x="416" y="29" fill="#7f959b" font-size="12" font-weight="700">RESPONSE</text>
+  </g>
+
+  <g transform="translate(92 588)" font-family="Arial, Helvetica, sans-serif">
+    <rect width="918" height="216" rx="24" fill="#0d1c23" stroke="#ffffff" stroke-opacity="0.06"/>
+    <text x="28" y="34" fill="#55dfc5" font-size="11" font-weight="800" letter-spacing="1.8">ASSESSMENT</text>
+    <text x="28" y="63" fill="#f2f8f7" font-size="22" font-weight="800">Analyst findings</text>
+
+    <circle cx="38" cy="100" r="5" fill="#44dabb"/>
+    <text x="56" y="105" fill="#b7c6ca" font-size="14">Credential phishing preceded suspicious authentication activity.</text>
+    <circle cx="38" cy="136" r="5" fill="#44dabb"/>
+    <text x="56" y="141" fill="#b7c6ca" font-size="14">Identity and mailbox artifacts indicate likely account takeover.</text>
+    <circle cx="38" cy="172" r="5" fill="#44dabb"/>
+    <text x="56" y="177" fill="#b7c6ca" font-size="14">External forwarding behavior creates risk of ongoing email collection.</text>
+  </g>
+
+  <g transform="translate(1030 588)" font-family="Arial, Helvetica, sans-serif">
+    <rect width="478" height="216" rx="24" fill="#0d1c23" stroke="#ffffff" stroke-opacity="0.06"/>
+    <text x="28" y="34" fill="#55dfc5" font-size="11" font-weight="800" letter-spacing="1.8">RISK</text>
+    <text x="28" y="63" fill="#f2f8f7" font-size="22" font-weight="800">Investigation confidence</text>
+    <circle cx="118" cy="139" r="54" fill="#0a151a" stroke="#2ce1ba" stroke-width="9" stroke-opacity="0.85"/>
+    <text x="118" y="145" text-anchor="middle" fill="#f2faf8" font-size="30" font-weight="800">90</text>
+    <text x="185" y="126" fill="#a9bbc0" font-size="13">HIGH CONFIDENCE</text>
+    <text x="185" y="151" fill="#7f969c" font-size="12">Identity, email, and mailbox</text>
+    <text x="185" y="170" fill="#7f969c" font-size="12">evidence correlated.</text>
+  </g>
+
+  <text x="92" y="837" fill="#60777e" font-family="Arial, Helvetica, sans-serif" font-size="11">React + FastAPI • Microsoft 365 evidence • Entra ID • MITRE ATT&amp;CK • IOC correlation</text>
+</svg>
