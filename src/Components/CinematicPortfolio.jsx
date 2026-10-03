@@ -15,6 +15,7 @@ import {
 import myImage from "../images/MyPicture.png";
 import windowsConsole from "../images/windows-infrastructure-console.svg";
 import PortfolioAssistant from "./PortfolioAssistant";
+import StoryExperienceTimeline from "./StoryExperienceTimeline";
 
 const scenes = [
   { id: "intro", label: "Start", number: "00" },
@@ -491,7 +492,7 @@ const CinematicPortfolio = () => {
                     );
                   })}
                 </div>
-                <button type="button" onClick={() => navigate(2)} className="group mt-6 inline-flex items-center gap-3 text-sm font-bold text-[#58E6D1]">See what I build <FaArrowRight className="transition-transform duration-700 group-hover:translate-x-1" /></button>
+                <StoryExperienceTimeline onViewProjects={() => navigate(2)} />
               </div>
             </SceneShell>
           )}
