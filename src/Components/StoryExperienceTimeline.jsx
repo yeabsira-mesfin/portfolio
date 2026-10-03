@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react";
-import { createPortal } from "react-dom";
 import { motion, useReducedMotion } from "framer-motion";
 import { FaArrowRight, FaCode, FaLayerGroup, FaShieldAlt, FaUsers } from "react-icons/fa";
 
@@ -38,68 +36,10 @@ const experience = [
   },
 ];
 
-export default function StoryExperienceTimeline() {
+export default function StoryExperienceTimeline({ onViewProjects }) {
   const reduceMotion = useReducedMotion();
-  const [target, setTarget] = useState(null);
 
-  useEffect(() => {
-    let portalHost = null;
-    let originalProjectsCta = null;
-
-    const sync = () => {
-      const story = document.querySelector('[data-story-content="true"]');
-      if (!story) {
-        setTarget(null);
-        return;
-      }
-
-      originalProjectsCta = Array.from(story.children).find(
-        (child) => child.tagName === "BUTTON" && child.textContent?.includes("See what I build")
-      );
-
-      if (originalProjectsCta) {
-        originalProjectsCta.style.display = "none";
-        originalProjectsCta.setAttribute("aria-hidden", "true");
-        originalProjectsCta.setAttribute("tabindex", "-1");
-      }
-
-      portalHost = story.querySelector('[data-story-timeline-host="true"]');
-
-      if (!portalHost) {
-        portalHost = document.createElement("div");
-        portalHost.setAttribute("data-story-timeline-host", "true");
-        story.appendChild(portalHost);
-      }
-
-      setTarget(portalHost);
-    };
-
-    sync();
-    const observer = new MutationObserver(sync);
-    observer.observe(document.body, { childList: true, subtree: true });
-
-    return () => {
-      observer.disconnect();
-      if (originalProjectsCta?.isConnected) {
-        originalProjectsCta.style.display = "";
-        originalProjectsCta.removeAttribute("aria-hidden");
-        originalProjectsCta.removeAttribute("tabindex");
-      }
-      if (portalHost?.isConnected) portalHost.remove();
-    };
-  }, []);
-
-  const openProjects = () => {
-    const projectsNavButton = Array.from(
-      document.querySelectorAll('nav[aria-label="Portfolio sections"] button')
-    ).find((button) => button.textContent?.trim().toLowerCase() === "projects");
-
-    projectsNavButton?.click();
-  };
-
-  if (!target) return null;
-
-  return createPortal(
+  return (
     <section className="story-experience-timeline relative mt-8 overflow-hidden rounded-[1.65rem] border border-[#7CEBDD]/10 bg-[#061720]/55 p-5 shadow-[0_24px_80px_rgba(0,5,11,.25)] backdrop-blur-xl sm:p-6">
       <div className="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full bg-[#58E6D1]/[.055] blur-3xl" />
       <div className="pointer-events-none absolute -bottom-24 left-1/3 h-52 w-52 rounded-full bg-[#7CB7FF]/[.045] blur-3xl" />
@@ -137,17 +77,16 @@ export default function StoryExperienceTimeline() {
         })}
       </div>
 
-      <div className="relative z-10 mt-8 border-t border-[#7CEBDD]/10 pt-6 pb-1">
+      <div className="relative z-10 mt-8 border-t border-[#7CEBDD]/10 pb-1 pt-6">
         <button
           type="button"
-          onClick={openProjects}
+          onClick={onViewProjects}
           className="group inline-flex items-center gap-3 rounded-full bg-[#DFFFFB] px-5 py-3.5 text-sm font-bold text-[#03131A] shadow-[0_10px_34px_rgba(86,230,211,.12)] transition-all duration-700 hover:-translate-y-0.5 hover:bg-white"
         >
           See what I build
           <FaArrowRight className="text-xs transition-transform duration-700 group-hover:translate-x-1" />
         </button>
       </div>
-    </section>,
-    target
+    </section>
   );
 }
