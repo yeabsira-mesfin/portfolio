@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { motion, useReducedMotion } from "framer-motion";
-import { FaCode, FaLayerGroup, FaShieldAlt, FaUsers } from "react-icons/fa";
+import { FaArrowRight, FaCode, FaLayerGroup, FaShieldAlt, FaUsers } from "react-icons/fa";
 
 const experience = [
   {
@@ -44,6 +44,7 @@ export default function StoryExperienceTimeline() {
 
   useEffect(() => {
     let portalHost = null;
+    let originalProjectsCta = null;
 
     const sync = () => {
       const story = document.querySelector('[data-story-content="true"]');
@@ -52,21 +53,22 @@ export default function StoryExperienceTimeline() {
         return;
       }
 
+      originalProjectsCta = Array.from(story.children).find(
+        (child) => child.tagName === "BUTTON" && child.textContent?.includes("See what I build")
+      );
+
+      if (originalProjectsCta) {
+        originalProjectsCta.style.display = "none";
+        originalProjectsCta.setAttribute("aria-hidden", "true");
+        originalProjectsCta.setAttribute("tabindex", "-1");
+      }
+
       portalHost = story.querySelector('[data-story-timeline-host="true"]');
 
       if (!portalHost) {
         portalHost = document.createElement("div");
         portalHost.setAttribute("data-story-timeline-host", "true");
-
-        const projectsCta = Array.from(story.children).find(
-          (child) => child.tagName === "BUTTON" && child.textContent?.includes("See what I build")
-        );
-
-        if (projectsCta) {
-          story.insertBefore(portalHost, projectsCta);
-        } else {
-          story.appendChild(portalHost);
-        }
+        story.appendChild(portalHost);
       }
 
       setTarget(portalHost);
@@ -78,9 +80,22 @@ export default function StoryExperienceTimeline() {
 
     return () => {
       observer.disconnect();
+      if (originalProjectsCta?.isConnected) {
+        originalProjectsCta.style.display = "";
+        originalProjectsCta.removeAttribute("aria-hidden");
+        originalProjectsCta.removeAttribute("tabindex");
+      }
       if (portalHost?.isConnected) portalHost.remove();
     };
   }, []);
+
+  const openProjects = () => {
+    const projectsNavButton = Array.from(
+      document.querySelectorAll('nav[aria-label="Portfolio sections"] button')
+    ).find((button) => button.textContent?.trim().toLowerCase() === "projects");
+
+    projectsNavButton?.click();
+  };
 
   if (!target) return null;
 
@@ -120,6 +135,17 @@ export default function StoryExperienceTimeline() {
             </motion.article>
           );
         })}
+      </div>
+
+      <div className="relative z-10 mt-8 border-t border-[#7CEBDD]/10 pt-6 pb-1">
+        <button
+          type="button"
+          onClick={openProjects}
+          className="group inline-flex items-center gap-3 rounded-full bg-[#DFFFFB] px-5 py-3.5 text-sm font-bold text-[#03131A] shadow-[0_10px_34px_rgba(86,230,211,.12)] transition-all duration-700 hover:-translate-y-0.5 hover:bg-white"
+        >
+          See what I build
+          <FaArrowRight className="text-xs transition-transform duration-700 group-hover:translate-x-1" />
+        </button>
       </div>
     </section>,
     target
