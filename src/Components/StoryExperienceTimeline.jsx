@@ -20,9 +20,9 @@ const experience = [
   },
   {
     period: "Leadership",
-    title: "Teams, reliability, and client outcomes",
-    text: "Led four account managers, trained teammates, standardized workflows, diagnosed production issues, and helped shorten release cycles while keeping critical delivery stable under time pressure.",
-    proof: "4 account managers · 30% faster releases · no critical incidents over 2 years",
+    title: "Technical leadership, reliability, and client outcomes",
+    text: "Led four account managers who also worked as developers, trained teammates, standardized development and delivery workflows, diagnosed production issues, and helped shorten release cycles while keeping critical client delivery stable under time pressure.",
+    proof: "4 developer-account managers · 30% faster releases · no critical incidents over 2 years",
     icon: FaUsers,
     accent: "#E8BD73",
   },
