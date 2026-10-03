@@ -1,15 +1,12 @@
 const fs = require("fs");
 const path = require("path");
 
-const cinematicPath = path.join(__dirname, "..", "src", "Components", "CinematicPortfolio.jsx");
-let source = fs.readFileSync(cinematicPath, "utf8");
+const root = path.join(__dirname, "..");
+const cinematicPath = path.join(root, "src", "Components", "CinematicPortfolio.jsx");
+const timelinePath = path.join(root, "src", "Components", "StoryExperienceTimeline.jsx");
 
-// Put the Story CTA in a visually distinct footer so the page clearly continues
-// through the full story before sending visitors to Projects.
-source = source.replace(
-  '<button type="button" onClick={() => navigate(2)} className="group mt-6 inline-flex items-center gap-3 text-sm font-bold text-[#58E6D1]">See what I build <FaArrowRight className="transition-transform duration-700 group-hover:translate-x-1" /></button>',
-  '<div data-story-footer="true" className="mt-12 border-t border-[#7CEBDD]/10 pb-3 pt-7"><button type="button" onClick={() => navigate(2)} className="group inline-flex items-center gap-3 rounded-full bg-[#DFFFFB] px-5 py-3.5 text-sm font-bold text-[#03131A] shadow-[0_10px_34px_rgba(86,230,211,.10)] transition-all duration-700 hover:-translate-y-0.5 hover:bg-white">See what I build <FaArrowRight className="text-xs transition-transform duration-700 group-hover:translate-x-1" /></button></div>',
-);
+let source = fs.readFileSync(cinematicPath, "utf8");
+const timelineSource = fs.readFileSync(timelinePath, "utf8");
 
 // The BEC project is injected by the main QA patch. Give it its repository link
 // so every project shown in the portfolio has a destination visitors can open.
@@ -24,8 +21,24 @@ source = source.replace(
   '>View repository <FaGithub className="text-[10px]" /></a>',
 );
 
-if (!source.includes('data-story-footer="true"')) {
-  throw new Error("Requested portfolio update failed: Story footer CTA was not applied");
+// The Story timeline is now rendered directly by CinematicPortfolio. Keep exactly
+// one Projects CTA, owned by StoryExperienceTimeline, and fail the build if the
+// duplicate inline CTA ever comes back.
+if (!source.includes('import StoryExperienceTimeline from "./StoryExperienceTimeline";')) {
+  throw new Error("Requested portfolio update failed: StoryExperienceTimeline import is missing");
+}
+
+if (!source.includes('<StoryExperienceTimeline onViewProjects={() => navigate(2)} />')) {
+  throw new Error("Requested portfolio update failed: StoryExperienceTimeline is not rendered inside the Story scene");
+}
+
+if (source.includes("See what I build")) {
+  throw new Error("Requested portfolio update failed: duplicate Story CTA remains in CinematicPortfolio.jsx");
+}
+
+const timelineCtaCount = (timelineSource.match(/See what I build/g) || []).length;
+if (timelineCtaCount !== 1) {
+  throw new Error(`Requested portfolio update failed: expected exactly one Story CTA, found ${timelineCtaCount}`);
 }
 
 const projectBlocks = source.match(/\{\n\s+id: "[^"]+",[\s\S]*?\n\s+\},/g) || [];
@@ -38,4 +51,4 @@ if (missingDestinations.length > 0) {
 }
 
 fs.writeFileSync(cinematicPath, source);
-console.log("Requested portfolio updates applied: Story CTA moved into the page footer and every project has a repo or live destination.");
+console.log("Requested portfolio updates applied: single Story CTA verified and every project has a repo or live destination.");
