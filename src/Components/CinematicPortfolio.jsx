@@ -82,15 +82,15 @@ const projects = [
 const storyCards = [
   {
     eyebrow: "WHAT I AM",
-    title: "Software engineer with systems instincts.",
-    text: "I build full-stack products, but I naturally follow the work deeper: APIs, identity, networking, infrastructure, reliability, and security.",
+    title: "Software engineer and cybersecurity professional.",
+    text: "I build full-stack products and secure the systems around them, working across APIs, identity, networking, infrastructure, reliability, and defensive security.",
     icon: FaCode,
     accent: "#58E6D1",
   },
   {
     eyebrow: "WHAT I’M DOING",
-    title: "Going deeper into cybersecurity.",
-    text: "I am completing an M.S. in Cybersecurity in Computer Science at The George Washington University, focused on secure systems and network security.",
+    title: "Advancing software engineering and cybersecurity together.",
+    text: "I am completing an M.S. in Cybersecurity in Computer Science at The George Washington University while continuing to build production software and security-focused systems.",
     icon: FaGraduationCap,
     accent: "#7CB7FF",
   },
@@ -463,14 +463,14 @@ const CinematicPortfolio = () => {
               <div className="order-2 lg:order-1">
                 <div className="mb-5 flex items-center gap-3"><span className="h-px w-10 bg-[#58E6D1]/65" /><span className="font-mono text-[9px] font-bold uppercase tracking-[.22em] text-[#58E6D1]">Portfolio / 2026</span></div>
                 <h1 className="max-w-4xl text-[clamp(3.25rem,7.5vw,7rem)] font-semibold leading-[.84] tracking-[-.07em] text-[#E8F7F5]">Yeabsira<br /><span className="bg-gradient-to-r from-[#E7FFFB] via-[#58E6D1] to-[#7CB7FF] bg-clip-text text-transparent">Mesfin.</span></h1>
-                <p className="mt-7 max-w-xl text-[clamp(1.05rem,2vw,1.55rem)] font-medium leading-[1.35] tracking-[-.02em] text-[#D4ECE9]/72">I build software, understand the systems underneath it, and keep moving deeper into security.</p>
-                <p className="mt-5 max-w-xl text-sm leading-7 text-[#C5E1DE]/42 sm:text-base">Want to step into the story? Turn the mechanism and move through what I am, what I have built, and where I am going next.</p>
+                <p className="mt-7 max-w-xl text-[clamp(1.05rem,2vw,1.55rem)] font-medium leading-[1.35] tracking-[-.02em] text-[#D4ECE9]/72">I build production software and secure the systems behind it, combining full-stack engineering with cybersecurity across applications, APIs, identity, infrastructure, and defensive operations.</p>
+                <p className="mt-5 max-w-xl text-sm leading-7 text-[#C5E1DE]/42 sm:text-base">Want to step into the story? Turn the mechanism and explore how software engineering and cybersecurity come together in what I build, operate, and secure.</p>
                 <div className="mt-8 flex flex-wrap items-center gap-3">
                   <button type="button" onClick={() => navigate(1)} className="group inline-flex items-center gap-3 rounded-full bg-[#DFFFFB] px-5 py-3.5 text-sm font-bold text-[#03131A] shadow-[0_10px_34px_rgba(86,230,211,.12)] transition-all duration-700 hover:-translate-y-0.5 hover:bg-white">Enter my story <FaArrowRight className="text-xs transition-transform duration-700 group-hover:translate-x-1" /></button>
                   <button type="button" onClick={() => navigate(2)} className="rounded-full border border-[#7CEBDD]/14 bg-[#7CEBDD]/[.025] px-4 py-3 text-xs font-bold text-[#C8EAE6]/60 transition-all duration-700 hover:border-[#7CEBDD]/35 hover:text-[#E8FFFC]">Jump to projects</button>
                   <button type="button" onClick={() => navigate(3)} className="rounded-full border border-[#7CEBDD]/14 bg-[#7CEBDD]/[.025] px-4 py-3 text-xs font-bold text-[#C8EAE6]/60 transition-all duration-700 hover:border-[#7CEBDD]/35 hover:text-[#E8FFFC]">Contact</button>
                 </div>
-                <div className="mt-10 flex flex-wrap gap-x-7 gap-y-3 border-t border-[#7CEBDD]/8 pt-5 font-mono text-[9px] uppercase tracking-[.17em] text-[#B9D9D5]/28"><span>5+ years building</span><span>200+ enterprise deliveries</span><span>GWU cybersecurity M.S.</span></div>
+                <div className="mt-10 flex flex-wrap gap-x-7 gap-y-3 border-t border-[#7CEBDD]/8 pt-5 font-mono text-[9px] uppercase tracking-[.17em] text-[#B9D9D5]/28"><span>5+ years software engineering</span><span>200+ enterprise deliveries</span><span>GWU cybersecurity M.S.</span></div>
               </div>
               <div className="order-1 lg:order-2"><HeroVisual scene={scene} wheelTurn={wheelTurn} reduceMotion={reduceMotion} onNavigate={navigate} /></div>
             </SceneShell>
