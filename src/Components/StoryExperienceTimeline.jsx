@@ -4,8 +4,8 @@ import { FaArrowRight, FaCode, FaLayerGroup, FaShieldAlt, FaUsers } from "react-
 const experience = [
   {
     period: "2019 → Present",
-    title: "Software engineering foundation",
-    text: "Built 10+ full-stack web and mobile applications across JavaScript, TypeScript, React, Node.js, Python, Java, SQL, MongoDB, REST APIs, authentication, testing, and production support.",
+    title: "Advanced full-stack systems engineering",
+    text: "Built 100+ full-stack web and mobile applications across JavaScript, TypeScript, React, Node.js, Python, Java, SQL, MongoDB, REST APIs, authentication, testing, and production support.",
     proof: "5+ years building · full stack · APIs · secure delivery",
     icon: FaCode,
     accent: "#58E6D1",
@@ -28,9 +28,9 @@ const experience = [
   },
   {
     period: "Now",
-    title: "Software + cybersecurity",
-    text: "Completing an M.S. in Cybersecurity in Computer Science at George Washington University while building security-focused projects around application security, endpoint posture, infrastructure, secure APIs, RBAC, and AI security testing.",
-    proof: "GWU M.S. · AppSec · infrastructure · AI security",
+    title: "Software engineering + cybersecurity",
+    text: "Completing an M.S. in Cybersecurity in Computer Science at George Washington University while building both production software and security-focused projects across application security, endpoint posture, infrastructure, secure APIs, RBAC, and AI security testing.",
+    proof: "GWU M.S. · software engineering · AppSec · infrastructure · AI security",
     icon: FaShieldAlt,
     accent: "#B39BFF",
   },
@@ -49,8 +49,8 @@ export default function StoryExperienceTimeline({ onViewProjects }) {
           <span className="font-mono text-[8px] font-bold uppercase tracking-[.22em] text-[#58E6D1]">Experience / trajectory</span>
           <span className="h-px flex-1 bg-gradient-to-r from-[#58E6D1]/30 to-transparent" />
         </div>
-        <h3 className="mt-3 max-w-2xl text-xl font-semibold tracking-[-.035em] text-[#E8F7F5]/92 sm:text-2xl">Building products, operating real systems, and moving deeper into security.</h3>
-        <p className="mt-2 max-w-2xl text-sm leading-6 text-[#C5DFDC]/46">The path has been hands-on from the start: build it, ship it, support it, improve it, then understand how to secure the systems underneath it.</p>
+        <h3 className="mt-3 max-w-2xl text-xl font-semibold tracking-[-.035em] text-[#E8F7F5]/92 sm:text-2xl">Building software, securing systems, and operating both in the real world.</h3>
+        <p className="mt-2 max-w-2xl text-sm leading-6 text-[#C5DFDC]/46">The path has been hands-on from the start: design it, build it, secure it, ship it, support it, and keep improving it.</p>
       </motion.div>
 
       <div className="relative z-10 mt-6 space-y-3 before:absolute before:bottom-4 before:left-[19px] before:top-4 before:w-px before:bg-gradient-to-b before:from-[#58E6D1]/45 before:via-[#7CB7FF]/18 before:to-transparent sm:before:left-[23px]">
