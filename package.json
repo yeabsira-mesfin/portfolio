@@ -4,12 +4,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@emailjs/browser": "^4.4.1",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "autoprefixer": "^10.4.20",
-    "emailjs-com": "^3.2.0",
     "framer-motion": "^10.12.16",
     "postcss": "^8.4.49",
     "react": "^18.3.1",
@@ -23,10 +21,11 @@
   "scripts": {
     "start": "react-scripts start",
     "prebuild": "node scripts/apply-portfolio-qa-fixes.js && node scripts/apply-requested-portfolio-updates.js",
-    "build": "react-scripts build",
-    "postbuild": "node scripts/qa-build.js",
+    "build": "node scripts/build-production.js",
+    "postbuild": "node scripts/qa-build.js && npm run security:check",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "security:check": "node scripts/security-check.js"
   },
   "eslintConfig": {
     "extends": [
@@ -35,7 +34,9 @@
     ],
     "overrides": [
       {
-        "files": ["src/Components/CareerQuest.jsx"],
+        "files": [
+          "src/Components/CareerQuest.jsx"
+        ],
         "rules": {
           "react-hooks/exhaustive-deps": "off"
         }

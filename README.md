@@ -60,7 +60,7 @@ The site includes:
 - Consistent GitHub, LinkedIn, X, and portfolio identity links
 
 ### Contact
-The portfolio includes a working contact form powered by EmailJS, along with direct links to GitHub, LinkedIn, X, and email.
+Professional inquiries use LinkedIn. The portfolio does not collect contact-form submissions or publish a personal email address, phone number, or downloadable résumé.
 
 ## Tech Stack
 
@@ -72,7 +72,6 @@ The portfolio includes a working contact form powered by EmailJS, along with dir
 - React Icons
 
 **Integrations**
-- EmailJS
 - X public timeline integration
 
 **Engineering**

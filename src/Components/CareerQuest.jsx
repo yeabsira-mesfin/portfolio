@@ -412,7 +412,7 @@ const CareerQuest = () => {
                   <h2 className="mt-5 max-w-5xl text-[clamp(3.2rem,7vw,6.8rem)] font-black leading-[0.84] tracking-[-0.07em] text-[#f4f1e8]">You reached<br /><span className="text-[#d9ff43]">the current chapter.</span></h2>
                   <p className="mt-7 max-w-2xl text-base leading-7 text-white/46 sm:text-lg">I am looking for software engineering, infrastructure engineering, security engineering, and adjacent roles where code and systems thinking meet.</p>
                   <div className="mt-8 flex flex-wrap gap-3">
-                    <a href="mailto:yeabsira.mesfin29@gmail.com" className="inline-flex items-center gap-3 rounded-2xl bg-[#d9ff43] px-5 py-3.5 text-sm font-black text-[#090a0c]"><FaEnvelope /> Email me</a>
+                    <a href="https://www.linkedin.com/in/yeabsira-mesfin-76379928a" className="inline-flex items-center gap-3 rounded-2xl bg-[#d9ff43] px-5 py-3.5 text-sm font-black text-[#090a0c]"><FaEnvelope /> Contact me</a>
                     <a href="https://www.linkedin.com/in/yeabsira-mesfin-76379928a" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.035] px-5 py-3.5 text-sm font-black text-white/65 hover:text-white"><FaLinkedinIn /> LinkedIn</a>
                     <a href="https://github.com/yeabsira-mesfin" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.035] px-5 py-3.5 text-sm font-black text-white/65 hover:text-white"><FaGithub /> GitHub</a>
                   </div>

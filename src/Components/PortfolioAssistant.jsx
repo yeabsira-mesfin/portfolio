@@ -17,7 +17,7 @@ const answers = {
   projects:
     "Recent work includes the Windows Infrastructure Reliability Console, Secure Cloud Infrastructure as Code, TechBoard, and Secure Login Analyzer. Together they show infrastructure monitoring and failover, AWS/Terraform security, full-stack RBAC workflows, and authentication-event detection.",
   roles:
-    "He is targeting Software Engineer, Full-Stack Engineer, Infrastructure Engineer, Application Security Engineer, Security Engineer, and related systems roles. He is based in Bristow, Virginia and is open to relocation across the U.S.",
+    "He is targeting Software Engineer, Full-Stack Engineer, Infrastructure Engineer, Application Security Engineer, Security Engineer, and related systems roles. He is based in Washington, DC metro area and is open to relocation across the U.S.",
   experience:
     "Yeabsira has 5+ years of software experience, including freelance work starting in 2019 and several years at MMCY. At MMCY he grew from developer into client-facing leadership and delivered 200+ enterprise event builds while working across production troubleshooting, integrations, analytics, custom development, and security-oriented systems work.",
   education:

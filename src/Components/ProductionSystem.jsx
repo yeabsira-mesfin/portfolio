@@ -272,7 +272,7 @@ const ProductionSystem = () => {
                   <a href="#services" className="group inline-flex items-center gap-3 rounded-xl bg-[#dce6e1] px-5 py-3.5 text-sm font-black text-[#101716] transition hover:-translate-y-0.5 hover:bg-white">
                     Inspect the work <FaArrowRight className="text-xs transition-transform group-hover:translate-x-1" />
                   </a>
-                  <a href="mailto:yeabsira.mesfin29@gmail.com" className="inline-flex items-center gap-2 rounded-xl border border-white/[0.09] bg-white/[0.025] px-5 py-3.5 text-sm font-black text-white/58 transition hover:border-white/15 hover:text-white">
+                  <a href="https://www.linkedin.com/in/yeabsira-mesfin-76379928a" className="inline-flex items-center gap-2 rounded-xl border border-white/[0.09] bg-white/[0.025] px-5 py-3.5 text-sm font-black text-white/58 transition hover:border-white/15 hover:text-white">
                     <FaEnvelope /> Contact
                   </a>
                 </div>
@@ -564,7 +564,7 @@ const ProductionSystem = () => {
               <p className="mt-7 max-w-2xl text-base leading-7 text-white/42 sm:text-lg">I am completing an M.S. in Cybersecurity in Computer Science at The George Washington University and applying my software background to infrastructure reliability, networking, authentication, defensive engineering, and secure systems.</p>
 
               <div className="mt-8 flex flex-wrap gap-3">
-                <a href="mailto:yeabsira.mesfin29@gmail.com" className="inline-flex items-center gap-3 rounded-xl bg-[#dce6e1] px-5 py-3.5 text-sm font-black text-[#101716] transition hover:-translate-y-0.5 hover:bg-white"><FaEnvelope /> Start a conversation</a>
+                <a href="https://www.linkedin.com/in/yeabsira-mesfin-76379928a" className="inline-flex items-center gap-3 rounded-xl bg-[#dce6e1] px-5 py-3.5 text-sm font-black text-[#101716] transition hover:-translate-y-0.5 hover:bg-white"><FaEnvelope /> Start a conversation</a>
                 <a href="https://www.linkedin.com/in/yeabsira-mesfin-76379928a" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 rounded-xl border border-white/[0.09] bg-white/[0.025] px-5 py-3.5 text-sm font-black text-white/55 transition hover:text-white"><FaLinkedinIn /> LinkedIn</a>
               </div>
             </div>
