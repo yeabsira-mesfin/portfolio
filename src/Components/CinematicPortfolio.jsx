@@ -26,6 +26,17 @@ const scenes = [
 
 const projects = [
   {
+    id: "agentbench-pro",
+    title: "AgentBench Pro",
+    lane: "AI Evaluation + Software Engineering",
+    summary: "A coding-agent evaluation workbench with six curated software engineering tasks, versioned scoring rubrics, evidence-backed reviewer assessments, and independent security and regression release gates.",
+    proof: "React · TypeScript · FastAPI · Python · Pydantic · Pytest · Docker · GitHub Actions",
+    repo: "https://github.com/yeabsira-mesfin/agentbench-swe",
+    demo: "https://agentbench-swe.vercel.app/",
+    code: "AI",
+    accent: "#A6B8FF",
+  },
+  {
     id: "appsec",
     title: "AppSec Vulnerability Manager",
     lane: "AppSec + Software",
