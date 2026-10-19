@@ -521,14 +521,12 @@ const CinematicPortfolio = () => {
                   <p className="mt-4 max-w-[190px] text-center font-mono text-[7px] uppercase tracking-[.2em] text-[#A8D8D2]/24">rotating project mechanism</p>
                 </div>
 
-                <AnimatePresence mode="wait">
+                <div>
                   <motion.article
                     data-project-card="true"
-                    key={selectedProject.id}
-                    initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 12, scale: .99 }}
+                    initial={false}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -8, scale: .994 }}
-                    transition={{ duration: 0.76, ease: [0.16, 1, 0.3, 1] }}
+                    transition={{ duration: 0.2, ease: "easeOut" }}
                     className="min-w-0 overflow-hidden rounded-[1.8rem] border border-[#7CEBDD]/11 bg-[#03131A]/84 p-3 shadow-[0_30px_90px_rgba(0,5,11,.5)] backdrop-blur-xl sm:p-4"
                   >
                     <ProjectVisual project={selectedProject} reduceMotion={reduceMotion} />
@@ -543,7 +541,7 @@ const CinematicPortfolio = () => {
                       </div>
                     </div>
                   </motion.article>
-                </AnimatePresence>
+                </div>
               </div>
             </div>
           )}
