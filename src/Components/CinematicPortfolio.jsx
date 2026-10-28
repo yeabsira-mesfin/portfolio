@@ -93,22 +93,22 @@ const projects = [
 const storyCards = [
   {
     eyebrow: "WHAT I AM",
-    title: "Software engineer and cybersecurity professional.",
-    text: "I build full-stack products and secure the systems around them, working across APIs, identity, networking, infrastructure, reliability, and defensive security.",
+    title: "Full Stack Software Engineer and Cvent Developer.",
+    text: "I build web applications, secure APIs, event registration platforms, and mobile experiences using React, TypeScript, Node.js, Cvent, and SpotMe.",
     icon: FaCode,
     accent: "#58E6D1",
   },
   {
     eyebrow: "WHAT I’M DOING",
-    title: "Advancing software engineering and cybersecurity together.",
-    text: "I am completing an M.S. in Cybersecurity in Computer Science at The George Washington University while continuing to build production software and security-focused systems.",
+    title: "Pursuing an M.S. in Cybersecurity at GWU.",
+    text: "I'm pursuing an M.S. in Cybersecurity in Computer Science at The George Washington University, bringing application security, infrastructure, and secure systems thinking into my engineering work.",
     icon: FaGraduationCap,
     accent: "#7CB7FF",
   },
   {
     eyebrow: "WHAT I’VE DONE",
-    title: "Built and operated real client systems.",
-    text: "At MMCY, I grew from developer into client-facing leadership while delivering 200+ enterprise event builds and supporting production outcomes.",
+    title: "Enterprise delivery and technical leadership.",
+    text: "Through MMCY, I supported BCD Travel, YPO, Abbott, and CDW as enterprise clients, delivering 200+ event builds and progressing from Cvent development into client-facing team leadership.",
     icon: FaServer,
     accent: "#E8BD73",
   },
@@ -457,7 +457,7 @@ const CinematicPortfolio = () => {
         <div className="mx-auto flex max-w-7xl items-center justify-between rounded-2xl border border-[#79EADF]/10 bg-[#031019]/72 px-3 py-2.5 shadow-[0_18px_60px_rgba(0,5,11,.36)] backdrop-blur-2xl sm:px-4">
           <button type="button" onClick={() => navigate(0)} className="group flex items-center gap-3 text-left">
             <span className="relative grid h-9 w-9 place-items-center rounded-full border border-[#7CEBDD]/18 bg-[#7CEBDD]/[.04] font-mono text-[10px] font-bold text-[#DFFFFB]/80">YM<span className="absolute -inset-1 rounded-full border border-[#7CEBDD]/0 transition-all duration-700 group-hover:border-[#7CEBDD]/35" /></span>
-            <span className="hidden sm:block"><span className="block text-sm font-bold tracking-[-.02em] text-[#E8F7F5]/90">Yeabsira Mesfin</span><span className="block font-mono text-[8px] uppercase tracking-[.18em] text-[#B8DCD8]/35">Software · Systems · Security</span></span>
+            <span className="hidden sm:block"><span className="block text-sm font-bold tracking-[-.02em] text-[#E8F7F5]/90">Yeabsira Mesfin</span><span className="block font-mono text-[8px] uppercase tracking-[.18em] text-[#B8DCD8]/35">Full Stack · Cvent · Security</span></span>
           </button>
           <nav className="flex items-center gap-0.5 sm:gap-1.5" aria-label="Portfolio sections">
             {scenes.slice(1).map((item, index) => (
@@ -472,16 +472,16 @@ const CinematicPortfolio = () => {
           {scene === 0 && (
             <SceneShell>
               <div className="order-2 lg:order-1">
-                <div className="mb-5 flex items-center gap-3"><span className="h-px w-10 bg-[#58E6D1]/65" /><span className="font-mono text-[9px] font-bold uppercase tracking-[.22em] text-[#58E6D1]">Portfolio / 2026</span></div>
+                <div className="mb-5 flex items-center gap-3"><span className="h-px w-10 bg-[#58E6D1]/65" /><span className="font-mono text-[9px] font-bold uppercase tracking-[.22em] text-[#58E6D1]">Full Stack · Cvent · Cybersecurity</span></div>
                 <h1 className="max-w-4xl text-[clamp(3.25rem,7.5vw,7rem)] font-semibold leading-[.84] tracking-[-.07em] text-[#E8F7F5]">Yeabsira<br /><span className="bg-gradient-to-r from-[#E7FFFB] via-[#58E6D1] to-[#7CB7FF] bg-clip-text text-transparent">Mesfin.</span></h1>
-                <p className="mt-7 max-w-xl text-[clamp(1.05rem,2vw,1.55rem)] font-medium leading-[1.35] tracking-[-.02em] text-[#D4ECE9]/72">I build production software and secure the systems behind it, combining full-stack engineering with cybersecurity across applications, APIs, identity, infrastructure, and defensive operations.</p>
-                <p className="mt-5 max-w-xl text-sm leading-7 text-[#C5E1DE]/42 sm:text-base">Want to step into the story? Turn the mechanism and explore how software engineering and cybersecurity come together in what I build, operate, and secure.</p>
+                <p className="mt-7 max-w-xl text-[clamp(1.05rem,2vw,1.55rem)] font-medium leading-[1.35] tracking-[-.02em] text-[#D4ECE9]/72">Building software. Powering experiences. Securing systems.</p>
+                <p className="mt-5 max-w-xl text-sm leading-7 text-[#C5E1DE]/42 sm:text-base">I'm a Full Stack Software Engineer and Cvent Developer with 5+ years of experience building secure web applications, enterprise event platforms, and mobile experiences. Through MMCY, I supported BCD Travel, YPO, Abbott, and CDW as enterprise clients while growing into technical leadership. I'm pursuing an M.S. in Cybersecurity in Computer Science at The George Washington University.</p>
                 <div className="mt-8 flex flex-wrap items-center gap-3">
                   <button type="button" onClick={() => navigate(1)} className="group inline-flex items-center gap-3 rounded-full bg-[#DFFFFB] px-5 py-3.5 text-sm font-bold text-[#03131A] shadow-[0_10px_34px_rgba(86,230,211,.12)] transition-all duration-700 hover:-translate-y-0.5 hover:bg-white">Enter my story <FaArrowRight className="text-xs transition-transform duration-700 group-hover:translate-x-1" /></button>
                   <button type="button" onClick={() => navigate(2)} className="rounded-full border border-[#7CEBDD]/14 bg-[#7CEBDD]/[.025] px-4 py-3 text-xs font-bold text-[#C8EAE6]/60 transition-all duration-700 hover:border-[#7CEBDD]/35 hover:text-[#E8FFFC]">Jump to projects</button>
                   <button type="button" onClick={() => navigate(3)} className="rounded-full border border-[#7CEBDD]/14 bg-[#7CEBDD]/[.025] px-4 py-3 text-xs font-bold text-[#C8EAE6]/60 transition-all duration-700 hover:border-[#7CEBDD]/35 hover:text-[#E8FFFC]">Contact</button>
                 </div>
-                <div className="mt-10 flex flex-wrap gap-x-7 gap-y-3 border-t border-[#7CEBDD]/8 pt-5 font-mono text-[9px] uppercase tracking-[.17em] text-[#B9D9D5]/28"><span>5+ years software engineering</span><span>200+ enterprise deliveries</span><span>GWU cybersecurity M.S.</span></div>
+                <div className="mt-10 flex flex-wrap gap-x-7 gap-y-3 border-t border-[#7CEBDD]/8 pt-5 font-mono text-[9px] uppercase tracking-[.17em] text-[#B9D9D5]/28"><span>5+ years full stack + Cvent</span><span>200+ enterprise event builds</span><span>GWU cybersecurity M.S.</span></div>
               </div>
               <div className="order-1 lg:order-2"><HeroVisual scene={scene} wheelTurn={wheelTurn} reduceMotion={reduceMotion} onNavigate={navigate} /></div>
             </SceneShell>
@@ -563,7 +563,7 @@ const CinematicPortfolio = () => {
               <div>
                 <div className="flex items-center gap-3"><span className="font-mono text-[9px] font-bold uppercase tracking-[.2em] text-[#58E6D1]">03 / Contact</span><span className="h-px flex-1 bg-[#7CEBDD]/8" /></div>
                 <h2 className="mt-5 text-[clamp(3rem,6vw,5.8rem)] font-semibold leading-[.87] tracking-[-.065em] text-[#E8F7F5]">Let’s build<br /><span className="text-[#C6E1DE]/24">what comes next.</span></h2>
-                <p className="mt-6 max-w-xl text-base leading-7 text-[#C5DFDC]/44">I am interested in software engineering, infrastructure, application security, and security engineering work where product thinking and systems thinking meet.</p>
+                <p className="mt-6 max-w-xl text-base leading-7 text-[#C5DFDC]/44">I'm interested in full stack engineering, Cvent development, enterprise event technology, and cybersecurity roles where reliable products and secure systems matter.</p>
                 <div className="mt-8 grid gap-3 sm:grid-cols-2">
                   <a href="https://www.linkedin.com/in/yeabsira-mesfin-76379928a" className="group rounded-2xl border border-[#7CEBDD]/9 bg-[#7CEBDD]/[.025] p-4 transition-all duration-700 hover:border-[#58E6D1]/35 hover:bg-[#7CEBDD]/[.045]"><FaEnvelope className="text-[#58E6D1]" /><p className="mt-4 font-mono text-[8px] uppercase tracking-[.18em] text-[#B9D9D5]/28">Contact</p><p className="mt-1 break-all text-sm font-semibold text-[#E0F7F3]/76">Connect on LinkedIn</p></a>
                   <a href="https://www.linkedin.com/in/yeabsira-mesfin-76379928a" target="_blank" rel="noopener noreferrer" className="group rounded-2xl border border-[#7CEBDD]/9 bg-[#7CEBDD]/[.025] p-4 transition-all duration-700 hover:border-[#7CB7FF]/35 hover:bg-[#7CEBDD]/[.045]"><FaLinkedinIn className="text-[#7CB7FF]" /><p className="mt-4 font-mono text-[8px] uppercase tracking-[.18em] text-[#B9D9D5]/28">LinkedIn</p><p className="mt-1 text-sm font-semibold text-[#E0F7F3]/76">Yeabsira Mesfin</p></a>

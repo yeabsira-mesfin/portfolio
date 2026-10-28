@@ -3,33 +3,33 @@ import { FaArrowRight, FaCode, FaLayerGroup, FaShieldAlt, FaUsers } from "react-
 
 const experience = [
   {
-    period: "2019 → Present",
-    title: "Advanced full-stack systems engineering",
-    text: "Built 100+ full-stack web and mobile applications across JavaScript, TypeScript, React, Node.js, Python, Java, SQL, MongoDB, REST APIs, authentication, testing, and production support.",
-    proof: "5+ years building · full stack · APIs · secure delivery",
+    period: "5+ years",
+    title: "Full stack software engineering",
+    text: "Built 10+ full stack web and mobile applications using React, TypeScript, Node.js, Python, SQL, MongoDB, REST APIs, JWT, RBAC, testing, and secure delivery.",
+    proof: "10+ full stack apps · 40% faster database performance · secure APIs",
     icon: FaCode,
     accent: "#58E6D1",
   },
   {
     period: "2022 → 2025",
-    title: "Enterprise delivery at MMCY",
-    text: "Progressed from developer into client-facing leadership while delivering 200+ enterprise event builds and supporting BCD, YPO, Abbott, CDW, and other enterprise teams through launches and live production.",
+    title: "Cvent development and enterprise delivery at MMCY",
+    text: "Built registration websites, attendee journeys, and mobile event experiences using Cvent and SpotMe for MMCY clients BCD Travel, YPO, Abbott, and CDW, delivering 200+ event builds and supporting live launches.",
     proof: "200+ builds · 5,000+ attendee records · zero data loss",
     icon: FaLayerGroup,
     accent: "#7CB7FF",
   },
   {
     period: "Leadership",
-    title: "Technical leadership, reliability, and client outcomes",
-    text: "Led four developer-account managers in dual technical and client-facing roles, trained teammates, standardized development and delivery workflows, diagnosed production issues, and helped shorten release cycles while keeping critical client delivery stable under time pressure.",
+    title: "Team leadership, client success, and reliability",
+    text: "Progressed from Cvent development into client-facing team leadership, leading 4 teammates, standardizing delivery workflows, troubleshooting production issues, and helping reduce release cycles by 30%.",
     proof: "4 developer-account managers · 30% faster releases · no critical incidents over 2 years",
     icon: FaUsers,
     accent: "#E8BD73",
   },
   {
     period: "Now",
-    title: "Software engineering + cybersecurity",
-    text: "Completing an M.S. in Cybersecurity in Computer Science at George Washington University while building both production software and security-focused projects across application security, endpoint posture, infrastructure, secure APIs, RBAC, and AI security testing.",
+    title: "Cybersecurity M.S. at George Washington University",
+    text: "Pursuing an M.S. in Cybersecurity in Computer Science at The George Washington University while building security-focused projects spanning application security, infrastructure, secure APIs, RBAC, and AI security testing.",
     proof: "GWU M.S. · software engineering · AppSec · infrastructure · AI security",
     icon: FaShieldAlt,
     accent: "#B39BFF",
@@ -49,7 +49,7 @@ export default function StoryExperienceTimeline({ onViewProjects }) {
           <span className="font-mono text-[8px] font-bold uppercase tracking-[.22em] text-[#58E6D1]">Experience / trajectory</span>
           <span className="h-px flex-1 bg-gradient-to-r from-[#58E6D1]/30 to-transparent" />
         </div>
-        <h3 className="mt-3 max-w-2xl text-xl font-semibold tracking-[-.035em] text-[#E8F7F5]/92 sm:text-2xl">Building software, securing systems, and operating both in the real world.</h3>
+        <h3 className="mt-3 max-w-2xl text-xl font-semibold tracking-[-.035em] text-[#E8F7F5]/92 sm:text-2xl">From full stack and Cvent development to secure systems and technical leadership.</h3>
         <p className="mt-2 max-w-2xl text-sm leading-6 text-[#C5DFDC]/46">The path has been hands-on from the start: design it, build it, secure it, ship it, support it, and keep improving it.</p>
       </motion.div>
 

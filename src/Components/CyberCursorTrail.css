@@ -1,0 +1,71 @@
+/* Additive, non-interactive desktop pointer effect. Existing page styling is unchanged. */
+.cyber-cursor-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10002;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 180ms ease;
+  overflow: hidden;
+}
+
+.cyber-cursor-overlay.is-visible {
+  opacity: 1;
+}
+
+.cyber-cursor-head,
+.cyber-cursor-particle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.cyber-cursor-head {
+  display: grid;
+  place-items: center;
+  width: 35px;
+  height: 35px;
+  border: 1px solid rgba(88, 230, 209, 0.54);
+  border-radius: 50%;
+  color: rgba(180, 255, 242, 0.88);
+  background: radial-gradient(circle, rgba(13, 83, 86, 0.24), rgba(2, 11, 18, 0.08) 74%);
+  box-shadow: 0 0 15px rgba(88, 230, 209, 0.14), inset 0 0 12px rgba(88, 230, 209, 0.08);
+}
+
+.cyber-cursor-head::before {
+  content: "";
+  position: absolute;
+  inset: -5px;
+  border: 1px dashed rgba(124, 183, 255, 0.43);
+  border-radius: 50%;
+  animation: cyber-cursor-scan 10s linear infinite;
+}
+
+.cyber-cursor-head svg {
+  width: 16px;
+  height: 16px;
+  filter: drop-shadow(0 0 3px rgba(88, 230, 209, 0.38));
+}
+
+.cyber-cursor-particle {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #58e6d1;
+  box-shadow: 0 0 9px rgba(88, 230, 209, 0.6);
+}
+
+.cyber-cursor-particle-1 { opacity: 0.65; width: 5px; height: 5px; }
+.cyber-cursor-particle-2 { opacity: 0.48; width: 4px; height: 4px; }
+.cyber-cursor-particle-3 { opacity: 0.33; width: 3px; height: 3px; }
+.cyber-cursor-particle-4 { opacity: 0.2; width: 2px; height: 2px; }
+
+@keyframes cyber-cursor-scan {
+  to { rotate: 360deg; }
+}
+
+@media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .cyber-cursor-overlay { display: none !important; }
+}
