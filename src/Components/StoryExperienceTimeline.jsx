@@ -3,12 +3,12 @@ import { FaArrowRight, FaCode, FaLayerGroup, FaShieldAlt, FaUsers } from "react-
 
 const experience = [
   {
-    period: "5+ years",
-    title: "Full stack software engineering",
-    text: "Built 10+ full stack web and mobile applications using React, TypeScript, Node.js, Python, SQL, MongoDB, REST APIs, JWT, RBAC, testing, and secure delivery.",
-    proof: "10+ full stack apps · 40% faster database performance · secure APIs",
-    icon: FaCode,
-    accent: "#58E6D1",
+    period: "Now",
+    title: "Cybersecurity M.S. at George Washington University",
+    text: "Pursuing an M.S. in Cybersecurity in Computer Science at The George Washington University while building security-focused projects spanning application security, infrastructure, secure APIs, RBAC, and AI security testing.",
+    proof: "GWU M.S. · software engineering · AppSec · infrastructure · AI security",
+    icon: FaShieldAlt,
+    accent: "#B39BFF",
   },
   {
     period: "2022 → 2025",
@@ -27,12 +27,12 @@ const experience = [
     accent: "#E8BD73",
   },
   {
-    period: "Now",
-    title: "Cybersecurity M.S. at George Washington University",
-    text: "Pursuing an M.S. in Cybersecurity in Computer Science at The George Washington University while building security-focused projects spanning application security, infrastructure, secure APIs, RBAC, and AI security testing.",
-    proof: "GWU M.S. · software engineering · AppSec · infrastructure · AI security",
-    icon: FaShieldAlt,
-    accent: "#B39BFF",
+    period: "5+ years",
+    title: "Full stack software engineering",
+    text: "Built 10+ full stack web and mobile applications using React, TypeScript, Node.js, Python, SQL, MongoDB, REST APIs, JWT, RBAC, testing, and secure delivery.",
+    proof: "10+ full stack apps · 40% faster database performance · secure APIs",
+    icon: FaCode,
+    accent: "#58E6D1",
   },
 ];
 
