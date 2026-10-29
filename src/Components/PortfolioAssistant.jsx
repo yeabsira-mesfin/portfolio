@@ -11,7 +11,7 @@ const quickPrompts = [
 
 const answers = {
   specialties:
-    "Yeabsira works where software, infrastructure, and security meet. His strongest lanes are full-stack software engineering, infrastructure and networking, application security, authentication, cloud systems, and reliability. He is especially comfortable with Python, JavaScript/TypeScript, React, Node.js, Linux, Docker, AWS, Terraform, and security-focused engineering.",
+    "Yeabsira is a full-stack software engineer with 5+ years of experience building secure web applications and enterprise event technology solutions. His strengths include React, Next.js, JavaScript/TypeScript, Node.js, Express, Python, SQL, REST APIs, JWT/RBAC authentication, and performance optimization. Through MMCY, he supported Cvent and other event technology solutions for BCD Travel, YPO, Abbott, and CDW, working on registration workflows, integrations, troubleshooting, and production support. He is pursuing an M.S. in Cybersecurity in Computer Science at The George Washington University, with a growing focus on application security, network security, Linux, Docker, CI/CD, AWS, and Terraform.",
   current:
     "Right now, Yeabsira is completing his M.S. in Cybersecurity in Computer Science at The George Washington University while building deeper hands-on work in network security, infrastructure reliability, secure authentication, cloud security, and software engineering.",
   projects:
