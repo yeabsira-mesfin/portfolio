@@ -519,7 +519,7 @@ const CinematicPortfolio = () => {
                     {projects.map((project) => {
                       const active = selectedProject.id === project.id;
                       return (
-                        <button key={project.id} type="button" onClick={() => { setSelectedProject(project); setWheelTurn((value) => value + 1); window.setTimeout(() => { const card = document.querySelector('[data-project-card="true"]'); const rect = card?.getBoundingClientRect(); if (card && rect && (rect.top > window.innerHeight - 140 || rect.bottom < 96)) card.scrollIntoView({ behavior: reduceMotion || window.innerWidth < 1024 ? "auto" : "smooth", block: "start" }); }, 180); }} className={`w-full rounded-2xl border p-3.5 text-left transition-all duration-700 ${active ? "border-[#7CEBDD]/30 bg-[#7CEBDD]/[.07] shadow-[0_0_32px_rgba(88,230,209,.04)]" : "border-[#7CEBDD]/7 bg-[#7CEBDD]/[.012] hover:border-[#7CEBDD]/18 hover:bg-[#7CEBDD]/[.03]"}`}>
+                        <button key={project.id} type="button" onClick={() => { setSelectedProject(project); setWheelTurn((value) => value + 1); window.setTimeout(() => { const card = document.querySelector('[data-project-card="true"]'); const rect = card?.getBoundingClientRect(); if (card && rect && (rect.top > window.innerHeight - 140 || rect.bottom < 96)) card.scrollIntoView({ behavior: reduceMotion || window.innerWidth < 1024 ? "instant" : "smooth", block: "start" }); }, 180); }} className={`w-full rounded-2xl border p-3.5 text-left transition-all duration-700 ${active ? "border-[#7CEBDD]/30 bg-[#7CEBDD]/[.07] shadow-[0_0_32px_rgba(88,230,209,.04)]" : "border-[#7CEBDD]/7 bg-[#7CEBDD]/[.012] hover:border-[#7CEBDD]/18 hover:bg-[#7CEBDD]/[.03]"}`}>
                           <div className="flex items-center gap-3"><span className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-[#7CEBDD]/10 font-mono text-[9px] font-bold" style={{ color: project.accent }}>{project.code}</span><div className="min-w-0"><p className={`truncate text-sm font-semibold ${active ? "text-[#EFFFFC]" : "text-[#C8E2DF]/62"}`}>{project.title}</p><p className="mt-0.5 font-mono text-[8px] uppercase tracking-[.14em] text-[#B8D6D2]/28">{project.lane}</p></div></div>
                         </button>
                       );
@@ -538,7 +538,7 @@ const CinematicPortfolio = () => {
                     initial={false}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     transition={{ duration: 0.2, ease: "easeOut" }}
-                    className="min-w-0 overflow-hidden rounded-[1.8rem] border border-[#7CEBDD]/11 bg-[#03131A]/84 p-3 shadow-[0_30px_90px_rgba(0,5,11,.5)] backdrop-blur-xl sm:p-4"
+                    className="min-w-0 scroll-mt-28 overflow-hidden rounded-[1.8rem] border border-[#7CEBDD]/11 bg-[#03131A]/84 p-3 shadow-[0_30px_90px_rgba(0,5,11,.5)] backdrop-blur-xl sm:p-4"
                   >
                     <ProjectVisual project={selectedProject} reduceMotion={reduceMotion} />
                     <div className="p-3 pb-4 pt-5 sm:p-4 sm:pb-4">
