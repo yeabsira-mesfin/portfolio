@@ -101,3 +101,13 @@
     padding-right: 6rem !important;
   }
 }
+
+
+/* On narrow phones, keep the Story navigation robot beside the decorative
+   mechanism instead of allowing it to obscure the first story card. */
+@media (max-width: 639px) {
+  body:has([data-story-content="true"]) button[data-journey-robot="true"] {
+    top: max(118px, env(safe-area-inset-top)) !important;
+    bottom: auto !important;
+  }
+}
