@@ -100,7 +100,7 @@ const storyCards = [
   },
   {
     eyebrow: "WHAT I’M DOING",
-    title: "Cybersecurity and AI systems at GWU.",
+    title: "Graduate work in secure systems and AI.",
     text: "I'm pursuing an M.S. in Cybersecurity in Computer Science at The George Washington University, studying network security, defensive engineering, and privacy risks in AI-enabled systems while applying these concepts in labs and projects.",
     icon: FaGraduationCap,
     accent: "#7CB7FF",
@@ -457,7 +457,7 @@ const CinematicPortfolio = () => {
         <div className="mx-auto flex max-w-7xl items-center justify-between rounded-2xl border border-[#79EADF]/10 bg-[#031019]/72 px-3 py-2.5 shadow-[0_18px_60px_rgba(0,5,11,.36)] backdrop-blur-2xl sm:px-4">
           <button type="button" onClick={() => navigate(0)} className="group flex items-center gap-3 text-left">
             <span className="relative grid h-9 w-9 place-items-center rounded-full border border-[#7CEBDD]/18 bg-[#7CEBDD]/[.04] font-mono text-[10px] font-bold text-[#DFFFFB]/80">YM<span className="absolute -inset-1 rounded-full border border-[#7CEBDD]/0 transition-all duration-700 group-hover:border-[#7CEBDD]/35" /></span>
-            <span className="hidden sm:block"><span className="block text-sm font-bold tracking-[-.02em] text-[#E8F7F5]/90">Yeabsira Mesfin</span><span className="block font-mono text-[8px] uppercase tracking-[.18em] text-[#B8DCD8]/35">Cybersecurity · AI · Software</span></span>
+            <span className="hidden sm:block"><span className="block text-sm font-bold tracking-[-.02em] text-[#E8F7F5]/90">Yeabsira Mesfin</span><span className="block font-mono text-[8px] uppercase tracking-[.18em] text-[#B8DCD8]/35">Secure Software · AI · Systems</span></span>
           </button>
           <nav className="flex items-center gap-0.5 sm:gap-1.5" aria-label="Portfolio sections">
             {scenes.slice(1).map((item, index) => (
@@ -472,16 +472,16 @@ const CinematicPortfolio = () => {
           {scene === 0 && (
             <SceneShell>
               <div className="order-2 lg:order-1">
-                <div className="mb-5 flex items-center gap-3"><span className="h-px w-10 bg-[#58E6D1]/65" /><span className="font-mono text-[9px] font-bold uppercase tracking-[.22em] text-[#58E6D1]">Application Security · AI · Engineering</span></div>
+                <div className="mb-5 flex items-center gap-3"><span className="h-px w-10 bg-[#58E6D1]/65" /><span className="font-mono text-[9px] font-bold uppercase tracking-[.22em] text-[#58E6D1]">Secure Engineering · AI Evaluation</span></div>
                 <h1 className="max-w-4xl text-[clamp(3.25rem,7.5vw,7rem)] font-semibold leading-[.84] tracking-[-.07em] text-[#E8F7F5]">Yeabsira<br /><span className="bg-gradient-to-r from-[#E7FFFB] via-[#58E6D1] to-[#7CB7FF] bg-clip-text text-transparent">Mesfin.</span></h1>
                 <p className="mt-7 max-w-xl text-[clamp(1.05rem,2vw,1.55rem)] font-medium leading-[1.35] tracking-[-.02em] text-[#D4ECE9]/72">Securing software. Defending systems. Evaluating AI.</p>
-                <p className="mt-5 max-w-xl text-sm leading-7 text-[#C5E1DE]/42 sm:text-base">I'm a Full Stack Software Engineer focused on cybersecurity, application security, and AI-assisted software reliability. I bring 5+ years of experience building and supporting production applications, secure APIs, and enterprise platforms. My recent projects explore vulnerability management, defensive tooling, and coding-agent evaluation. I'm pursuing an M.S. in Cybersecurity in Computer Science at The George Washington University. Previously, through MMCY, I supported BCD Travel, YPO, Abbott, and CDW while growing into technical leadership.</p>
+                <p className="mt-5 max-w-xl text-sm leading-7 text-[#C5E1DE]/42 sm:text-base">I'm a Full Stack Software Engineer focused on secure systems, network defense, and AI-assisted software reliability. I bring 5+ years of experience building and supporting production applications, secure APIs, and enterprise platforms. My recent projects explore vulnerability management, defensive tooling, and coding-agent evaluation. I'm pursuing an M.S. in Cybersecurity in Computer Science at The George Washington University. Previously, through MMCY, I supported BCD Travel, YPO, Abbott, and CDW while growing into technical leadership.</p>
                 <div className="mt-8 flex flex-wrap items-center gap-3">
                   <button type="button" onClick={() => navigate(1)} className="group inline-flex items-center gap-3 rounded-full bg-[#DFFFFB] px-5 py-3.5 text-sm font-bold text-[#03131A] shadow-[0_10px_34px_rgba(86,230,211,.12)] transition-all duration-700 hover:-translate-y-0.5 hover:bg-white">Enter my story <FaArrowRight className="text-xs transition-transform duration-700 group-hover:translate-x-1" /></button>
                   <button type="button" onClick={() => navigate(2)} className="rounded-full border border-[#7CEBDD]/14 bg-[#7CEBDD]/[.025] px-4 py-3 text-xs font-bold text-[#C8EAE6]/60 transition-all duration-700 hover:border-[#7CEBDD]/35 hover:text-[#E8FFFC]">Jump to projects</button>
                   <button type="button" onClick={() => navigate(3)} className="rounded-full border border-[#7CEBDD]/14 bg-[#7CEBDD]/[.025] px-4 py-3 text-xs font-bold text-[#C8EAE6]/60 transition-all duration-700 hover:border-[#7CEBDD]/35 hover:text-[#E8FFFC]">Contact</button>
                 </div>
-                <div className="mt-10 flex flex-wrap gap-x-7 gap-y-3 border-t border-[#7CEBDD]/8 pt-5 font-mono text-[9px] uppercase tracking-[.17em] text-[#B9D9D5]/28"><span>5+ years in software engineering</span><span>AppSec + AI evaluation projects</span><span>GWU cybersecurity M.S.</span></div>
+                <div className="mt-10 flex flex-wrap gap-x-7 gap-y-3 border-t border-[#7CEBDD]/8 pt-5 font-mono text-[9px] uppercase tracking-[.17em] text-[#B9D9D5]/28"><span>5+ years in software engineering</span><span>AppSec + AI evaluation projects</span><span>GWU graduate studies</span></div>
               </div>
               <div className="order-1 lg:order-2"><HeroVisual scene={scene} wheelTurn={wheelTurn} reduceMotion={reduceMotion} onNavigate={navigate} /></div>
             </SceneShell>
@@ -563,7 +563,7 @@ const CinematicPortfolio = () => {
               <div>
                 <div className="flex items-center gap-3"><span className="font-mono text-[9px] font-bold uppercase tracking-[.2em] text-[#58E6D1]">03 / Contact</span><span className="h-px flex-1 bg-[#7CEBDD]/8" /></div>
                 <h2 className="mt-5 text-[clamp(3rem,6vw,5.8rem)] font-semibold leading-[.87] tracking-[-.065em] text-[#E8F7F5]">Let’s build<br /><span className="text-[#C6E1DE]/24">what comes next.</span></h2>
-                <p className="mt-6 max-w-xl text-base leading-7 text-[#C5DFDC]/44">I'm interested in cybersecurity, application security, AI evaluation, and secure software engineering roles where dependable systems, thoughtful testing, and real-world impact matter.</p>
+                <p className="mt-6 max-w-xl text-base leading-7 text-[#C5DFDC]/44">I'm interested in secure software engineering, network defense, and AI evaluation roles where dependable systems, thoughtful testing, and real-world impact matter.</p>
                 <div className="mt-8 grid gap-3 sm:grid-cols-2">
                   <a href="https://www.linkedin.com/in/yeabsira-mesfin-76379928a" className="group rounded-2xl border border-[#7CEBDD]/9 bg-[#7CEBDD]/[.025] p-4 transition-all duration-700 hover:border-[#58E6D1]/35 hover:bg-[#7CEBDD]/[.045]"><FaEnvelope className="text-[#58E6D1]" /><p className="mt-4 font-mono text-[8px] uppercase tracking-[.18em] text-[#B9D9D5]/28">Contact</p><p className="mt-1 break-all text-sm font-semibold text-[#E0F7F3]/76">Connect on LinkedIn</p></a>
                   <a href="https://www.linkedin.com/in/yeabsira-mesfin-76379928a" target="_blank" rel="noopener noreferrer" className="group rounded-2xl border border-[#7CEBDD]/9 bg-[#7CEBDD]/[.025] p-4 transition-all duration-700 hover:border-[#7CB7FF]/35 hover:bg-[#7CEBDD]/[.045]"><FaLinkedinIn className="text-[#7CB7FF]" /><p className="mt-4 font-mono text-[8px] uppercase tracking-[.18em] text-[#B9D9D5]/28">LinkedIn</p><p className="mt-1 text-sm font-semibold text-[#E0F7F3]/76">Yeabsira Mesfin</p></a>

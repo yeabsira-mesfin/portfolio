@@ -4,9 +4,9 @@ import { FaArrowRight, FaCode, FaLayerGroup, FaShieldAlt, FaUsers } from "react-
 const experience = [
   {
     period: "Now",
-    title: "Cybersecurity graduate studies and AI security projects",
-    text: "Pursuing an M.S. in Cybersecurity in Computer Science at GWU while building projects in AppSec, network defense, AI security testing, and coding-agent evaluation. Graduate coursework also explores privacy leakage in AI-based chat systems.",
-    proof: "GWU M.S. · network security · AppSec · AI security · code evaluation",
+    title: "Graduate studies in secure systems and AI evaluation",
+    text: "Pursuing an M.S. in Cybersecurity in Computer Science at GWU while building projects in vulnerability management, network defense, LLM safeguards, and coding-agent evaluation. Graduate coursework also explores privacy leakage in AI-based chat systems.",
+    proof: "GWU M.S. · network defense · secure APIs · AI evaluation · code review",
     icon: FaShieldAlt,
     accent: "#B39BFF",
   },

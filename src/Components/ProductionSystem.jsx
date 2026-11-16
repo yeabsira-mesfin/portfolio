@@ -72,7 +72,7 @@ const history = [
   {
     year: "2025–Now",
     phase: "Systems",
-    title: "Expanded deeper into infrastructure and cybersecurity.",
+    title: "Expanded deeper into infrastructure and defensive systems.",
     text: "M.S. Cybersecurity in Computer Science at GWU, with hands-on work in networking, secure systems, authentication, infrastructure reliability, Linux, cloud, and defensive engineering.",
     signal: "Build + operate + secure",
   },

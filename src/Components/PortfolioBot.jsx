@@ -17,7 +17,7 @@ const knowledge = [
   {
     keywords: ["role", "roles", "job", "jobs", "looking for", "career", "position", "opportunity"],
     answer:
-      "Yeabsira is focused on software engineering, infrastructure engineering, security engineering, application security, and adjacent technical roles where coding, systems, and security overlap. He is especially interested in work where he can build, troubleshoot, automate, and improve reliable systems.",
+      "Yeabsira is focused on software engineering, infrastructure engineering, security engineering, secure software design, and adjacent technical roles where coding, systems, and security overlap. He is especially interested in work where he can build, troubleshoot, automate, and improve reliable systems.",
   },
   {
     keywords: ["experience", "worked", "work", "background", "company", "client", "mmcy", "freelance", "freelancing"],
@@ -37,7 +37,7 @@ const knowledge = [
   {
     keywords: ["study", "studying", "education", "degree", "school", "university", "gwu", "master", "masters"],
     answer:
-      "Yeabsira is an M.S. Cybersecurity in Computer Science candidate at The George Washington University, expected in 2027. He also holds a B.S. in Computer Science. His current learning connects cybersecurity with software engineering, infrastructure, networking, and secure systems.",
+      "Yeabsira is an M.S. Cybersecurity in Computer Science candidate at The George Washington University, expected in 2027. He also holds a B.S. in Computer Science. His current learning connects defensive systems with software engineering, infrastructure, networking, and secure systems.",
   },
   {
     keywords: ["skill", "skills", "technology", "stack", "language", "languages", "react", "python", "javascript"],
@@ -57,7 +57,7 @@ const knowledge = [
   {
     keywords: ["current", "currently", "now", "working on", "focus"],
     answer:
-      "Right now, Yeabsira is combining his software engineering background with deeper work in infrastructure reliability, automation, networking, cloud, and cybersecurity while completing his master's degree at GWU.",
+      "Right now, Yeabsira is combining his software engineering background with deeper work in infrastructure reliability, automation, networking, cloud, and network defense while completing his master's degree at GWU.",
   },
 ];
 
@@ -80,7 +80,7 @@ const findAnswer = (question) => {
 
   if (match?.score > 0) return match.answer;
 
-  return "I can help with Yeabsira's experience, strengths, projects, technical skills, cybersecurity work, education, current focus, and the kinds of roles he is looking for.";
+  return "I can help with Yeabsira's experience, strengths, projects, technical skills, defensive engineering work, education, current focus, and the kinds of roles he is looking for.";
 };
 
 const PortfolioBot = () => {
@@ -96,7 +96,7 @@ const PortfolioBot = () => {
   const [messages, setMessages] = useState([
     {
       from: "bot",
-      text: "Hi, I am Yeabsira's portfolio assistant. Want to know more about him? Ask about his work, projects, skills, cybersecurity focus, or the roles he is looking for.",
+      text: "Hi, I am Yeabsira's portfolio assistant. Want to know more about him? Ask about his work, projects, skills, secure systems focus, or the roles he is looking for.",
     },
   ]);
 

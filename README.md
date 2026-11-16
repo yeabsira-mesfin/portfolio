@@ -1,10 +1,10 @@
-# Yeabsira Mesfin | Cybersecurity, AI Security & Software Engineering
+# Yeabsira Mesfin | Secure Software, Network Defense & AI Evaluation
 
 [![Portfolio Build](https://github.com/yeabsira-mesfin/portfolio/actions/workflows/build.yml/badge.svg)](https://github.com/yeabsira-mesfin/portfolio/actions/workflows/build.yml)
 
 Official portfolio for **Yeabsira Mesfin**, a full-stack software engineer with **5+ years of experience** and an **M.S. Cybersecurity in Computer Science candidate at The George Washington University**.
 
-The site emphasizes **application security, network defense, AI security testing, coding-agent evaluation, secure APIs, and resilient software**, supported by years of production engineering and technical leadership.
+The site emphasizes **secure APIs, network defense, LLM safeguards, coding-agent evaluation, and resilient software**, supported by years of production engineering and technical leadership.
 
 ### [View the live portfolio: yeabsira-mesfin.vercel.app](https://yeabsira-mesfin.vercel.app/)
 
@@ -13,16 +13,16 @@ The site emphasizes **application security, network defense, AI security testing
 ### Interactive Portfolio Assistant
 A responsive portfolio assistant that helps visitors learn about my:
 - Experience and technical background
-- Cybersecurity, AppSec, AI security, and AI evaluation projects
+- Secure software, vulnerability management, and AI evaluation projects
 - Skills and technologies
-- Cybersecurity graduate studies and AI privacy interests
+- Graduate studies in secure systems and AI privacy interests
 - Current engineering focus
 - Target roles and career interests
 
 The assistant uses a curated portfolio knowledge base so answers stay grounded in information presented on the site.
 
 ### Security Feed
-A cybersecurity and networking focused section connected to my public X profile.
+A network defense and systems-focused section connected to my public X profile.
 
 It includes:
 - Animated network telemetry visualization
@@ -33,7 +33,7 @@ It includes:
 - Mobile friendly fallback when embedded X timelines are blocked by browsers or content restrictions
 
 ### Projects
-The portfolio highlights cybersecurity and AI work, including:
+The portfolio highlights defensive engineering and AI work, including:
 
 - **AgentBench Pro**: coding-agent evaluation with security and regression checks
 - **AI Security Testing Lab**: defensive controls and automated tests for LLM-enabled applications
@@ -132,11 +132,11 @@ This helps catch build and integration issues before deployment.
 
 ## About Me
 
-I started building software through freelance work in **2019** and now focus on **cybersecurity, AI security, and secure software engineering**, grounded in **5+ years of software experience**.
+I started building software through freelance work in **2019** and now focus on **secure systems, network defense, and AI evaluation**, grounded in **5+ years of software experience**.
 
 My background includes full-stack development, secure APIs, authentication and access controls, testing, production troubleshooting, and technical leadership. Through MMCY, I supported **BCD Travel, YPO, Abbott, and CDW**. That experience shapes my approach to reliability, security, and accountable engineering.
 
-I am pursuing an **M.S. in Cybersecurity in Computer Science at The George Washington University**, with hands-on interests in network defense, application security, AI-assisted code reliability, and privacy risks in AI chat systems.
+I am pursuing an **M.S. in Cybersecurity in Computer Science at The George Washington University**, with hands-on interests in network defense, secure API design, AI-assisted code reliability, and privacy risks in AI chat systems.
 
 ## Connect
 

@@ -3,7 +3,7 @@ import { AnimatePresence, motion, useAnimationControls, useReducedMotion } from 
 import { FaArrowUp, FaTimes } from "react-icons/fa";
 
 const quickPrompts = [
-  "What cybersecurity projects has he built?",
+  "What defensive projects has he built?",
   "How does Yeabsira work with AI?",
   "What is he studying at GWU?",
   "What roles is he targeting?",
@@ -11,17 +11,17 @@ const quickPrompts = [
 
 const answers = {
   specialties:
-    "Yeabsira combines 5+ years of full-stack software engineering with a focus on application security, defensive systems, and AI evaluation. His technical foundation includes React, TypeScript, Node.js, Python, FastAPI, SQL, REST APIs, JWT, RBAC, secure API design, testing, Linux, Docker, and CI/CD. He uses those skills to build security tools, analyze authentication behavior, and evaluate AI-assisted software.",
+    "Yeabsira combines 5+ years of full-stack software engineering with a focus on secure software, defensive systems, and AI evaluation. His technical foundation includes React, TypeScript, Node.js, Python, FastAPI, SQL, REST APIs, JWT, RBAC, secure API design, testing, Linux, Docker, and CI/CD. He uses those skills to build security tools, analyze authentication behavior, and evaluate AI-assisted software.",
   security:
-    "His cybersecurity work spans the AppSec Vulnerability Manager, which brings Semgrep, Trivy, and OWASP ZAP findings into a remediation workflow; Secure Login Analyzer for authentication-event detection; a BEC Incident Investigation Lab; secure AWS infrastructure as code; and a Windows Infrastructure Reliability Console. His GWU coursework and hands-on labs also cover network security, traffic analysis, TLS, and defensive controls. These are projects and academic work, not a claim that all were enterprise deployments.",
+    "His defensive engineering projects span the AppSec Vulnerability Manager, which brings Semgrep, Trivy, and OWASP ZAP findings into a remediation workflow; Secure Login Analyzer for authentication-event detection; a BEC Incident Investigation Lab; secure AWS infrastructure as code; and a Windows Infrastructure Reliability Console. His GWU coursework and hands-on labs also cover network security, traffic analysis, TLS, and defensive controls. These are projects and academic work, not a claim that all were enterprise deployments.",
   ai:
     "Yeabsira explores how AI-powered software can be tested, secured, and trusted. AgentBench Pro evaluates coding agents using curated software engineering tasks, versioned rubrics, evidence-backed assessments, and security and regression checks. His AI Security Testing Lab focuses on input validation, sensitive-data redaction, tool allowlisting, and automated tests for LLM applications. He also built an AI Study Planner using Python, file parsing, and an AI API. His academic interests include privacy leakage in AI chat systems and the reliability of AI-assisted code after merge.",
   current:
-    "Yeabsira is pursuing an M.S. in Cybersecurity in Computer Science at The George Washington University. His current hands-on focus includes application security, network defense labs, vulnerability management, secure infrastructure, AI security testing, and evaluating AI-assisted code changes.",
+    "Yeabsira is pursuing an M.S. in Cybersecurity in Computer Science at The George Washington University. His current hands-on focus includes secure API design, network defense labs, vulnerability management, secure infrastructure, LLM safeguards, and evaluating AI-assisted code changes.",
   projects:
     "Start with AgentBench Pro for AI coding-agent evaluation, the AI Security Testing Lab for LLM application defenses, and the AppSec Vulnerability Manager for scanner findings and remediation. Other featured security projects include the BEC Incident Investigation Lab, Secure Login Analyzer, Secure Cloud Infrastructure as Code, and Windows Infrastructure Reliability Console. Open the Projects section to explore code and demos.",
   roles:
-    "Yeabsira is targeting cybersecurity and software roles where engineering and defense overlap, including Security Analyst, SOC Analyst, Application Security Analyst, junior security engineering, AI evaluation, and secure Full Stack Software Engineer positions. He is open to opportunities in Washington, DC and Northern Virginia, plus remote U.S. roles. His event technology experience is part of his production background, not the main focus of this portfolio.",
+    "Yeabsira is targeting secure software and systems roles where engineering and defense overlap, including Security Analyst, SOC Analyst, vulnerability management, junior security engineering, AI evaluation, and secure Full Stack Software Engineer positions. He is open to opportunities in Washington, DC and Northern Virginia, plus remote U.S. roles. His event technology experience is part of his production background, not the main focus of this portfolio.",
   experience:
     "Yeabsira has 5+ years of experience building and supporting software, starting with freelance development and later working at MMCY. There he supported enterprise clients BCD Travel, YPO, Abbott, and CDW, progressing from Cvent development into team leadership. His work included 200+ event technology builds, integrations, production troubleshooting, and reliable handling of 5,000+ attendee records with zero data loss. His current security and AI direction is demonstrated through graduate study and hands-on projects.",
   education:
@@ -30,7 +30,7 @@ const answers = {
 
 export const getReply = (question) => {
   const text = String(question || "").toLowerCase().trim();
-  if (!text) return "Ask me about Yeabsira's cybersecurity work, AI projects, graduate studies, or engineering experience.";
+  if (!text) return "Ask me about Yeabsira's defensive engineering work, AI projects, graduate studies, or engineering experience.";
 
   // Domain-specific topics should take priority over generic words like "work" or "project".
   if (/\b(ai|llm|llms|agent|agents|copilot|machine learning|model evaluation|prompt injection)\b|artificial intelligence|generative ai/.test(text)) return answers.ai;
@@ -42,7 +42,7 @@ export const getReply = (question) => {
   if (/current|\bnow\b|focus|working on|research/.test(text)) return answers.current;
   if (/special|skill|stack|technology|technologies|strong|language|what does/.test(text)) return answers.specialties;
 
-  return "I can explain Yeabsira's cybersecurity projects, AI evaluation and security work, software engineering skills, GWU studies, professional experience, or target roles. Try a suggested question to get started.";
+  return "I can explain Yeabsira's defensive projects, AI evaluation and security work, software engineering skills, GWU studies, professional experience, or target roles. Try a suggested question to get started.";
 };
 
 const RobotMark = ({ reduceMotion, controls }) => (
@@ -82,7 +82,7 @@ const PortfolioAssistant = () => {
   const [messages, setMessages] = useState([
     {
       role: "assistant",
-      text: "Hi, I’m Yeabsira’s portfolio assistant. Ask about his cybersecurity projects, AI evaluation work, secure software engineering, or GWU studies.",
+      text: "Hi, I’m Yeabsira’s portfolio assistant. Ask about his defensive engineering projects, AI evaluation work, secure software engineering, or GWU studies.",
     },
   ]);
 
