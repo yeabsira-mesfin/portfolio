@@ -1,10 +1,10 @@
-# Yeabsira Mesfin | Software Engineer & Cybersecurity Portfolio
+# Yeabsira Mesfin | Cybersecurity, AI Security & Software Engineering
 
 [![Portfolio Build](https://github.com/yeabsira-mesfin/portfolio/actions/workflows/build.yml/badge.svg)](https://github.com/yeabsira-mesfin/portfolio/actions/workflows/build.yml)
 
-Official portfolio for **Yeabsira Mesfin**, a software engineer with **5+ years of software development experience** and an **M.S. Cybersecurity in Computer Science candidate at The George Washington University**.
+Official portfolio for **Yeabsira Mesfin**, a full-stack software engineer with **5+ years of experience** and an **M.S. Cybersecurity in Computer Science candidate at The George Washington University**.
 
-The site brings together my software engineering background with my growing focus on **cybersecurity, networking, infrastructure reliability, Linux, automation, and secure systems**.
+The site emphasizes **application security, network defense, AI security testing, coding-agent evaluation, secure APIs, and resilient software**, supported by years of production engineering and technical leadership.
 
 ### [View the live portfolio: yeabsira-mesfin.vercel.app](https://yeabsira-mesfin.vercel.app/)
 
@@ -13,9 +13,9 @@ The site brings together my software engineering background with my growing focu
 ### Interactive Portfolio Assistant
 A responsive portfolio assistant that helps visitors learn about my:
 - Experience and technical background
-- Software, infrastructure, and security projects
+- Cybersecurity, AppSec, AI security, and AI evaluation projects
 - Skills and technologies
-- Cybersecurity graduate studies
+- Cybersecurity graduate studies and AI privacy interests
 - Current engineering focus
 - Target roles and career interests
 
@@ -33,14 +33,14 @@ It includes:
 - Mobile friendly fallback when embedded X timelines are blocked by browsers or content restrictions
 
 ### Projects
-The portfolio highlights both software engineering and infrastructure/security projects, including:
+The portfolio highlights cybersecurity and AI work, including:
 
-- **Windows Infrastructure Reliability Console**
-- **High Availability Hosting Lab**
-- **Secure Cloud Infrastructure as Code**
-- **Infrastructure Operations Toolkit**
-- **Secure Login Analyzer**
-- Full stack web applications and product projects
+- **AgentBench Pro**: coding-agent evaluation with security and regression checks
+- **AI Security Testing Lab**: defensive controls and automated tests for LLM-enabled applications
+- **AppSec Vulnerability Manager**: Semgrep, Trivy, and OWASP ZAP finding management
+- **BEC Incident Investigation Lab**: incident-response evidence and correlation
+- **Secure Login Analyzer**: authentication-event analysis
+- **Secure Cloud Infrastructure as Code** and **Windows Infrastructure Reliability Console**
 
 ### Responsive Design
 The interface is designed for desktop, tablet, and mobile with:
@@ -60,7 +60,7 @@ The site includes:
 - Consistent GitHub, LinkedIn, X, and portfolio identity links
 
 ### Contact
-Professional inquiries use LinkedIn. The portfolio does not collect contact-form submissions or publish a personal email address, phone number, or downloadable résumé.
+Professional inquiries are welcome through LinkedIn or email. The portfolio does not collect contact-form submissions.
 
 ## Tech Stack
 
@@ -132,11 +132,11 @@ This helps catch build and integration issues before deployment.
 
 ## About Me
 
-I started building software through freelance work in **2019** and now have **5+ years of software development experience**.
+I started building software through freelance work in **2019** and now focus on **cybersecurity, AI security, and secure software engineering**, grounded in **5+ years of software experience**.
 
-My background includes full stack development, APIs, production troubleshooting, enterprise technical delivery, integrations, client support, and team leadership. I have supported enterprise clients including **BCD Travel, YPO, Abbott, and CDW**.
+My background includes full-stack development, secure APIs, authentication and access controls, testing, production troubleshooting, and technical leadership. Through MMCY, I supported **BCD Travel, YPO, Abbott, and CDW**. That experience shapes my approach to reliability, security, and accountable engineering.
 
-I am currently completing an **M.S. in Cybersecurity in Computer Science at The George Washington University**, where I am expanding deeper into secure systems, networking, infrastructure, authentication, and defensive engineering.
+I am pursuing an **M.S. in Cybersecurity in Computer Science at The George Washington University**, with hands-on interests in network defense, application security, AI-assisted code reliability, and privacy risks in AI chat systems.
 
 ## Connect
 

@@ -41,9 +41,9 @@ const getCurrentScene = () => {
   }
 
   if (
-    bodyText.includes("Software engineer with systems instincts.") ||
-    bodyText.includes("Going deeper into cybersecurity.") ||
-    bodyText.includes("Built and operated real client systems.")
+    bodyText.includes("Secure software and AI evaluation.") ||
+    bodyText.includes("Cybersecurity and AI systems at GWU.") ||
+    bodyText.includes("Production engineering and technical leadership.")
   ) {
     return "story";
   }
